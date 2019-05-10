@@ -8,5 +8,14 @@ namespace Server
 {
     public class Card
     {
+        private int name;
+        private int type;
+        private string link;
+        public Card(int name1, int type1, string link1)
+        {
+            name = name1;
+            type = type1;
+            link = link1;
+        }
     }
 }
