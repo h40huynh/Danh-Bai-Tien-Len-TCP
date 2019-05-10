@@ -1,6 +1,6 @@
 ﻿namespace Server
 {
-    partial class Form1
+    partial class ServerMainForm
     {
         /// <summary>
         /// Required designer variable.
