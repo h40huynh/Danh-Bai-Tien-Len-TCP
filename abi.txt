@@ -1,0 +1,16 @@
+client:
+	create room <money>
+	join
+	winner <idroom>
+	pop <idroom> <listcards> / miss <idroom> <listcards>
+	close
+room (server listen):
+	room <id> 
+	user <id> <money>
+	start <listcards>
+	next <listcards>
+	wait <listcards>
+	end <idwin> 
+	
+		
+	

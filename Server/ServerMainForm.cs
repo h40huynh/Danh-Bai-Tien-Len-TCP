@@ -16,6 +16,9 @@ namespace Server
     {
         private TcpModel tcpModel;
         private List<Player> players = new List<Player>();
+        private List<Room> rooms = new List<Room>();
+
+
 
         public ServerMainForm()
         {
@@ -71,10 +74,46 @@ namespace Server
                 {
                     string data = player.receiveData();
                     rtxtLog.Text += $"From {name}: {data}\n";
+
+                    string[] fixData = data.Split(' ');
+                    switch(fixData[0])
+                    {
+                        case "create"://yêu cầu tạo phòng
+                            Room newRoom = new Room(int.Parse(fixData[1]), rooms.Count);
+                            newRoom.addPlayer(player);
+                            rooms.Add(newRoom);
+                            break;
+
+                        case "join":// yêu cầu chơi phòng ngẫu nhiên
+                            join(player);
+                            break;
+
+                        case "winner"://client thắng gửi, kết thúc ván
+                            rooms[player.getIDRoom()].endGame(player);
+                            break;
+
+                        case "pop":
+                            rooms[player.getIDRoom()].mergeCard(data);
+                            rooms[player.getIDRoom()].sendCardToPlayer(data, player);
+                            break;
+
+                        case "miss"://client bỏ lượt
+                            rooms[player.getIDRoom()].sendCardToPlayer(data, player);
+                            break;
+
+                        case "close":
+                            rooms[player.getIDRoom()].deletePlayer(player);
+                            player.closeConnection();
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
             }
             catch (Exception)
             {
+                player.closeConnection();
                 rtxtLog.Text += $"Close connection from {name}.\n";
             }
         }
@@ -83,7 +122,7 @@ namespace Server
         {
             try
             {
-                startServer(false);
+                startServer(false);                
             }
             catch (Exception)
             {
@@ -94,6 +133,26 @@ namespace Server
         private void btnStartDefault_Click(object sender, EventArgs e)
         {
             startServer();
+        }
+
+        private void join(Player newPlayer)
+        {
+            int t = 0;
+            foreach(Room r in rooms)
+                if (r.isReady() == false)
+                {
+                    t = 1;
+                    r.addPlayer(newPlayer);
+                    if (r.isReady())
+                        r.startGame();
+                    break;
+                }
+            if (t == 0)
+            {
+                Room newRoom = new Room(3000, rooms.Count);
+                rooms[rooms.Count - 1].addPlayer(newPlayer);
+            }
+                
         }
     }
 }

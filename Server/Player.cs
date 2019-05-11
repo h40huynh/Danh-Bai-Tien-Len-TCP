@@ -10,6 +10,7 @@ namespace Server
     public class Player
     {
         private int id;
+        private int idRoom;
         private Socket socket;
         private int money;
 
@@ -17,7 +18,12 @@ namespace Server
         private int bufferLength = 100;
 
         private static int recentId = 0;
-        
+
+        public string getName() => $"User{id}";
+        public int getMoney() => money;
+        public int getID() => id;
+        public int getIDRoom() => idRoom;
+
         public Player(Socket socket)
         {
             this.socket = socket;
@@ -41,7 +47,10 @@ namespace Server
             return data;
         }
 
-        public string getName() => $"User{id}";
-        public int getMoney() => money;
+        public void closeConnection()
+        {
+            socket.Close();
+        }
+       
     }
 }
