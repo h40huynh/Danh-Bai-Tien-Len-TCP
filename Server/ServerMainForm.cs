@@ -79,7 +79,7 @@ namespace Server
                     switch(fixData[0])
                     {
                         case "create"://yêu cầu tạo phòng
-                            Room newRoom = new Room(int.Parse(fixData[1]), rooms.Count);
+                            Room newRoom = new Room(int.Parse(fixData[2]), rooms.Count);
                             newRoom.addPlayer(player);
                             rooms.Add(newRoom);
                             break;

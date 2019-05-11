@@ -41,6 +41,7 @@
             // 
             // ptbCards
             // 
+            this.ptbCards.BackColor = System.Drawing.Color.Transparent;
             this.ptbCards.Location = new System.Drawing.Point(426, 158);
             this.ptbCards.Name = "ptbCards";
             this.ptbCards.Size = new System.Drawing.Size(98, 133);
@@ -50,6 +51,7 @@
             // 
             // ptbCardLeft
             // 
+            this.ptbCardLeft.BackColor = System.Drawing.Color.Transparent;
             this.ptbCardLeft.Location = new System.Drawing.Point(12, 158);
             this.ptbCardLeft.Name = "ptbCardLeft";
             this.ptbCardLeft.Size = new System.Drawing.Size(98, 133);
@@ -59,6 +61,7 @@
             // 
             // ptbCardRight
             // 
+            this.ptbCardRight.BackColor = System.Drawing.Color.Transparent;
             this.ptbCardRight.Location = new System.Drawing.Point(822, 158);
             this.ptbCardRight.Name = "ptbCardRight";
             this.ptbCardRight.Size = new System.Drawing.Size(98, 133);
@@ -68,6 +71,7 @@
             // 
             // ptbCardUp
             // 
+            this.ptbCardUp.BackColor = System.Drawing.Color.Transparent;
             this.ptbCardUp.Location = new System.Drawing.Point(426, -30);
             this.ptbCardUp.Name = "ptbCardUp";
             this.ptbCardUp.Size = new System.Drawing.Size(98, 133);

@@ -42,6 +42,7 @@ namespace Client
                 ptbMyCards[i].ImageLocation = "./cards/3_1.png";
                 ptbMyCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
                 ptbMyCards[i].Name = $"ptbMyCard_{i}";
+                //ptbMyCards[i].BackColor = Color.Transparent;
 
                 ptbMyCards[i].Click += (sen, eve) =>
                 {

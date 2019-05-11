@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txtIP = new System.Windows.Forms.TextBox();
-            this.txtPort = new System.Windows.Forms.TextBox();
-            this.btnStart = new System.Windows.Forms.Button();
             this.btnStartDefault = new System.Windows.Forms.Button();
+            this.btnStart = new System.Windows.Forms.Button();
+            this.txtPort = new System.Windows.Forms.TextBox();
+            this.txtIP = new System.Windows.Forms.TextBox();
             this.rtxtLog = new System.Windows.Forms.RichTextBox();
             this.statusStripMain = new System.Windows.Forms.StatusStrip();
             this.lblStatus = new System.Windows.Forms.ToolStripStatusLabel();
@@ -54,19 +54,15 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
             // 
-            // txtIP
+            // btnStartDefault
             // 
-            this.txtIP.Location = new System.Drawing.Point(6, 19);
-            this.txtIP.Name = "txtIP";
-            this.txtIP.Size = new System.Drawing.Size(100, 20);
-            this.txtIP.TabIndex = 0;
-            // 
-            // txtPort
-            // 
-            this.txtPort.Location = new System.Drawing.Point(6, 45);
-            this.txtPort.Name = "txtPort";
-            this.txtPort.Size = new System.Drawing.Size(100, 20);
-            this.txtPort.TabIndex = 1;
+            this.btnStartDefault.Location = new System.Drawing.Point(197, 19);
+            this.btnStartDefault.Name = "btnStartDefault";
+            this.btnStartDefault.Size = new System.Drawing.Size(78, 46);
+            this.btnStartDefault.TabIndex = 3;
+            this.btnStartDefault.Text = "Start Default";
+            this.btnStartDefault.UseVisualStyleBackColor = true;
+            this.btnStartDefault.Click += new System.EventHandler(this.btnStartDefault_Click);
             // 
             // btnStart
             // 
@@ -78,15 +74,19 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // btnStartDefault
+            // txtPort
             // 
-            this.btnStartDefault.Location = new System.Drawing.Point(197, 19);
-            this.btnStartDefault.Name = "btnStartDefault";
-            this.btnStartDefault.Size = new System.Drawing.Size(78, 46);
-            this.btnStartDefault.TabIndex = 3;
-            this.btnStartDefault.Text = "Start Default";
-            this.btnStartDefault.UseVisualStyleBackColor = true;
-            this.btnStartDefault.Click += new System.EventHandler(this.btnStartDefault_Click);
+            this.txtPort.Location = new System.Drawing.Point(6, 45);
+            this.txtPort.Name = "txtPort";
+            this.txtPort.Size = new System.Drawing.Size(100, 20);
+            this.txtPort.TabIndex = 1;
+            // 
+            // txtIP
+            // 
+            this.txtIP.Location = new System.Drawing.Point(6, 19);
+            this.txtIP.Name = "txtIP";
+            this.txtIP.Size = new System.Drawing.Size(100, 20);
+            this.txtIP.TabIndex = 0;
             // 
             // rtxtLog
             // 

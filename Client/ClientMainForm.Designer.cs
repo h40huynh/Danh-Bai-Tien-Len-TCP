@@ -35,12 +35,15 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCreate = new System.Windows.Forms.Button();
             this.btnJoin = new System.Windows.Forms.Button();
+            this.cbbMoneyToPlay = new System.Windows.Forms.ComboBox();
+            this.btnLocal = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.btnLocal);
             this.groupBox1.Controls.Add(this.btnConnect);
             this.groupBox1.Controls.Add(this.txtPort);
             this.groupBox1.Controls.Add(this.txtIP);
@@ -77,6 +80,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cbbMoneyToPlay);
             this.groupBox2.Controls.Add(this.btnJoin);
             this.groupBox2.Controls.Add(this.btnCreate);
             this.groupBox2.Location = new System.Drawing.Point(13, 147);
@@ -88,21 +92,43 @@
             // 
             // btnCreate
             // 
+            this.btnCreate.Enabled = false;
             this.btnCreate.Location = new System.Drawing.Point(300, 81);
             this.btnCreate.Name = "btnCreate";
             this.btnCreate.Size = new System.Drawing.Size(75, 46);
             this.btnCreate.TabIndex = 3;
             this.btnCreate.Text = "Create room";
             this.btnCreate.UseVisualStyleBackColor = true;
+            this.btnCreate.Click += new System.EventHandler(this.BtnCreate_Click);
             // 
             // btnJoin
             // 
+            this.btnJoin.Enabled = false;
             this.btnJoin.Location = new System.Drawing.Point(380, 81);
             this.btnJoin.Name = "btnJoin";
             this.btnJoin.Size = new System.Drawing.Size(75, 46);
             this.btnJoin.TabIndex = 4;
             this.btnJoin.Text = "Join Game";
             this.btnJoin.UseVisualStyleBackColor = true;
+            this.btnJoin.Click += new System.EventHandler(this.BtnJoin_Click);
+            // 
+            // cbbMoneyToPlay
+            // 
+            this.cbbMoneyToPlay.FormattingEnabled = true;
+            this.cbbMoneyToPlay.Location = new System.Drawing.Point(300, 54);
+            this.cbbMoneyToPlay.Name = "cbbMoneyToPlay";
+            this.cbbMoneyToPlay.Size = new System.Drawing.Size(155, 21);
+            this.cbbMoneyToPlay.TabIndex = 5;
+            // 
+            // btnLocal
+            // 
+            this.btnLocal.Location = new System.Drawing.Point(195, 19);
+            this.btnLocal.Name = "btnLocal";
+            this.btnLocal.Size = new System.Drawing.Size(75, 46);
+            this.btnLocal.TabIndex = 3;
+            this.btnLocal.Text = "Connect Local";
+            this.btnLocal.UseVisualStyleBackColor = true;
+            this.btnLocal.Click += new System.EventHandler(this.BtnLocal_Click);
             // 
             // ClientMainForm
             // 
@@ -113,6 +139,7 @@
             this.Controls.Add(this.groupBox1);
             this.Name = "ClientMainForm";
             this.Text = "Game Danh Bai Tien Len";
+            this.Load += new System.EventHandler(this.ClientMainForm_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -129,6 +156,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btnJoin;
         private System.Windows.Forms.Button btnCreate;
+        private System.Windows.Forms.ComboBox cbbMoneyToPlay;
+        private System.Windows.Forms.Button btnLocal;
     }
 }
 
