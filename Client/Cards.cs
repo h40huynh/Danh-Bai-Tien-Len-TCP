@@ -19,6 +19,7 @@ namespace Client
                 Card card = new Card(int.Parse(tmp[i]));
                 cards.Add(card);
             }
+            quicksort(cards);
         }
 
         private void sort()
