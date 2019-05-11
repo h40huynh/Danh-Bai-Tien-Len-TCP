@@ -82,10 +82,12 @@ namespace Server
                             Room newRoom = new Room(int.Parse(fixData[2]), rooms.Count);
                             newRoom.addPlayer(player);
                             rooms.Add(newRoom);
+                            player.sendData("room " + player.getIDRoom());
                             break;
 
                         case "join":// yêu cầu chơi phòng ngẫu nhiên
                             join(player);
+                            player.sendData("room " + player.getIDRoom());
                             break;
 
                         case "winner"://client thắng gửi, kết thúc ván

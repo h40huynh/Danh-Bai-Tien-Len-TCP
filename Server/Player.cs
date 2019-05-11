@@ -23,6 +23,7 @@ namespace Server
         public int getMoney() => money;
         public int getID() => id;
         public int getIDRoom() => idRoom;
+        public void setIDRoom(int id) { idRoom = id; }
 
         public Player(Socket socket)
         {
