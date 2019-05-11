@@ -29,14 +29,14 @@ namespace Server
         public void mix()
         {
             Random random = new Random();
-            int a = random.Next(10, 40);
-            Console.Write(a.ToString() + " ");
-            Card[] card1 = new Card[a];
-            Card[] card2 = new Card[52 - a];
-            Array.Copy(cards, 0, card1, 0, a);
-            Array.Copy(cards, a, card2, 0, 52 - a);
-            Array.Copy(card2, 0, cards, 0, 52 - a);
-            Array.Copy(card1, 0, cards, 52 - a, a);
+            int start = random.Next(5, 25);
+            int len = random.Next(5, 25);
+
+            Card[] temp = new Card[len];
+            
+            Array.Copy(cards, start, temp, 0, len);
+            Array.Copy(cards, 0, cards, start, len);
+            Array.Copy(temp, 0, cards, 0, len);
         }
 
         public string[] Split_Cards()
