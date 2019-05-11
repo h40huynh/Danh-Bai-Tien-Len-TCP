@@ -138,7 +138,7 @@ namespace Client
         {
             //chuỗi số khác nhau
             List<int> arrayIncreased = new List<int>();
-            arrayIncreased.Add(myCard[0]);
+            arrayIncreased.Add(myCard[0]); 
             for (int i = 1; i < myCard.Length - 1; i++)
             {
                 if (myCard[i] / 10 == 15)
