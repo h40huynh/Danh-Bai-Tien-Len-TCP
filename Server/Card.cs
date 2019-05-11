@@ -17,5 +17,8 @@ namespace Server
             type = type1;
             link = link1;
         }
+        public int getName() => name;
+        public int getType() => type;
+        public string getLink() => link;
     }
 }
