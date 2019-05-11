@@ -8,5 +8,6 @@ namespace Client
 {
     class Rules
     {
+
     }
 }

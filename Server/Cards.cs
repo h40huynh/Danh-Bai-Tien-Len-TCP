@@ -20,6 +20,7 @@ namespace Server
                 for (int j = 3; j < 16; j++)
                 {
                     cards[count] = new Card(j, i, $"{j}_{i}.png");
+
                     count++;
                 }
             }
@@ -37,17 +38,17 @@ namespace Server
             Array.Copy(card1, 0, cards, 52 - a, a);
         }
 
-        public Card[,] Split_Cards()
+        public string[] Split_Cards()
         {
-            Card[,] split = new Card[4, 13];
-            int j = 0;
+            string[] split = new string[4];
+            
             for (int i = 0; i < 52; i += 4) 
             {
-                split[0, j] = cards[i];
-                split[1, j] = cards[i+1];
-                split[2, j] = cards[i+2];
-                split[3, j] = cards[i+3];
-                j++;
+                split[0] = cards[i].ToString() + ' ';
+                split[1] = cards[i + 1].ToString() + ' ';
+                split[2] = cards[i + 2].ToString() + ' ';
+                split[3] = cards[i + 3].ToString() + ' ';
+                
             }
             numberOfCard = 0;
             return split;
