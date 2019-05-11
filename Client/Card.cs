@@ -30,5 +30,10 @@ namespace Client
         public int getvalue() => name * 10 + type;
         public string getlink() => link;
 
+        public override string ToString()
+        {
+            return getvalue().ToString();
+        }
+
     }
 }
