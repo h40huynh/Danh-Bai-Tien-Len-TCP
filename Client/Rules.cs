@@ -21,14 +21,14 @@ namespace Client
 
         }
 
-        check sigal // lẻ
-            check double // đôi
-            check trippel // check 3
-            check quara quara // check tứ quý
-            ckeck goup
-            check 3đoithong
-            check  4 đôithoong
-            check 5đoi
+        //check sigal // lẻ
+           // check double // đôi
+            //check trippel // check 3
+            //check quara quara // check tứ quý
+            //ckeck goup
+            //check 3đoithong
+            //check  4 đôithoong
+            //check 5đoi
 
 
     }
