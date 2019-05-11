@@ -13,7 +13,7 @@ namespace Client
 
         public Cards(string receiveServer)
         {
-            string[] tmp = Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] tmp = receiveServer.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < tmp.Length; i++)
             {
                 Card card = new Card(int.Parse(tmp[i]));
