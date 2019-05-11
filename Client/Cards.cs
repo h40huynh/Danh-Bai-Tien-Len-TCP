@@ -13,12 +13,13 @@ namespace Client
 
         public Cards(string receiveServer)
         {
-            string[] tmp = receiveServer.Split(' ');
+            string[] tmp = Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < tmp.Length; i++)
             {
                 Card card = new Card(int.Parse(tmp[i]));
                 cards.Add(card);
             }
+            numberOfCard = cards.Count;
             quicksort(cards);
         }
 
@@ -35,6 +36,7 @@ namespace Client
                     cards.RemoveAt(i);
                 }
             }
+            numberOfCard = cards.Count;
         }
         static List<Card> quicksort(List<Card> list)
         {
@@ -60,5 +62,19 @@ namespace Client
             sorted.AddRange(quicksort(greater));
             return sorted;
         }
+
+        private string listToString()
+        {
+            string tmp = "";
+            for(int i =0; i< numberOfCard;  i++)
+            {
+                tmp = tmp + cards[i].getvalue().ToString() + " ";
+            }
+            return tmp;
+        }
+
+        public int getNumberOfCard() => numberOfCard;
+        public string getCards() => this.listToString();
+
     }
 }
