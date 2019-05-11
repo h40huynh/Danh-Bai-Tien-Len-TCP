@@ -13,7 +13,7 @@ namespace Server
         private int money;
         private Player[] players;
         private Cards cards = new Cards();
-        private int winnerPosition;
+        private int winnerPosition = 0;
         private int numberOfPlayer = 0;
       
         public Room(int money, int id)
@@ -51,10 +51,13 @@ namespace Server
         {
             for (int i = 0; i < 50; i++)
                 cards.mix();
-            String[] sendCard = cards.Split_Cards();
+            string[] sendCard = cards.Split_Cards();
+
+            int count = 0;
             for (int i = 0; i < 4; i++) 
             {
-                players[winnerPosition++ % 4].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
+                players[count].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
+                count = (count + 1) % 4;
             }
             
             
