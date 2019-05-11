@@ -30,6 +30,7 @@ namespace Server
         {
             Random random = new Random();
             int a = random.Next(10, 40);
+            Console.Write(a.ToString() + " ");
             Card[] card1 = new Card[a];
             Card[] card2 = new Card[52 - a];
             Array.Copy(cards, 0, card1, 0, a);
@@ -44,10 +45,10 @@ namespace Server
             
             for (int i = 0; i < 52; i += 4) 
             {
-                split[0] = cards[i].ToString() + ' ';
-                split[1] = cards[i + 1].ToString() + ' ';
-                split[2] = cards[i + 2].ToString() + ' ';
-                split[3] = cards[i + 3].ToString() + ' ';
+                split[0] += cards[i].ToString() + ' ';
+                split[1] += cards[i + 1].ToString() + ' ';
+                split[2] += cards[i + 2].ToString() + ' ';
+                split[3] += cards[i + 3].ToString() + ' ';
                 
             }
             numberOfCard = 0;

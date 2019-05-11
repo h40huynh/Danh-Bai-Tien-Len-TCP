@@ -49,13 +49,14 @@ namespace Server
 
         public void startGame()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 50; i++)
                 cards.mix();
             String[] sendCard = cards.Split_Cards();
             for (int i = 0; i < 4; i++) 
             {
                 players[winnerPosition++ % 4].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
             }
+            
             
         }
 
@@ -64,7 +65,7 @@ namespace Server
             string[] str = dataReceive.Split(' ');
             for (int i = 1; i < str.Length; i++)
             {
-                Card newCard = new Card(int.Parse(str[1]) / 10, int.Parse(str[1]) % 10);
+                Card newCard = new Card(int.Parse(str[i]) / 10, int.Parse(str[i]) % 10);
                 cards.Add(newCard);
             }
         }

@@ -39,7 +39,7 @@ namespace Client
                 switch(value[0])
                 {
                     case "room":
-                        using (GameForm gameForm = new GameForm(int.Parse(value[1])))
+                        using (GameForm gameForm = new GameForm(int.Parse(value[1]), tcpModel))
                         {
                             gameForm.ShowDialog();
                         }
