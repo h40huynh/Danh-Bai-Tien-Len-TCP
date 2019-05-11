@@ -35,10 +35,11 @@ namespace Client
             while (true)
             {
                 string data = tcpModel.receiveData();
-                switch(data.Split(' ')[0])
+                string[] value = data.Split(' ');
+                switch(value[0])
                 {
                     case "room":
-                        using (GameForm gameForm = new GameForm())
+                        using (GameForm gameForm = new GameForm(int.Parse(value[1])))
                         {
                             gameForm.ShowDialog();
                         }
@@ -78,7 +79,7 @@ namespace Client
 
         private void BtnJoin_Click(object sender, EventArgs e)
         {
-            tcpModel.sendData("join");
+            tcpModel.sendData("join ");
         }
 
         private void BtnLocal_Click(object sender, EventArgs e)

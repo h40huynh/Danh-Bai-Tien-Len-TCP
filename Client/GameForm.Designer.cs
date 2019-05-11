@@ -33,6 +33,7 @@
             this.ptbCardLeft = new System.Windows.Forms.PictureBox();
             this.ptbCardRight = new System.Windows.Forms.PictureBox();
             this.ptbCardUp = new System.Windows.Forms.PictureBox();
+            this.lblRoomId = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).BeginInit();
@@ -79,6 +80,18 @@
             this.ptbCardUp.TabIndex = 3;
             this.ptbCardUp.TabStop = false;
             // 
+            // lblRoomId
+            // 
+            this.lblRoomId.AutoSize = true;
+            this.lblRoomId.BackColor = System.Drawing.Color.Transparent;
+            this.lblRoomId.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomId.ForeColor = System.Drawing.Color.Yellow;
+            this.lblRoomId.Location = new System.Drawing.Point(85, 39);
+            this.lblRoomId.Name = "lblRoomId";
+            this.lblRoomId.Size = new System.Drawing.Size(133, 29);
+            this.lblRoomId.TabIndex = 4;
+            this.lblRoomId.Text = "lblRoomId";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -87,6 +100,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.lblRoomId);
             this.Controls.Add(this.ptbCardUp);
             this.Controls.Add(this.ptbCardRight);
             this.Controls.Add(this.ptbCardLeft);
@@ -100,6 +114,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardUp)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -109,5 +124,6 @@
         private System.Windows.Forms.PictureBox ptbCardLeft;
         private System.Windows.Forms.PictureBox ptbCardRight;
         private System.Windows.Forms.PictureBox ptbCardUp;
+        private System.Windows.Forms.Label lblRoomId;
     }
 }

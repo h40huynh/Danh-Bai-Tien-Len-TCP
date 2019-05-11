@@ -16,12 +16,13 @@ namespace Client
         private int space = 30;
         private PictureBox[] ptbMyCards;
         private bool[] isClick;
-        public GameForm()
+        public GameForm(int roomId)
         {
             InitializeComponent();
 
             cardSize = ptbCards.Size;
             isClick = new bool[13];
+            lblRoomId.Text = roomId.ToString();
         }
 
         private void initPictureBox(string listCard)

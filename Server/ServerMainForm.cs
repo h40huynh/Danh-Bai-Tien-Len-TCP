@@ -82,12 +82,12 @@ namespace Server
                             Room newRoom = new Room(int.Parse(fixData[2]), rooms.Count);
                             newRoom.addPlayer(player);
                             rooms.Add(newRoom);
-                            player.sendData("room " + player.getIDRoom());
+                            //player.sendData("room " + player.getIDRoom());
                             break;
 
                         case "join":// yêu cầu chơi phòng ngẫu nhiên
-                            join(player);
-                            player.sendData("room " + player.getIDRoom());
+                            join(ref player);
+                            //player.sendData("room " + player.getIDRoom());
                             break;
 
                         case "winner"://client thắng gửi, kết thúc ván
@@ -137,23 +137,23 @@ namespace Server
             startServer();
         }
 
-        private void join(Player newPlayer)
+        private void join(ref Player newPlayer)
         {
-            int t = 0;
-            foreach(Room r in rooms)
-                if (r.isReady() == false)
-                {
-                    t = 1;
-                    r.addPlayer(newPlayer);
-                    if (r.isReady())
-                        r.startGame();
-                    break;
-                }
-            if (t == 0)
+
+            for(int i = 0; i< rooms.Count; i++)
             {
-                Room newRoom = new Room(3000, rooms.Count);
-                rooms[rooms.Count - 1].addPlayer(newPlayer);
+                if (rooms[i].isReady() == false)
+                {
+                    rooms[i].addPlayer(newPlayer);
+                    if (rooms[i].isReady())
+                        rooms[i].startGame();
+                    return;
+                }
             }
+
+            Room newRoom = new Room(3000, rooms.Count);
+            newRoom.addPlayer(newPlayer);
+            rooms.Add(newRoom);
                 
         }
     }

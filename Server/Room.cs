@@ -14,7 +14,7 @@ namespace Server
         private Player[] players;
         private Cards cards = new Cards();
         private int winnerPosition;
-        private int numberOfPlayer = 1;
+        private int numberOfPlayer = 0;
       
         public Room(int money, int id)
         {
@@ -33,6 +33,7 @@ namespace Server
                 {
                     players[i] = p;
                     players[i].setIDRoom(id);
+                    players[i].sendData($"room {id}");
                     numberOfPlayer++;
                     return;
                 }
