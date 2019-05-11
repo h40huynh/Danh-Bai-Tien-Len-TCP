@@ -18,8 +18,17 @@ namespace Client
             link = link1;
         }
 
+        public Card(int value)
+        {
+            name = value / 10;
+            type = value % 10;
+            link = $"{name}_{type}.png";
+        }
+
+        public int getname() => name;
+        public int gettype() => type;
+        public int getvalue() => name * 10 + type;
+        public string getlink() => link;
 
     }
-    
-
 }
