@@ -46,7 +46,7 @@ namespace Server
             int count = 0;
             Card[] temp = new Card[52];
             Array.Copy(cards, 0, temp, 0, 52);
-            for(int i =0; i<51;)
+            for(int i =0; i<50;)
             {
                 cards[i] = temp[count];
                 cards[i + 1] = temp[count + 25];
