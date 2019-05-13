@@ -21,8 +21,10 @@ namespace Server
             this.money = money;
             this.id = id;
             players = new Player[4];
-            for (int i = 0; i < 15; i++) 
-                cards.mix();
+            for (int i = 0; i < 15; i++)
+            {
+                cards.mix1();
+            }
         }
 
         public void addPlayer(Player p)
@@ -49,8 +51,11 @@ namespace Server
 
         public void startGame()
         {
-            for (int i = 0; i < 50; i++)
-                cards.mix();
+            for (int i = 0; i < 15; i++)
+            {
+                cards.mix1();
+                cards.mix2();
+            }
             string[] sendCard = cards.Split_Cards();
 
             int count = 0;
