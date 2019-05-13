@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Server
@@ -30,13 +31,15 @@ namespace Server
         {
             Random random = new Random();
             int start = random.Next(5, 25);
+            Thread.Sleep(10);
             int len = random.Next(5, 25);
+            
 
             Card[] temp = new Card[len];
             
-            Array.Copy(cards, start, temp, 0, len);
-            Array.Copy(cards, 0, cards, start, len);
-            Array.Copy(temp, 0, cards, 0, len);
+            Array.Copy(cards, 0, temp, 0, len);
+            Array.Copy(cards, start, cards, 0, len);
+            Array.Copy(temp, 0, cards, start, len);
         }
 
         public string[] Split_Cards()
