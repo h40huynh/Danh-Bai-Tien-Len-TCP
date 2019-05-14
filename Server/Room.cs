@@ -24,6 +24,7 @@ namespace Server
             for (int i = 0; i < 15; i++)
             {
                 cards.mix1();
+                cards.mix2();
             }
         }
 
@@ -54,7 +55,6 @@ namespace Server
             for (int i = 0; i < 15; i++)
             {
                 cards.mix1();
-                cards.mix2();
             }
             string[] sendCard = cards.Split_Cards();
 
