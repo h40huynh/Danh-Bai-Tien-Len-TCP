@@ -28,7 +28,8 @@ namespace Server
         public Player(Socket socket)
         {
             this.socket = socket;
-            id = recentId++;
+            id = recentId;
+            recentId++;
             byteReceive = new byte[bufferLength];
         }
 

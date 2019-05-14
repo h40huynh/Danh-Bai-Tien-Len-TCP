@@ -14,6 +14,7 @@ namespace Client
     public partial class ClientMainForm : Form
     {
         private TcpModel tcpModel;
+
         public ClientMainForm()
         {
             InitializeComponent();
@@ -41,8 +42,14 @@ namespace Client
                     case "room":
                         using (GameForm gameForm = new GameForm(int.Parse(value[1]), tcpModel))
                         {
+                            this.Hide();
                             gameForm.ShowDialog();
+                            this.Show();
                         }
+                        break;
+                    case "user":
+                        tcpModel.setID(int.Parse(value[1]));
+                        Console.WriteLine($"Seted ID {tcpModel.getID()}");
                         break;
                     default:
                         break;

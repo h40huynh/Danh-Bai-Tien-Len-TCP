@@ -14,6 +14,10 @@ namespace Client
         private TcpClient tcpClient;
         private Stream stream;
         private byte[] byteReceive;
+        private int ID;
+
+        public int getID() => ID;
+        public void setID(int id) { ID = id; }
 
         public TcpModel(string ip, int port)
         {

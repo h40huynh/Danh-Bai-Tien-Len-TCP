@@ -8,11 +8,12 @@ namespace Client
 {
     public class Cards
     {
-        int numberOfCard;
+        int numberOfCard = 0;
         List<Card> cards;
 
         public Cards(string receiveServer)
         {
+            cards = new List<Card>();
             string[] tmp = receiveServer.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             for (int i = 0; i < tmp.Length; i++)
             {
@@ -21,6 +22,16 @@ namespace Client
             }
             numberOfCard = cards.Count;
             quicksort(cards);
+        }
+
+        public Cards(Card[] cardArray)
+        {
+            cards = new List<Card>();
+            for (int i=0;i<cardArray.Length;i++)
+            {
+                cards.Add(cardArray[i]);
+            }
+            numberOfCard = cards.Count;
         }
 
         private void sort()

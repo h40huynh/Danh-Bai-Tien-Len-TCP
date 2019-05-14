@@ -58,6 +58,7 @@ namespace Server
 
                 players.Add(player);
                 rtxtLog.Text += $"{player.getName()} join game.\n";
+                player.sendData("user " + player.getID().ToString());
 
                 Thread thread = new Thread(reciveDataThread);
                 thread.Start(player);
@@ -104,6 +105,9 @@ namespace Server
                         case "close":
                             rooms[player.getIDRoom()].deletePlayer(player);
                             player.closeConnection();
+                            break;
+                        case "lose":
+                            rooms[player.getIDRoom()].mergeCard(data);
                             break;
 
                         default:

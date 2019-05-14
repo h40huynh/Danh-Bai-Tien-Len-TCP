@@ -34,6 +34,8 @@
             this.ptbCardRight = new System.Windows.Forms.PictureBox();
             this.ptbCardUp = new System.Windows.Forms.PictureBox();
             this.lblRoomId = new System.Windows.Forms.Label();
+            this.btnFight = new System.Windows.Forms.Button();
+            this.btnIgnore = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).BeginInit();
@@ -86,11 +88,33 @@
             this.lblRoomId.BackColor = System.Drawing.Color.Transparent;
             this.lblRoomId.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRoomId.ForeColor = System.Drawing.Color.Yellow;
-            this.lblRoomId.Location = new System.Drawing.Point(85, 39);
+            this.lblRoomId.Location = new System.Drawing.Point(735, 9);
             this.lblRoomId.Name = "lblRoomId";
             this.lblRoomId.Size = new System.Drawing.Size(133, 29);
             this.lblRoomId.TabIndex = 4;
             this.lblRoomId.Text = "lblRoomId";
+            // 
+            // btnFight
+            // 
+            this.btnFight.Enabled = false;
+            this.btnFight.Location = new System.Drawing.Point(402, 308);
+            this.btnFight.Name = "btnFight";
+            this.btnFight.Size = new System.Drawing.Size(75, 23);
+            this.btnFight.TabIndex = 5;
+            this.btnFight.Text = "Fight";
+            this.btnFight.UseVisualStyleBackColor = true;
+            this.btnFight.Click += new System.EventHandler(this.BtnFight_Click);
+            // 
+            // btnIgnore
+            // 
+            this.btnIgnore.Enabled = false;
+            this.btnIgnore.Location = new System.Drawing.Point(485, 308);
+            this.btnIgnore.Name = "btnIgnore";
+            this.btnIgnore.Size = new System.Drawing.Size(75, 23);
+            this.btnIgnore.TabIndex = 6;
+            this.btnIgnore.Text = "Ignore";
+            this.btnIgnore.UseVisualStyleBackColor = true;
+            this.btnIgnore.Click += new System.EventHandler(this.BtnIgnore_Click);
             // 
             // GameForm
             // 
@@ -100,6 +124,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.btnIgnore);
+            this.Controls.Add(this.btnFight);
             this.Controls.Add(this.lblRoomId);
             this.Controls.Add(this.ptbCardUp);
             this.Controls.Add(this.ptbCardRight);
@@ -125,5 +151,7 @@
         private System.Windows.Forms.PictureBox ptbCardRight;
         private System.Windows.Forms.PictureBox ptbCardUp;
         private System.Windows.Forms.Label lblRoomId;
+        private System.Windows.Forms.Button btnFight;
+        private System.Windows.Forms.Button btnIgnore;
     }
 }
