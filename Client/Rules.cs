@@ -8,8 +8,8 @@ namespace Client
 {
     class Rules
     {
-        int[] enamyCard;
-        int[] myCard;
+        int[] enamyCard; // cục bài ở giữa nè
+        int[] myCard;// tất cả bài của mình
         int[] currentCard; // bài đang chọn
 
         public Rules(string currentCard1)

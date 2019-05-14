@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Server
@@ -26,17 +27,32 @@ namespace Server
             }
         }
 
-        public void mix()
+        public void mix1()
         {
             Random random = new Random();
-            int start = random.Next(5, 25);
             int len = random.Next(5, 25);
+
+            int start = len + random.Next(5, 20);
 
             Card[] temp = new Card[len];
             
-            Array.Copy(cards, start, temp, 0, len);
-            Array.Copy(cards, 0, cards, start, len);
-            Array.Copy(temp, 0, cards, 0, len);
+            Array.Copy(cards, 0, temp, 0, len);
+            Array.Copy(cards, start, cards, 0, len);
+            Array.Copy(temp, 0, cards, start, len);
+        }
+
+        public void mix2()
+        {
+            int count = 0;
+            Card[] temp = new Card[52];
+            Array.Copy(cards, 0, temp, 0, 52);
+            for(int i =0; i<50;)
+            {
+                cards[i] = temp[count];
+                cards[i + 1] = temp[count + 25];
+                i += 2;
+                count += 1;
+            }
         }
 
         public string[] Split_Cards()
