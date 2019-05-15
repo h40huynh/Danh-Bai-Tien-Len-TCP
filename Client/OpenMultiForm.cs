@@ -19,14 +19,19 @@ namespace Client
 
         private void OpenMultiForm_Load(object sender, EventArgs e)
         {
+            
+            
+        }
+
+        private void BtnAddClient_Click(object sender, EventArgs e)
+        {
             ClientMainForm clientMainForm;
             int i = 4;
-            while(i-- != 0)
+            while (i-- != 0)
             {
                 clientMainForm = new ClientMainForm();
                 clientMainForm.Show();
             }
-            
         }
     }
 }

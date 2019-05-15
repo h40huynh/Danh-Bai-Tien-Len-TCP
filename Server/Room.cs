@@ -21,16 +21,16 @@ namespace Server
             this.money = money;
             this.id = id;
             players = new Player[4];
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 5; i++)
             {
                 cards.mix1();
-                cards.mix2();
+                //cards.mix2();
             }
         }
 
         public void addPlayer(Player p)
         {   
-            for(int i = 0; i < 4; i++)
+            for(int i = 0; i < 5; i++)
             {
                 if(players[i] == null)
                 {
@@ -52,7 +52,7 @@ namespace Server
 
         public void startGame()
         {
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 2; i++)
             {
                 cards.mix1();
             }

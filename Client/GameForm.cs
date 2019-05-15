@@ -51,12 +51,13 @@ namespace Client
                         int id = int.Parse(value[value.Length - 1]);
                         if (id == tcpModel.getID())
                             btnFight.Enabled = true;
-                        Console.WriteLine($"Data: {value[value.Length - 1]}");
-                        Console.WriteLine($"ID: {tcpModel.getID()}");
+                        //Console.WriteLine($"Data: {value[value.Length - 1]}");
+                        //Console.WriteLine($"ID: {tcpModel.getID()}");
                         break;
 
                     case "next":
-                        handleCardString(data);
+                        //handleCardString(data);
+                        Console.WriteLine(data);
                         btnIgnore.Enabled = true;
                         rule.setEnemyCard(data);
                         if (rule.check())
@@ -65,8 +66,9 @@ namespace Client
                         break;
 
                     case "wait":
-                        handleCardString(data);
+                        //handleCardString(data);
                         // hien bai cua doi thu len man hinh
+                        Console.WriteLine(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
@@ -161,10 +163,10 @@ namespace Client
             for (int i = 0; i < 13; i++)
                 if (isClick[i])
                     myCards += cardsArray[i].ToString();
-            rule.setcurrentCard(myCards);
-            if (rule.checkcurrent() == false)
-                MessageBox.Show("Invalid cards");
-            else
+            //rule.setcurrentCard(myCards);
+            //if (rule.checkcurrent() == false)
+            //    MessageBox.Show("Invalid cards");
+            //else
                 tcpModel.sendData("pop " + myCards);
                 
         }

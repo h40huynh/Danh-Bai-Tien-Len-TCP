@@ -24,6 +24,8 @@ namespace Server
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+
+            startServer();
         }
 
         private void startServer(bool isDefault = true)
@@ -94,6 +96,7 @@ namespace Server
                             break;
 
                         case "pop":
+                            Console.WriteLine(data);
                             rooms[player.getIDRoom()].mergeCard(data);
                             rooms[player.getIDRoom()].sendCardToPlayer(data, player);
                             break;

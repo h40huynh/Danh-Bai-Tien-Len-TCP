@@ -19,6 +19,8 @@ namespace Client
         {
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
+
+            BtnLocal_Click(null, null);
         }
 
         private void connect()
@@ -49,7 +51,7 @@ namespace Client
                         break;
                     case "user":
                         tcpModel.setID(int.Parse(value[1]));
-                        Console.WriteLine($"Seted ID {tcpModel.getID()}");
+                        //tcpModel.sendData("join ");
                         break;
                     default:
                         break;
@@ -93,6 +95,7 @@ namespace Client
         {
             tcpModel = new TcpModel("127.0.0.1", 8080);
             btnConnect.Enabled = false;
+            btnLocal.Enabled = false;
             btnCreate.Enabled = btnJoin.Enabled = true;
 
             Thread thread = new Thread(receiveFromServerThread);

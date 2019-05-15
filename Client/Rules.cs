@@ -26,9 +26,17 @@ namespace Client
             currentCard = Array.ConvertAll<string, int>(mystr, int.Parse);
         }
 
-        public Rules(string currentCard1)
+        public void setmyCard(string datareceive)
         {
-            string[] currCardstr = currentCard1.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] tmp = new string[mystr.Length - 2];
+            for (int i=1;i<mystr.Length -1;i++)
+                tmp[i - 1] = mystr[i];
+            myCard = Array.ConvertAll<string, int>(tmp, int.Parse);
+        }
+        public Rules(string datacard)
+        {
+            string[] currCardstr = datacard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             int len = currCardstr.Length - 1;
             string[] tmp = new string[len];
             Array.Copy(currCardstr, 1, tmp, 0, len);
