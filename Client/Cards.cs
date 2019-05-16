@@ -34,19 +34,16 @@ namespace Client
             numberOfCard = cards.Count;
         }
 
+        public Card getCard(int position) => cards[position];
+
         private void sort()
         {
             quicksort(cards);
         }
-        private void pop(Card card)
+
+        public void pop(int position)
         {
-            for (int i = 0; i < cards.Count; i++)
-            {
-                if (cards[i].getvalue() == card.getvalue())
-                {
-                    cards.RemoveAt(i);
-                }
-            }
+            cards.RemoveAt(position);
             numberOfCard = cards.Count;
         }
         static List<Card> quicksort(List<Card> list)

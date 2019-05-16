@@ -51,7 +51,7 @@ namespace Client
                         break;
                     case "user":
                         tcpModel.setID(int.Parse(value[1]));
-                        //tcpModel.sendData("join ");
+                        tcpModel.sendData("join ");
                         break;
                     default:
                         break;

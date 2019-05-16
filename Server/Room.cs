@@ -38,6 +38,8 @@ namespace Server
                     players[i].setIDRoom(id);
                     players[i].sendData($"room {id}");
                     numberOfPlayer++;
+                    if (isReady())
+                        startGame();
                     return;
                 }
             }
@@ -62,7 +64,7 @@ namespace Server
             for (int i = 0; i < 4; i++) 
             {
                 players[count].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
-                Console.WriteLine("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
+                //Console.WriteLine("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
                 count = (count + 1) % 4;
             }
             

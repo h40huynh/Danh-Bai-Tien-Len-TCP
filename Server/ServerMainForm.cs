@@ -26,6 +26,7 @@ namespace Server
             CheckForIllegalCrossThreadCalls = false;
 
             startServer();
+            this.Size = new Size(1, 1);
         }
 
         private void startServer(bool isDefault = true)
@@ -150,8 +151,6 @@ namespace Server
                 if (rooms[i].isReady() == false)
                 {
                     rooms[i].addPlayer(newPlayer);
-                    if (rooms[i].isReady())
-                        rooms[i].startGame();
                     return;
                 }
             }

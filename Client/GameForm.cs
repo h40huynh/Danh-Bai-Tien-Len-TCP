@@ -16,21 +16,22 @@ namespace Client
         private Size cardSize;
         private int space = 30;
         
-        private PictureBox[] ptbMyCards;
+        private List<PictureBox> ptbMyCards;
         private bool[] isClick;
         private TcpModel tcpModel;
-        private Card[] cardsArray;
+        private Cards cards;
+
         private Rules rule;
         public GameForm(int roomId, TcpModel tcpModel)
         {
             InitializeComponent();
-            
 
+            ptbMyCards = new List<PictureBox>();
             cardSize = ptbCards.Size;
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
             this.tcpModel = tcpModel;
-
+            createPicturebox();
             Thread thread = new Thread(receiveDataThread);
             thread.Start();
         }
@@ -46,8 +47,8 @@ namespace Client
                     case "start":
                         initPictureBox(data);
                         
-                        Cards tmpCards = new Cards(cardsArray);
-                        rule = new Rules(tmpCards.ToString());
+                        //Cards tmpCards = new Cards(cardsArray);
+                        //rule = new Rules(tmpCards.ToString());
                         int id = int.Parse(value[value.Length - 1]);
                         if (id == tcpModel.getID())
                             btnFight.Enabled = true;
@@ -86,23 +87,17 @@ namespace Client
         private void initPictureBox(string listCard)
         {
             handleCardString(listCard);
-            ptbMyCards = new PictureBox[13];
 
             int listWith = 12 * space + cardSize.Width;
             int x = this.Width / 2 - listWith / 2 + 12 * space;
 
             Point startPoint = new Point(x, 400);
-            setCardPosition(startPoint);
-        }
 
-        private void setCardPosition(Point startPoint)
-        {
-            for (int i = 12; i >= 0; i--)
+            for(int i = 0; i < 13; i++)
             {
-                ptbMyCards[i] = new PictureBox();
                 ptbMyCards[i].Location = startPoint;
                 ptbMyCards[i].Size = cardSize;
-                ptbMyCards[i].ImageLocation = $"./Cards/{cardsArray[i].getlink()}";
+                ptbMyCards[i].ImageLocation = $"./Cards/{cards.getCard(i).getlink()}";
                 ptbMyCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
                 ptbMyCards[i].Name = $"ptbMyCard_{i}";
 
@@ -125,12 +120,22 @@ namespace Client
                     isClick[id] = !isClick[id];
                 };
 
-                this.Invoke((MethodInvoker)delegate
-                {
-                    Controls.Add(ptbMyCards[i]);
-                });
+                startPoint.X -= space;
+            }
+        }
 
+        private void setCardPosition()
+        {
+            int len = ptbMyCards.Count - 1;
+            int listWith = len * space + cardSize.Width;
+            int x = this.Width / 2 - listWith / 2 + len * space;
 
+            Point startPoint = new Point(x, 400);
+
+            for (int i = len; i >= 0; i--)
+            {
+                ptbMyCards[i].Location = startPoint;
+                ptbMyCards[i].Size = cardSize;
                 startPoint.X -= space;
             }
         }
@@ -149,34 +154,66 @@ namespace Client
 
         private void handleCardString(string data)
         {
-            cardsArray = new Card[13];
+            
+            Card[] cardsArray = new Card[13];
             string[] s = data.Split(' ');
             for(int i = 0; i < 13; i++)
             {
                 cardsArray[i] = new Card(int.Parse(s[i + 1]));
             }
+            cards = new Cards(cardsArray);
         }
 
         private void BtnFight_Click(object sender, EventArgs e)
         {
             string myCards = "";
             for (int i = 0; i < 13; i++)
+            {
                 if (isClick[i])
-                    myCards += cardsArray[i].ToString();
+                {
+                    myCards += cards.getCard(i).ToString();
+                }
+            }
+                
             //rule.setcurrentCard(myCards);
             //if (rule.checkcurrent() == false)
             //    MessageBox.Show("Invalid cards");
             //else
                 tcpModel.sendData("pop " + myCards);
-                
+
+            for (int i = 0; i < cards.getNumberOfCard(); i++) 
+            {
+                if (isClick[i])
+                {
+                    ptbMyCards.RemoveAt(i);
+                    cards.pop(i);
+                    isClick[i] = false;
+                    setCardPosition();
+                    
+                }
+            }
+                   
         }
+
+
 
         private void BtnIgnore_Click(object sender, EventArgs e)
         {
             string sendCard = "";
-            for (int i = 0; i < cardsArray.Length; i++)
-                sendCard += cardsArray[i].ToString();
+            for (int i = 0; i < cards.getNumberOfCard(); i++)
+                sendCard += cards.getCard(i).ToString();
             tcpModel.sendData("miss " + sendCard);
+        }
+
+        private void createPicturebox()
+        {
+            PictureBox[] pictureBoxes = new PictureBox[13];
+            for (int i = 0; i < 13; i++) 
+            {
+                pictureBoxes[i] = new PictureBox();
+                Controls.Add(pictureBoxes[i]);
+                ptbMyCards.Add(pictureBoxes[i]);
+            }
         }
     }
 }
