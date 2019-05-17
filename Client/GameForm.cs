@@ -21,7 +21,7 @@ namespace Client
         private TcpModel tcpModel;
         private Cards cards;
 
-        private Rules rule;
+        //private Rules rule;
         public GameForm(int roomId, TcpModel tcpModel)
         {
             InitializeComponent();
@@ -59,10 +59,11 @@ namespace Client
                     case "next":
                         //handleCardString(data);
                         Console.WriteLine(data);
+                        btnFight.Enabled = true;
                         btnIgnore.Enabled = true;
-                        rule.setEnemyCard(data);
-                        if (rule.check())
-                            btnFight.Enabled = true;
+                        //rule.setEnemyCard(data);
+                        //if (rule.check())
+                        //    btnFight.Enabled = true;
                         // hien bai cua doi thu len man hinh
                         break;
 

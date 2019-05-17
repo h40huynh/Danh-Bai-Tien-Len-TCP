@@ -21,6 +21,7 @@ namespace Client
             CheckForIllegalCrossThreadCalls = false;
 
             BtnLocal_Click(null, null);
+            
         }
 
         private void connect()

@@ -105,12 +105,15 @@ namespace Server
             {
                 dataSend += str[i] + ' ';
             }
-            for (int i = 0; i < 4; i++) 
+
+            winnerPosition = (winnerPosition + 1) % 4;
+            players[winnerPosition].sendData($"next {dataSend}");
+            for(int i = 0; i < 4; i++)
             {
-                if (players[i - 1] == player)
-                    players[i].sendData("next " + dataSend);
-                else
-                    players[i].sendData("wait " + dataSend);
+                if(i != winnerPosition)
+                {
+                    players[i].sendData($"wait {dataSend}");
+                }
             }
         }
         public bool isReady()
