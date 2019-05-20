@@ -98,10 +98,9 @@ namespace Client
             {
                 ptbMyCards[i].Location = startPoint;
                 ptbMyCards[i].Size = cardSize;
-                ptbMyCards[i].ImageLocation = $"./Cards/{cards.getCard(i).getlink()}";
+                ptbMyCards[i].ImageLocation = cards.getCard(i).getlink();
                 ptbMyCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                ptbMyCards[i].Name = $"ptbMyCard_{i}";
-
+                ptbMyCards[i].Name = $"ptbCard_{i}";
 
                 ptbMyCards[i].Click += (sen, eve) =>
                 {
@@ -133,7 +132,7 @@ namespace Client
 
             Point startPoint = new Point(x, 400);
 
-            for (int i = len; i >= 0; i--)
+            for (int i = 0; i <= len; i++)
             {
                 ptbMyCards[i].Location = startPoint;
                 ptbMyCards[i].Size = cardSize;
@@ -172,7 +171,7 @@ namespace Client
             {
                 if (isClick[i])
                 {
-                    myCards += cards.getCard(i).ToString();
+                    myCards += " " + cards.getCard(i).ToString();
                 }
             }
                 
@@ -180,12 +179,13 @@ namespace Client
             //if (rule.checkcurrent() == false)
             //    MessageBox.Show("Invalid cards");
             //else
-                tcpModel.sendData("pop " + myCards);
+                tcpModel.sendData("pop" + myCards);
 
             for (int i = 0; i < cards.getNumberOfCard(); i++) 
             {
                 if (isClick[i])
                 {
+                    ptbMyCards[i].Dispose();
                     ptbMyCards.RemoveAt(i);
                     cards.pop(i);
                     isClick[i] = false;

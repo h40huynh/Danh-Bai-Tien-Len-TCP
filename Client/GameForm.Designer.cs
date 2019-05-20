@@ -45,9 +45,9 @@
             // ptbCards
             // 
             this.ptbCards.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCards.Location = new System.Drawing.Point(426, 158);
+            this.ptbCards.Location = new System.Drawing.Point(443, 221);
             this.ptbCards.Name = "ptbCards";
-            this.ptbCards.Size = new System.Drawing.Size(98, 133);
+            this.ptbCards.Size = new System.Drawing.Size(77, 110);
             this.ptbCards.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbCards.TabIndex = 0;
             this.ptbCards.TabStop = false;
@@ -55,9 +55,9 @@
             // ptbCardLeft
             // 
             this.ptbCardLeft.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardLeft.Location = new System.Drawing.Point(12, 158);
+            this.ptbCardLeft.Location = new System.Drawing.Point(62, 221);
             this.ptbCardLeft.Name = "ptbCardLeft";
-            this.ptbCardLeft.Size = new System.Drawing.Size(98, 133);
+            this.ptbCardLeft.Size = new System.Drawing.Size(77, 110);
             this.ptbCardLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbCardLeft.TabIndex = 1;
             this.ptbCardLeft.TabStop = false;
@@ -65,9 +65,9 @@
             // ptbCardRight
             // 
             this.ptbCardRight.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardRight.Location = new System.Drawing.Point(822, 158);
+            this.ptbCardRight.Location = new System.Drawing.Point(825, 221);
             this.ptbCardRight.Name = "ptbCardRight";
-            this.ptbCardRight.Size = new System.Drawing.Size(98, 133);
+            this.ptbCardRight.Size = new System.Drawing.Size(77, 110);
             this.ptbCardRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbCardRight.TabIndex = 2;
             this.ptbCardRight.TabStop = false;
@@ -75,9 +75,9 @@
             // ptbCardUp
             // 
             this.ptbCardUp.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardUp.Location = new System.Drawing.Point(426, -30);
+            this.ptbCardUp.Location = new System.Drawing.Point(443, -5);
             this.ptbCardUp.Name = "ptbCardUp";
-            this.ptbCardUp.Size = new System.Drawing.Size(98, 133);
+            this.ptbCardUp.Size = new System.Drawing.Size(77, 110);
             this.ptbCardUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.ptbCardUp.TabIndex = 3;
             this.ptbCardUp.TabStop = false;
@@ -97,7 +97,7 @@
             // btnFight
             // 
             this.btnFight.Enabled = false;
-            this.btnFight.Location = new System.Drawing.Point(402, 308);
+            this.btnFight.Location = new System.Drawing.Point(755, 446);
             this.btnFight.Name = "btnFight";
             this.btnFight.Size = new System.Drawing.Size(75, 23);
             this.btnFight.TabIndex = 5;
@@ -108,7 +108,7 @@
             // btnIgnore
             // 
             this.btnIgnore.Enabled = false;
-            this.btnIgnore.Location = new System.Drawing.Point(485, 308);
+            this.btnIgnore.Location = new System.Drawing.Point(836, 446);
             this.btnIgnore.Name = "btnIgnore";
             this.btnIgnore.Size = new System.Drawing.Size(75, 23);
             this.btnIgnore.TabIndex = 6;
