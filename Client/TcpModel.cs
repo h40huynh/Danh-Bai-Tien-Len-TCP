@@ -35,6 +35,7 @@ namespace Client
         public string receiveData()
         {
             stream.Read(byteReceive, 0, 100);
+            Console.WriteLine("receive: " + Encoding.ASCII.GetString(byteReceive));
             return Encoding.ASCII.GetString(byteReceive);
         }
     }

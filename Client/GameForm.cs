@@ -58,7 +58,7 @@ namespace Client
 
                     case "next":
                         //handleCardString(data);
-                        Console.WriteLine(data);
+                        //Console.WriteLine(data);
                         btnFight.Enabled = true;
                         btnIgnore.Enabled = true;
                         //rule.setEnemyCard(data);
@@ -70,7 +70,7 @@ namespace Client
                     case "wait":
                         //handleCardString(data);
                         // hien bai cua doi thu len man hinh
-                        Console.WriteLine(data);
+                        //Console.WriteLine(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
