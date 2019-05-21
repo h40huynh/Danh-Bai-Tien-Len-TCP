@@ -33,7 +33,7 @@ namespace Client
 
         public override string ToString()
         {
-            return getvalue().ToString();
+            return $"{name}{type}";
         }
 
     }

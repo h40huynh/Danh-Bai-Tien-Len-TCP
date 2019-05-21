@@ -28,14 +28,19 @@ namespace Client
 
         public void sendData(string data)
         {
-            byte[] byteSend = Encoding.ASCII.GetBytes(data);
+            ASCIIEncoding encoding = new ASCIIEncoding();
+            byte[] byteSend = encoding.GetBytes(data);
             stream.Write(byteSend, 0, byteSend.Length);
+            Console.WriteLine($"Send: {data}");
         }
 
         public string receiveData()
         {
+            ASCIIEncoding encoding = new ASCIIEncoding();
             stream.Read(byteReceive, 0, 100);
-            return Encoding.ASCII.GetString(byteReceive);
+            string data = encoding.GetString(byteReceive);
+            Console.WriteLine($"Receive: {data}");
+            return data;
         }
     }
 }

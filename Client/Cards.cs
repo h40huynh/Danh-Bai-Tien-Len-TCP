@@ -27,7 +27,7 @@ namespace Client
         public Cards(Card[] cardArray)
         {
             cards = new List<Card>();
-            for (int i=0;i<cardArray.Length;i++)
+            for (int i = 0;i < cardArray.Length; i++)
             {
                 cards.Add(cardArray[i]);
             }

@@ -36,16 +36,18 @@
             this.lblRoomId = new System.Windows.Forms.Label();
             this.btnFight = new System.Windows.Forms.Button();
             this.btnIgnore = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardUp)).BeginInit();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ptbCards
             // 
             this.ptbCards.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCards.Location = new System.Drawing.Point(443, 221);
+            this.ptbCards.Location = new System.Drawing.Point(-80, 221);
             this.ptbCards.Name = "ptbCards";
             this.ptbCards.Size = new System.Drawing.Size(77, 110);
             this.ptbCards.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -55,7 +57,7 @@
             // ptbCardLeft
             // 
             this.ptbCardLeft.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardLeft.Location = new System.Drawing.Point(62, 221);
+            this.ptbCardLeft.Location = new System.Drawing.Point(44, 221);
             this.ptbCardLeft.Name = "ptbCardLeft";
             this.ptbCardLeft.Size = new System.Drawing.Size(77, 110);
             this.ptbCardLeft.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -65,7 +67,7 @@
             // ptbCardRight
             // 
             this.ptbCardRight.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardRight.Location = new System.Drawing.Point(825, 221);
+            this.ptbCardRight.Location = new System.Drawing.Point(843, 221);
             this.ptbCardRight.Name = "ptbCardRight";
             this.ptbCardRight.Size = new System.Drawing.Size(77, 110);
             this.ptbCardRight.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -75,7 +77,7 @@
             // ptbCardUp
             // 
             this.ptbCardUp.BackColor = System.Drawing.Color.Transparent;
-            this.ptbCardUp.Location = new System.Drawing.Point(443, -5);
+            this.ptbCardUp.Location = new System.Drawing.Point(443, -29);
             this.ptbCardUp.Name = "ptbCardUp";
             this.ptbCardUp.Size = new System.Drawing.Size(77, 110);
             this.ptbCardUp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -86,11 +88,11 @@
             // 
             this.lblRoomId.AutoSize = true;
             this.lblRoomId.BackColor = System.Drawing.Color.Transparent;
-            this.lblRoomId.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblRoomId.Font = new System.Drawing.Font("Times New Roman", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRoomId.ForeColor = System.Drawing.Color.Yellow;
-            this.lblRoomId.Location = new System.Drawing.Point(735, 9);
+            this.lblRoomId.Location = new System.Drawing.Point(19, 20);
             this.lblRoomId.Name = "lblRoomId";
-            this.lblRoomId.Size = new System.Drawing.Size(133, 29);
+            this.lblRoomId.Size = new System.Drawing.Size(121, 26);
             this.lblRoomId.TabIndex = 4;
             this.lblRoomId.Text = "lblRoomId";
             // 
@@ -116,6 +118,15 @@
             this.btnIgnore.UseVisualStyleBackColor = true;
             this.btnIgnore.Click += new System.EventHandler(this.BtnIgnore_Click);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.Black;
+            this.panel1.Controls.Add(this.lblRoomId);
+            this.panel1.Location = new System.Drawing.Point(731, -11);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(277, 92);
+            this.panel1.TabIndex = 7;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -124,9 +135,9 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnIgnore);
             this.Controls.Add(this.btnFight);
-            this.Controls.Add(this.lblRoomId);
             this.Controls.Add(this.ptbCardUp);
             this.Controls.Add(this.ptbCardRight);
             this.Controls.Add(this.ptbCardLeft);
@@ -139,8 +150,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardLeft)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardUp)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -153,5 +165,6 @@
         private System.Windows.Forms.Label lblRoomId;
         private System.Windows.Forms.Button btnFight;
         private System.Windows.Forms.Button btnIgnore;
+        private System.Windows.Forms.Panel panel1;
     }
 }
