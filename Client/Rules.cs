@@ -15,40 +15,47 @@ namespace client
 
         public void setEnemyCard(string dataReceive)
         {
+            dataReceive = dataReceive.Remove(0, 5);
             string[] enemystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            string[] tmp = new string[enemystr.Length - 1];
-            enemyCard = Array.ConvertAll<string, int>(tmp, int.Parse);
+            //string[] tmp = new string[enemystr.Length - 1];
+            
+            enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
+            Array.Reverse(enemyCard);
         }
 
         public void setcurrentCard(string dataReceive)
         {
+            dataReceive = dataReceive.Remove(0, 1);
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             currentCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+            Array.Reverse(currentCard);
         }
 
         public void setmyCard(string datareceive)
         {
             string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            string[] tmp = new string[mystr.Length - 2];
-            for (int i = 1; i < mystr.Length - 1; i++)
-                tmp[i - 1] = mystr[i];
-            myCard = Array.ConvertAll<string, int>(tmp, int.Parse);
+            myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+            Array.Reverse(myCard);
+        }
+        public Rules()
+        {
+
         }
         //public Rules(string datacard)
         //{
-        //    string[] currCardstr = datacard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    int len = currCardstr.Length - 1;
-        //    string[] tmp = new string[len];
-        //    Array.Copy(currCardstr, 1, tmp, 0, len);
-        //    myCard = Array.ConvertAll(tmp, int.Parse);
+        //    string[] mystr = datacard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    string[] tmp = new string[mystr.Length - 2];
+        //    for (int i = 1; i < mystr.Length - 1; i++)
+        //        tmp[i - 1] = mystr[i];
+        //    myCard = Array.ConvertAll<string, int>(tmp, int.Parse);
         //}
-        public Rules(string myyCard, string dataReceive)
-        {
-            string[] myCardstr = myyCard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            string[] enemyCardstr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            myCard = Array.ConvertAll<string, int>(myCardstr, int.Parse);
-            enemyCard = Array.ConvertAll<string, int>(enemyCardstr, int.Parse);
-        }
+        //public Rules(string myyCard, string dataReceive)
+        //{
+        //    string[] myCardstr = myyCard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    string[] enemyCardstr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    myCard = Array.ConvertAll<string, int>(myCardstr, int.Parse);
+        //    enemyCard = Array.ConvertAll<string, int>(enemyCardstr, int.Parse);
+        //}
         public bool check() // check ban đầu
         {
 
@@ -350,7 +357,7 @@ namespace client
             // currentcard là chuỗi không giảm (bạn Hào)
             if (currentCard.Length == 0)
                 return false;
-            if (enemyCard.Length == 0) // người thắng đánh đầu tiên
+            if (enemyCard == null) // người thắng đánh đầu tiên
             {
                 if (issingle() == true || isdouble() == true || istriple() == true || isquadra() == true || isgroup() == true || isdoublegroup(3) == true || isdoublegroup(4) == true || isdoublegroup(5) == true)
                 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -21,8 +22,8 @@ namespace Client
         private bool[] isClick;
         private TcpModel tcpModel;
         private Cards cards;
-
-        //private Rules rule;
+        private string enemyCards = ""; // for Ignore_click
+        private Rules rule;
         public GameForm(int roomId, ref TcpModel tcpModel)
         {
             InitializeComponent();
@@ -38,7 +39,7 @@ namespace Client
             Thread thread = new Thread(receiveDataThread);
             thread.Start();
         }
-
+//-----------------------------------------------------------------
         private void receiveDataThread()
         {
             while(true)
@@ -49,9 +50,7 @@ namespace Client
                 {
                     case "start":
                         initPictureBox(data);
-                        
-                        //Cards tmpCards = new Cards(cardsArray);
-                        //rule = new Rules(tmpCards.ToString());
+                        rule = new Rules();
                         int id = int.Parse(value[value.Length - 1]);
                         if (id == tcpModel.getID())
                             btnFight.Enabled = true;
@@ -60,13 +59,14 @@ namespace Client
                         break;
 
                     case "next":
+                        enemyCards = data;
                         showRecentFightCard(data);
-                        btnFight.Enabled = true;
                         btnIgnore.Enabled = true;
-                        //rule.setEnemyCard(data);
-                        //if (rule.check())
-                        //    btnFight.Enabled = true;
-                        // hien bai cua doi thu len man hinh
+                        rule.setmyCard(getStringCards());
+                        rule.setEnemyCard(data);
+                        if (rule.check())
+                            btnFight.Enabled = true;
+
                         break;
 
                     case "wait":
@@ -84,7 +84,7 @@ namespace Client
                 }
             }
         }
-
+//-----------------------------------------------------------------------------
         private void initPictureBox(string listCard)
         {
             handleCardString(listCard);
@@ -123,7 +123,7 @@ namespace Client
                 startPoint.X -= space;
             }
         }
-
+//-----------------------------------------------------------------------------
         private void setCardPosition(ref List<PictureBox> pictureBox, int y, int n = 0)
         {
             int len = pictureBox.Count - 1;
@@ -148,7 +148,7 @@ namespace Client
                 startPoint.X -= space;
             }
         }
-
+//-----------------------------------------------------------------------------
         private void GameForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
@@ -160,54 +160,61 @@ namespace Client
             position.X = this.Size.Width / 2 - cardSize.Width / 2;
             position.Y = this.Size.Height / 2 - cardSize.Height / 2;
         }
-
+//-----------------------------------------------------------------------------
         private void handleCardString(string data)
         {
-            
             Card[] cardsArray = new Card[13];
             string[] s = data.Split(' ');
             for(int i = 0; i < 13; i++)
             {
                 cardsArray[i] = new Card(int.Parse(s[i + 1]));
             }
+            Card temp;
+            for (int i = 0; i < 12; i++) 
+            for (int j = i + 1; j < 13; j++) 
+                if (cardsArray[i].getvalue() < cardsArray[j].getvalue())
+                    {
+                        temp = cardsArray[i];
+                        cardsArray[i] = cardsArray[j];
+                        cardsArray[j] = temp;
+                    }
+
             cards = new Cards(cardsArray);
         }
-
+//-----------------------------------------------------------------------------
         private void BtnFight_Click(object sender, EventArgs e)
         {
             string myCards = "";
             for (int i = 0; i < 13; i++)
-            {
                 if (isClick[i])
-                {
                     myCards += " " + cards.getCard(i).ToString();
-                    ptbMyCards[i].Dispose();
-                    ptbMyCards[i] = null;
 
-                    isClick[i] = false;
-                    //setCardPosition(ref ptbMyCards, 400);
-                }
-            }
-
-            //rule.setcurrentCard(myCards);
-            //if (rule.checkcurrent() == false)
-            //    MessageBox.Show("Invalid cards");
-            //else
-            Console.WriteLine($"String before: {myCards}");
+            rule.setcurrentCard(myCards);
+            if (rule.checkcurrent() == false)
+                MessageBox.Show("Invalid cards");
+            else
+            {
+                for (int i = 0; i < 13; i++)
+                    if (isClick[i]) 
+                    {
+                        ptbMyCards[i].Dispose();
+                        ptbMyCards[i] = null;
+                        isClick[i] = false;
+                    }
+                Console.WriteLine($"String before: {myCards}");
                 tcpModel.sendData("pop" + myCards);
+            }
 
         }
 
-
+//-----------------------------------------------------------------------------
 
         private void BtnIgnore_Click(object sender, EventArgs e)
         {
-            string sendCard = "";
-            for (int i = 0; i < cards.getNumberOfCard(); i++)
-                sendCard += cards.getCard(i).ToString();
-            tcpModel.sendData("miss " + sendCard);
+            enemyCards = enemyCards.Remove(0, 5);
+            tcpModel.sendData("miss " + enemyCards);
         }
-
+//----------------------------------------------------------------------------
         private void createPicturebox()
         {
             PictureBox[] pictureBoxes = new PictureBox[13];
@@ -225,7 +232,7 @@ namespace Client
             }
             
         }
-
+//-----------------------------------------------------------------------------
         private void showRecentFightCard(string currentCardsString)
         {
             string[] s = currentCardsString.Substring(5).Split(' ');
@@ -251,6 +258,16 @@ namespace Client
             }
 
             setCardPosition(ref ptbReceiveCards, ptbCards.Location.Y, tmp.getNumberOfCard());
+        }
+//-----------------------------------------------------------------------------
+        private string getStringCards()
+        {
+            string str = "";
+            for (int i = 0; i < 13; i++)
+                if (ptbMyCards[i] != null)
+                    str += " " + cards.getCard(i).ToString();
+            str = str.Remove(0, 1);
+            return str;
         }
     }
 }
