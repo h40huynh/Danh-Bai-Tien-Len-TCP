@@ -39,11 +39,12 @@ namespace Client
             while (true)
             {
                 string data = tcpModel.receiveData();
+                Console.WriteLine("clientmainform: " + data);
                 string[] value = data.Split(' ');
                 switch(value[0])
                 {
                     case "room":
-                        using (GameForm gameForm = new GameForm(int.Parse(value[1]), tcpModel))
+                        using (GameForm gameForm = new GameForm(int.Parse(value[1]), ref tcpModel))
                         {
                             this.Hide();
                             gameForm.ShowDialog();

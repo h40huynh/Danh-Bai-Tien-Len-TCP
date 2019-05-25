@@ -99,12 +99,8 @@ namespace Server
         //gửi bài cho tất cả client sau mỗi lần có người đánh
         public void sendCardToPlayer(string dataReceive, Player player) 
         {
-            string[] str = dataReceive.Split(' ');
-            string dataSend = "";
-            for (int i = 1; i < str.Length; i++) 
-            {
-                dataSend += str[i] + ' ';
-            }
+            string type = dataReceive.Split(' ')[0];
+            string dataSend = dataReceive.Substring(type.Length + 1);
 
             winnerPosition = (winnerPosition + 1) % 4;
             players[winnerPosition].sendData($"next {dataSend}");

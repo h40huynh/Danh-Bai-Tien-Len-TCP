@@ -17,16 +17,19 @@ namespace Client
         private int space = 30;
         
         private List<PictureBox> ptbMyCards;
+        private List<PictureBox> ptbReceiveCards;
         private bool[] isClick;
         private TcpModel tcpModel;
         private Cards cards;
 
         //private Rules rule;
-        public GameForm(int roomId, TcpModel tcpModel)
+        public GameForm(int roomId, ref TcpModel tcpModel)
         {
             InitializeComponent();
 
             ptbMyCards = new List<PictureBox>();
+            ptbReceiveCards = new List<PictureBox>();
+
             cardSize = ptbCards.Size;
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
@@ -57,8 +60,7 @@ namespace Client
                         break;
 
                     case "next":
-                        //handleCardString(data);
-                        //Console.WriteLine(data);
+                        showRecentFightCard(data);
                         btnFight.Enabled = true;
                         btnIgnore.Enabled = true;
                         //rule.setEnemyCard(data);
@@ -68,9 +70,7 @@ namespace Client
                         break;
 
                     case "wait":
-                        //handleCardString(data);
-                        // hien bai cua doi thu len man hinh
-                        //Console.WriteLine(data);
+                        showRecentFightCard(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
@@ -98,10 +98,9 @@ namespace Client
             {
                 ptbMyCards[i].Location = startPoint;
                 ptbMyCards[i].Size = cardSize;
-                ptbMyCards[i].ImageLocation = $"./Cards/{cards.getCard(i).getlink()}";
+                ptbMyCards[i].ImageLocation = cards.getCard(i).getlink();
                 ptbMyCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                ptbMyCards[i].Name = $"ptbMyCard_{i}";
-
+                ptbMyCards[i].Name = $"ptbCard_{i}";
 
                 ptbMyCards[i].Click += (sen, eve) =>
                 {
@@ -125,18 +124,27 @@ namespace Client
             }
         }
 
-        private void setCardPosition()
+        private void setCardPosition(ref List<PictureBox> pictureBox, int y, int n = 0)
         {
-            int len = ptbMyCards.Count - 1;
+            int len = pictureBox.Count - 1;
+            len = n != 0 ? n - 1 : len;
             int listWith = len * space + cardSize.Width;
             int x = this.Width / 2 - listWith / 2 + len * space;
 
-            Point startPoint = new Point(x, 400);
+            Point startPoint = new Point(x, y);
 
-            for (int i = len; i >= 0; i--)
+            for (int i = 0; i <= len; i++)
             {
-                ptbMyCards[i].Location = startPoint;
-                ptbMyCards[i].Size = cardSize;
+                while (pictureBox[i] == null)
+                {
+                    i++;
+                    if (i > len)
+                    {
+                        return;
+                    }
+                }
+                pictureBox[i].Location = startPoint;
+                pictureBox[i].Size = cardSize;
                 startPoint.X -= space;
             }
         }
@@ -172,7 +180,12 @@ namespace Client
             {
                 if (isClick[i])
                 {
-                    myCards += cards.getCard(i).ToString();
+                    myCards += " " + cards.getCard(i).ToString();
+                    ptbMyCards[i].Dispose();
+                    ptbMyCards[i] = null;
+
+                    isClick[i] = false;
+                    //setCardPosition(ref ptbMyCards, 400);
                 }
             }
                 
@@ -180,20 +193,8 @@ namespace Client
             //if (rule.checkcurrent() == false)
             //    MessageBox.Show("Invalid cards");
             //else
-                tcpModel.sendData("pop " + myCards);
+                tcpModel.sendData("pop" + myCards);
 
-            for (int i = 0; i < cards.getNumberOfCard(); i++) 
-            {
-                if (isClick[i])
-                {
-                    ptbMyCards.RemoveAt(i);
-                    cards.pop(i);
-                    isClick[i] = false;
-                    setCardPosition();
-                    
-                }
-            }
-                   
         }
 
 
@@ -209,12 +210,46 @@ namespace Client
         private void createPicturebox()
         {
             PictureBox[] pictureBoxes = new PictureBox[13];
+            PictureBox[] pictureBoxes2 = new PictureBox[13];
             for (int i = 0; i < 13; i++) 
             {
                 pictureBoxes[i] = new PictureBox();
                 Controls.Add(pictureBoxes[i]);
                 ptbMyCards.Add(pictureBoxes[i]);
+
+                pictureBoxes2[i] = new PictureBox();
+                pictureBoxes2[i].BackColor = Color.Transparent;
+                Controls.Add(pictureBoxes2[i]);
+                ptbReceiveCards.Add(pictureBoxes2[i]);
             }
+            
+        }
+
+        private void showRecentFightCard(string currentCardsString)
+        {
+            string[] s = currentCardsString.Substring(5).Split(' ');
+            Card[] cardsArray = new Card[s.Length];
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                cardsArray[i] = new Card(int.Parse(s[i]));
+            }
+            Cards tmp = new Cards(cardsArray);
+            // wait 12
+            // next 12
+            
+            for (int i = 0; i < tmp.getNumberOfCard(); i++)
+            {
+                ptbReceiveCards[i].ImageLocation = tmp.getCard(i).getlink();
+                ptbReceiveCards[i].Size = cardSize;
+                ptbReceiveCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            for(int i = tmp.getNumberOfCard(); i < 13 ; i++)
+            {
+                ptbReceiveCards[i].Image = null;
+            }
+
+            setCardPosition(ref ptbReceiveCards, ptbCards.Location.Y, tmp.getNumberOfCard());
         }
     }
 }

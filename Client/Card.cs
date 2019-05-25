@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Client
 {
@@ -22,7 +23,7 @@ namespace Client
         {
             name = value / 10;
             type = value % 10;
-            link = $"{name}_{type}.png";
+            link = $"./cards/{name}_{type}.png";
         }
 
         public int getname() => name;
@@ -32,7 +33,7 @@ namespace Client
 
         public override string ToString()
         {
-            return getvalue().ToString();
+            return $"{name}{type}";
         }
 
     }

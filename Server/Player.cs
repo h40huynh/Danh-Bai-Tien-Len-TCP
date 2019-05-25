@@ -38,6 +38,7 @@ namespace Server
             ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] byteSend = encoding.GetBytes(data);
             socket.Send(byteSend);
+            Console.WriteLine($"Send: {data}");
         }
 
         public string receiveData()
@@ -46,6 +47,7 @@ namespace Server
             socket.Receive(byteReceive);
 
             string data = encoding.GetString(byteReceive);
+            Console.WriteLine($"Receive: {data}");
             return data;
         }
 
