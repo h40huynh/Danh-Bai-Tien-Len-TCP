@@ -13,7 +13,7 @@ namespace Client
     {
         private TcpClient tcpClient;
         private Stream stream;
-        private byte[] byteReceive;
+        //private byte[] byteReceive;
         private int ID;
 
         public int getID() => ID;
@@ -23,7 +23,7 @@ namespace Client
         {
             tcpClient = new TcpClient(ip, port);
             stream = tcpClient.GetStream();
-            byteReceive = new byte[100];
+            //byteReceive = new byte[100];
         }
 
         public void sendData(string data)
@@ -36,6 +36,7 @@ namespace Client
 
         public string receiveData()
         {
+            byte[] byteReceive = new byte[100];
             ASCIIEncoding encoding = new ASCIIEncoding();
             stream.Read(byteReceive, 0, 100);
             string data = encoding.GetString(byteReceive);

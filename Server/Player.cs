@@ -14,7 +14,7 @@ namespace Server
         private Socket socket;
         private int money;
 
-        private byte[] byteReceive;
+        //private byte[] byteReceive;
         private int bufferLength = 100;
 
         private static int recentId = 0;
@@ -30,7 +30,7 @@ namespace Server
             this.socket = socket;
             id = recentId;
             recentId++;
-            byteReceive = new byte[bufferLength];
+            //byteReceive = new byte[bufferLength];
         }
 
         public void sendData(string data)
@@ -43,6 +43,7 @@ namespace Server
 
         public string receiveData()
         {
+            byte[] byteReceive = new byte[bufferLength];
             ASCIIEncoding encoding = new ASCIIEncoding();
             socket.Receive(byteReceive);
 

@@ -188,11 +188,12 @@ namespace Client
                     //setCardPosition(ref ptbMyCards, 400);
                 }
             }
-                
+
             //rule.setcurrentCard(myCards);
             //if (rule.checkcurrent() == false)
             //    MessageBox.Show("Invalid cards");
             //else
+            Console.WriteLine($"String before: {myCards}");
                 tcpModel.sendData("pop" + myCards);
 
         }
