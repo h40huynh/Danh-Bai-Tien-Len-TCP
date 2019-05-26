@@ -15,10 +15,8 @@ namespace client
 
         public void setEnemyCard(string dataReceive)
         {
-            dataReceive = dataReceive.Remove(0, 5);
+            dataReceive = dataReceive.Remove(0, 7);
             string[] enemystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            //string[] tmp = new string[enemystr.Length - 1];
-            
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
             Array.Reverse(enemyCard);
         }
@@ -39,23 +37,7 @@ namespace client
         }
         public Rules()
         {
-
         }
-        //public Rules(string datacard)
-        //{
-        //    string[] mystr = datacard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    string[] tmp = new string[mystr.Length - 2];
-        //    for (int i = 1; i < mystr.Length - 1; i++)
-        //        tmp[i - 1] = mystr[i];
-        //    myCard = Array.ConvertAll<string, int>(tmp, int.Parse);
-        //}
-        //public Rules(string myyCard, string dataReceive)
-        //{
-        //    string[] myCardstr = myyCard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    string[] enemyCardstr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    myCard = Array.ConvertAll<string, int>(myCardstr, int.Parse);
-        //    enemyCard = Array.ConvertAll<string, int>(enemyCardstr, int.Parse);
-        //}
         public bool check() // check ban đầu
         {
 

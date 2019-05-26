@@ -15,7 +15,9 @@ namespace Server
         private Cards cards = new Cards();
         private int winnerPosition = 0;
         private int numberOfPlayer = 0;
-      
+        private int miss = 0;
+        private string playerMiss = "";
+//--------------------------------------------------------      
         public Room(int money, int id)
         {
             this.money = money;
@@ -27,7 +29,7 @@ namespace Server
                 //cards.mix2();
             }
         }
-
+//----------------------------------------------------------
         public void addPlayer(Player p)
         {   
             for(int i = 0; i < 5; i++)
@@ -44,14 +46,14 @@ namespace Server
                 }
             }
         }
-
+//-------------------------------------------------------------
         public void deletePlayer(Player p)
         {
             int position = Array.FindIndex(players, player => player == p);
             players[position] = null;
             numberOfPlayer--;
         }
-
+//---------------------------------------------------------------
         public void startGame()
         {
             for (int i = 0; i < 2; i++)
@@ -67,12 +69,11 @@ namespace Server
                 //Console.WriteLine("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
                 count = (count + 1) % 4;
             }
-            
-            
         }
-
+//---------------------------------------------------------------------------------
         public void mergeCard(string dataReceive)   //gom bài từ client
         {
+            
             string[] str = dataReceive.Split(' ');
             for (int i = 1; i < str.Length; i++)
             {
@@ -80,7 +81,7 @@ namespace Server
                 cards.Add(newCard);
             }
         }
-
+//------------------------------------------------------------------------------
         public void endGame(Player player)      //sau khi nhận tín hiệu kết thúc ván
         {
             for (int i = 0; i < 4; i++)
@@ -89,29 +90,41 @@ namespace Server
                 {
                     winnerPosition = i;
                 }
-                players[i].sendData("end " + player.getID().ToString());
+                else
+                    players[i].sendData("end");
             }
             Thread.Sleep(10000);
             if (isReady())
                 startGame();
         }
-
+//---------------------------------------------------------------
         //gửi bài cho tất cả client sau mỗi lần có người đánh
         public void sendCardToPlayer(string dataReceive, Player player) 
         {
             string type = dataReceive.Split(' ')[0];
-            string dataSend = dataReceive.Substring(type.Length + 1);
-
-            winnerPosition = (winnerPosition + 1) % 4;
-            players[winnerPosition].sendData($"next {dataSend}");
-            for(int i = 0; i < 4; i++)
+            if (type == "miss")
             {
+                miss++;
+                playerMiss += winnerPosition.ToString();
+            }
+            string dataSend = dataReceive.Substring(type.Length + 1);
+            do
+            {
+                winnerPosition = (winnerPosition + 1) % 4;
+            }
+            while (playerMiss.Contains(winnerPosition.ToString()));
+
+            players[winnerPosition].sendData($"next {miss.ToString()} {dataSend}");
+            for (int i = 0; i < 4; i++)
                 if(i != winnerPosition)
-                {
-                    players[i].sendData($"wait {dataSend}");
-                }
+                    players[i].sendData($"wait {miss.ToString()} {dataSend}");
+            if (miss == 3)
+            {
+                miss = 0;
+                playerMiss = "";
             }
         }
+//-------------------------------------------------------------------------
         public bool isReady()
         {
             if (numberOfPlayer == 4)

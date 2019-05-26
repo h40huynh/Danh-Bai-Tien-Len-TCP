@@ -97,7 +97,7 @@ namespace Server
                             break;
 
                         case "pop":
-                            //rooms[player.getIDRoom()].mergeCard(data);
+                            rooms[player.getIDRoom()].mergeCard(data);
                             rooms[player.getIDRoom()].sendCardToPlayer(data, player);
                             break;
 

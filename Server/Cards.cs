@@ -11,7 +11,7 @@ namespace Server
     {
         private Card[] cards;
         int numberOfCard = 52;
-
+//--------------------------------------------------------
         public Cards()
         {
             cards = new Card[52];
@@ -26,7 +26,7 @@ namespace Server
                 }
             }
         }
-
+//-------------------------------------------------------------------
         public void mix1()
         {
             Random random = new Random();
@@ -40,7 +40,7 @@ namespace Server
             Array.Copy(cards, start, cards, 0, len);
             Array.Copy(temp, 0, cards, start, len);
         }
-
+//-------------------------------------------------------------------------
         public void mix2()
         {
             int count = 0;
@@ -54,7 +54,7 @@ namespace Server
                 count += 1;
             }
         }
-
+//----------------------------------------------------------------------------------
         public string[] Split_Cards()
         {
             string[] split = new string[4];
@@ -68,9 +68,11 @@ namespace Server
                 
             }
             numberOfCard = 0;
+            cards = null;
+            cards = new Card[52];
             return split;
         }
-
+//-----------------------------------------------------------------------------------
         public void Add(Card newCard)
         {
             cards[numberOfCard] = new Card(newCard.getName(), newCard.getType(),newCard.getLink());

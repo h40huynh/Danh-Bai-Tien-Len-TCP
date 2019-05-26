@@ -16,7 +16,7 @@ namespace Client
     {
         private Size cardSize;
         private int space = 30;
-        
+        private int miss = 0;
         private List<PictureBox> ptbMyCards;
         private List<PictureBox> ptbReceiveCards;
         private bool[] isClick;
@@ -24,6 +24,8 @@ namespace Client
         private Cards cards;
         private string enemyCards = ""; // for Ignore_click
         private Rules rule;
+        private int numCardsLeft = 13;
+
         public GameForm(int roomId, ref TcpModel tcpModel)
         {
             InitializeComponent();
@@ -54,19 +56,17 @@ namespace Client
                         int id = int.Parse(value[value.Length - 1]);
                         if (id == tcpModel.getID())
                             btnFight.Enabled = true;
-                        //Console.WriteLine($"Data: {value[value.Length - 1]}");
-                        //Console.WriteLine($"ID: {tcpModel.getID()}");
                         break;
 
                     case "next":
                         enemyCards = data;
+                        miss = int.Parse(value[1]);
                         showRecentFightCard(data);
                         btnIgnore.Enabled = true;
                         rule.setmyCard(getStringCards());
                         rule.setEnemyCard(data);
-                        if (rule.check())
+                        if (rule.check() || miss == 3)
                             btnFight.Enabled = true;
-
                         break;
 
                     case "wait":
@@ -74,7 +74,6 @@ namespace Client
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
-
                     case "end":
                         // ham gui so bai con lai cho server
                         break;
@@ -190,28 +189,28 @@ namespace Client
                     myCards += " " + cards.getCard(i).ToString();
 
             rule.setcurrentCard(myCards);
-            if (rule.checkcurrent() == false)
+            if (miss < 3 && rule.checkcurrent() == false)
                 MessageBox.Show("Invalid cards");
             else
             {
                 for (int i = 0; i < 13; i++)
                     if (isClick[i]) 
                     {
+                        numCardsLeft--;
                         ptbMyCards[i].Dispose();
                         ptbMyCards[i] = null;
                         isClick[i] = false;
                     }
                 Console.WriteLine($"String before: {myCards}");
                 tcpModel.sendData("pop" + myCards);
+                if (numCardsLeft <= 0)
+                    tcpModel.sendData("winner ");
             }
-
         }
-
 //-----------------------------------------------------------------------------
-
         private void BtnIgnore_Click(object sender, EventArgs e)
         {
-            enemyCards = enemyCards.Remove(0, 5);
+            enemyCards = enemyCards.Remove(0, 7);
             tcpModel.sendData("miss " + enemyCards);
         }
 //----------------------------------------------------------------------------
@@ -235,7 +234,7 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void showRecentFightCard(string currentCardsString)
         {
-            string[] s = currentCardsString.Substring(5).Split(' ');
+            string[] s = currentCardsString.Substring(7).Split(' ');
             Card[] cardsArray = new Card[s.Length];
 
             for (int i = 0; i < s.Length; i++)
@@ -268,6 +267,15 @@ namespace Client
                     str += " " + cards.getCard(i).ToString();
             str = str.Remove(0, 1);
             return str;
+        }
+        //-----------------------------------------------------------------------------
+        private void sendCardsLeft()
+        {
+            string myCards = "";
+            for (int i = 0; i < 13; i++)
+                if (ptbMyCards[i] != null)
+                    myCards += " " + cards.getCard(i).ToString();
+            tcpModel.sendData("lose" + myCards);
         }
     }
 }
