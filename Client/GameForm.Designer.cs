@@ -37,6 +37,7 @@
             this.btnFight = new System.Windows.Forms.Button();
             this.btnIgnore = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAAAA = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCards)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbCardRight)).BeginInit();
@@ -127,6 +128,16 @@
             this.panel1.Size = new System.Drawing.Size(277, 92);
             this.panel1.TabIndex = 7;
             // 
+            // btnAAAA
+            // 
+            this.btnAAAA.Location = new System.Drawing.Point(785, 401);
+            this.btnAAAA.Name = "btnAAAA";
+            this.btnAAAA.Size = new System.Drawing.Size(75, 23);
+            this.btnAAAA.TabIndex = 8;
+            this.btnAAAA.Text = "Fight Group";
+            this.btnAAAA.UseVisualStyleBackColor = true;
+            this.btnAAAA.Click += new System.EventHandler(this.BtnAAAA_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -135,6 +146,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.btnAAAA);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnIgnore);
             this.Controls.Add(this.btnFight);
@@ -166,5 +178,6 @@
         private System.Windows.Forms.Button btnFight;
         private System.Windows.Forms.Button btnIgnore;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button btnAAAA;
     }
 }

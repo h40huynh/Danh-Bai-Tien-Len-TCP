@@ -89,7 +89,7 @@ namespace Server
                             break;
 
                         case "join":// yêu cầu chơi phòng ngẫu nhiên
-                            join(ref player);
+                            join(player);
                             break;
 
                         case "winner"://client thắng gửi, kết thúc ván
@@ -142,7 +142,7 @@ namespace Server
             startServer();
         }
 
-        private void join(ref Player newPlayer)
+        private void join(Player newPlayer)
         {
 
             for(int i = 0; i< rooms.Count; i++)

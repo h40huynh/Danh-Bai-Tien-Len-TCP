@@ -24,9 +24,9 @@ namespace Client
         private Cards cards;
         private string enemyCards = ""; // for Ignore_click
         private Rules rule;
-        private int numCardsLeft = 13;
+        private int numCardsLeft;
 
-        public GameForm(int roomId, ref TcpModel tcpModel)
+        public GameForm(int roomId, TcpModel tcpModel)
         {
             InitializeComponent();
 
@@ -75,7 +75,7 @@ namespace Client
                         btnIgnore.Enabled = false;
                         break;
                     case "end":
-                        // ham gui so bai con lai cho server
+                        cleanCardsImage();
                         break;
 
                     default:
@@ -86,6 +86,7 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void initPictureBox(string listCard)
         {
+            
             handleCardString(listCard);
 
             int listWith = 12 * space + cardSize.Width;
@@ -100,27 +101,28 @@ namespace Client
                 ptbMyCards[i].ImageLocation = cards.getCard(i).getlink();
                 ptbMyCards[i].SizeMode = PictureBoxSizeMode.StretchImage;
                 ptbMyCards[i].Name = $"ptbCard_{i}";
-
-                ptbMyCards[i].Click += (sen, eve) =>
-                {
-                    PictureBox pictureBox = sen as PictureBox;
-                    Point p = pictureBox.Location;
-                    int id = int.Parse(pictureBox.Name.Split('_')[1]);
-                    if (isClick[id])
-                    {
-                        p.Y += 20;
-                    }
-                    else
-                    {
-                        p.Y -= 20;
-                    }
-
-                    (sen as PictureBox).Location = p;
-                    isClick[id] = !isClick[id];
-                };
+                
 
                 startPoint.X -= space;
             }
+        }
+
+        private void PictureBoxCards_Click(object sender, EventArgs e)
+        {
+            PictureBox pictureBox = sender as PictureBox;
+            Point p = pictureBox.Location;
+            int id = int.Parse(pictureBox.Name.Split('_')[1]);
+            if (isClick[id])
+            {
+                p.Y += 20;
+            }
+            else
+            {
+                p.Y -= 20;
+            }
+
+            (sender as PictureBox).Location = p;
+            isClick[id] = !isClick[id];
         }
 //-----------------------------------------------------------------------------
         private void setCardPosition(ref List<PictureBox> pictureBox, int y, int n = 0)
@@ -162,6 +164,7 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void handleCardString(string data)
         {
+            numCardsLeft = 13;
             Card[] cardsArray = new Card[13];
             string[] s = data.Split(' ');
             for(int i = 0; i < 13; i++)
@@ -169,15 +172,18 @@ namespace Client
                 cardsArray[i] = new Card(int.Parse(s[i + 1]));
             }
             Card temp;
-            for (int i = 0; i < 12; i++) 
-            for (int j = i + 1; j < 13; j++) 
-                if (cardsArray[i].getvalue() < cardsArray[j].getvalue())
+            for (int i = 0; i < 12; i++)
+            {
+                for (int j = i + 1; j < 13; j++)
+                {
+                    if (cardsArray[i].getvalue() < cardsArray[j].getvalue())
                     {
                         temp = cardsArray[i];
                         cardsArray[i] = cardsArray[j];
                         cardsArray[j] = temp;
                     }
-
+                }
+            }
             cards = new Cards(cardsArray);
         }
 //-----------------------------------------------------------------------------
@@ -194,14 +200,16 @@ namespace Client
             else
             {
                 for (int i = 0; i < 13; i++)
-                    if (isClick[i]) 
+                {
+                    if (isClick[i])
                     {
                         numCardsLeft--;
                         ptbMyCards[i].Dispose();
                         ptbMyCards[i] = null;
                         isClick[i] = false;
                     }
-                Console.WriteLine($"String before: {myCards}");
+                }
+                    
                 tcpModel.sendData("pop" + myCards);
                 if (numCardsLeft <= 0)
                     tcpModel.sendData("winner ");
@@ -221,10 +229,13 @@ namespace Client
             for (int i = 0; i < 13; i++) 
             {
                 pictureBoxes[i] = new PictureBox();
+                pictureBoxes[i].Location = new Point(-200, -200);
                 Controls.Add(pictureBoxes[i]);
                 ptbMyCards.Add(pictureBoxes[i]);
+                ptbMyCards[i].Click += PictureBoxCards_Click;
 
                 pictureBoxes2[i] = new PictureBox();
+                pictureBoxes2[i].Location = new Point(-200, -200);
                 pictureBoxes2[i].BackColor = Color.Transparent;
                 Controls.Add(pictureBoxes2[i]);
                 ptbReceiveCards.Add(pictureBoxes2[i]);
@@ -277,5 +288,45 @@ namespace Client
                     myCards += " " + cards.getCard(i).ToString();
             tcpModel.sendData("lose" + myCards);
         }
+
+        private void cleanCardsImage()
+        {
+            cards = null;
+            for (int i = 0; i < 13; i++)
+            {
+                try
+                {
+                    ptbMyCards[i].Dispose();
+                }
+                catch { }
+                
+                ptbMyCards[i] = new PictureBox();
+                ptbMyCards[i].Location = new Point(-200, -200);
+                ptbMyCards[i].Click += PictureBoxCards_Click;
+
+                ptbReceiveCards[i].Dispose();
+                ptbReceiveCards[i] = new PictureBox();
+                ptbReceiveCards[i].Location = new Point(-200, -200);
+                ptbReceiveCards[i].BackColor = Color.Transparent;
+                if (this.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        Controls.Add(ptbMyCards[i]);
+                        Controls.Add(ptbReceiveCards[i]);
+                    });
+                }
+            }
+        }
+
+        private void BtnAAAA_Click(object sender, EventArgs e)
+        {
+            for (int i = 1; i < 13; i++)
+            {
+                isClick[i] = true;   
+            }
+            
+        }
+
     }
 }

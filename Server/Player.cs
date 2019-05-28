@@ -13,6 +13,7 @@ namespace Server
         private int idRoom;
         private Socket socket;
         private int money;
+        private ASCIIEncoding encoding;
 
         //private byte[] byteReceive;
         private int bufferLength = 100;
@@ -30,12 +31,12 @@ namespace Server
             this.socket = socket;
             id = recentId;
             recentId++;
+            encoding = new ASCIIEncoding();
             //byteReceive = new byte[bufferLength];
         }
 
         public void sendData(string data)
         {
-            ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] byteSend = encoding.GetBytes(data);
             socket.Send(byteSend);
             Console.WriteLine($"Send: {data}");
@@ -44,7 +45,6 @@ namespace Server
         public string receiveData()
         {
             byte[] byteReceive = new byte[bufferLength];
-            ASCIIEncoding encoding = new ASCIIEncoding();
             socket.Receive(byteReceive);
 
             string data = encoding.GetString(byteReceive);

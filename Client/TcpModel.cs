@@ -12,23 +12,23 @@ namespace Client
     public class TcpModel
     {
         private TcpClient tcpClient;
-        private Stream stream;
+        private NetworkStream stream;
         //private byte[] byteReceive;
         private int ID;
 
         public int getID() => ID;
         public void setID(int id) { ID = id; }
+        private ASCIIEncoding encoding;
 
         public TcpModel(string ip, int port)
         {
             tcpClient = new TcpClient(ip, port);
             stream = tcpClient.GetStream();
-            //byteReceive = new byte[100];
+            encoding = new ASCIIEncoding();
         }
 
         public void sendData(string data)
         {
-            ASCIIEncoding encoding = new ASCIIEncoding();
             byte[] byteSend = encoding.GetBytes(data);
             stream.Write(byteSend, 0, byteSend.Length);
             Console.WriteLine($"Send: {data}");
@@ -37,9 +37,11 @@ namespace Client
         public string receiveData()
         {
             byte[] byteReceive = new byte[100];
-            ASCIIEncoding encoding = new ASCIIEncoding();
             stream.Read(byteReceive, 0, 100);
+            
             string data = encoding.GetString(byteReceive);
+            char byte0 = (char)0;
+            data = data.Replace(byte0.ToString(), "");
             Console.WriteLine($"Receive: {data}");
             return data;
         }

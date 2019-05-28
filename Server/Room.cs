@@ -23,11 +23,6 @@ namespace Server
             this.money = money;
             this.id = id;
             players = new Player[4];
-            for (int i = 0; i < 5; i++)
-            {
-                cards.mix1();
-                //cards.mix2();
-            }
         }
 //----------------------------------------------------------
         public void addPlayer(Player p)
@@ -56,24 +51,24 @@ namespace Server
 //---------------------------------------------------------------
         public void startGame()
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 52; i++)
             {
                 cards.mix1();
+                cards.mix2();
             }
+
             string[] sendCard = cards.Split_Cards();
 
             int count = 0;
             for (int i = 0; i < 4; i++) 
             {
                 players[count].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
-                //Console.WriteLine("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
                 count = (count + 1) % 4;
             }
         }
 //---------------------------------------------------------------------------------
         public void mergeCard(string dataReceive)   //gom bài từ client
         {
-            
             string[] str = dataReceive.Split(' ');
             for (int i = 1; i < str.Length; i++)
             {
@@ -84,16 +79,17 @@ namespace Server
 //------------------------------------------------------------------------------
         public void endGame(Player player)      //sau khi nhận tín hiệu kết thúc ván
         {
+            Thread.Sleep(3000);
             for (int i = 0; i < 4; i++)
             {
                 if (players[i] == player)
                 {
                     winnerPosition = i;
                 }
-                else
-                    players[i].sendData("end");
+                
+                players[i].sendData("end");
             }
-            Thread.Sleep(10000);
+            Thread.Sleep(3000);
             if (isReady())
                 startGame();
         }

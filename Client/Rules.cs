@@ -164,6 +164,8 @@ namespace client
 
         private bool checkgroup(int[] curr) // check sảnh
         {
+            if (curr.Length < 3)
+                return false;
             //chuỗi số khác nhau
             List<int> arrayIncreased = new List<int>();
             int j;
