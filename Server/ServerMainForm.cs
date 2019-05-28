@@ -112,7 +112,11 @@ namespace Server
                         case "lose":
                             rooms[player.getIDRoom()].mergeCard(data);
                             break;
-
+                        case "chat":
+                            data = data.Substring(5);
+                            string sendContent = $"{player.getID()}:{data}";
+                            rooms[player.getIDRoom()].chat(sendContent);
+                            break;
                         default:
                             break;
                     }

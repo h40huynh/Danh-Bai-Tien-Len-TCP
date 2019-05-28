@@ -40,7 +40,8 @@ namespace client
         }
         public bool check() // check ban đầu
         {
-
+            if (enemyCard.Length == 0)
+                return true;
             // đánh lẻ 
             if (enemyCard.Length == 1)
             {
@@ -185,7 +186,7 @@ namespace client
             }
 
             // curr max < enemyCard min => false
-            if (arrayIncreased[0] < enemyCard[enemyCard.Length - 1])
+            if (arrayIncreased.Count == 0 || arrayIncreased[0] < enemyCard[enemyCard.Length - 1])
                 return false;
 
             int dem = 1;
@@ -341,7 +342,9 @@ namespace client
             // currentcard là chuỗi không giảm (bạn Hào)
             if (currentCard.Length == 0)
                 return false;
-            if (enemyCard == null) // người thắng đánh đầu tiên
+
+
+            if (enemyCard == null || enemyCard.Length == 0) // người thắng đánh đầu tiên
             {
                 if (issingle() == true || isdouble() == true || istriple() == true || isquadra() == true || isgroup() == true || isdoublegroup(3) == true || isdoublegroup(4) == true || isdoublegroup(5) == true)
                 {

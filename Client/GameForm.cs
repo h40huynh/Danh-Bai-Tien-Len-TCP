@@ -77,6 +77,10 @@ namespace Client
                     case "end":
                         cleanCardsImage();
                         break;
+                    case "chat":
+                        string msg = data.Substring(5);
+                        txtChatBox.Text += $"{msg}\n";
+                        break;
 
                     default:
                         break;
@@ -91,8 +95,9 @@ namespace Client
 
             int listWith = 12 * space + cardSize.Width;
             int x = this.Width / 2 - listWith / 2 + 12 * space;
+            x += 100;
 
-            Point startPoint = new Point(x, 400);
+            Point startPoint = new Point(x, 420);
 
             for(int i = 0; i < 13; i++)
             {
@@ -155,7 +160,7 @@ namespace Client
             CheckForIllegalCrossThreadCalls = false;
             // Set center card
             ptbCards.ImageLocation = "./cards/cardBack_green5.png";
-            ptbCardLeft.ImageLocation = ptbCardRight.ImageLocation = ptbCardUp.ImageLocation = ptbCards.ImageLocation;
+            ptbCardRight.ImageLocation = ptbCardUp.ImageLocation = ptbCards.ImageLocation;
 
             Point position = ptbCards.Location;
             position.X = this.Size.Width / 2 - cardSize.Width / 2;
@@ -195,24 +200,30 @@ namespace Client
                     myCards += " " + cards.getCard(i).ToString();
 
             rule.setcurrentCard(myCards);
-            if (miss < 3 && rule.checkcurrent() == false)
+            if (rule.checkcurrent() == false && miss < 3)
                 MessageBox.Show("Invalid cards");
             else
             {
-                for (int i = 0; i < 13; i++)
+                if (rule.checkcurrent() == true)
                 {
-                    if (isClick[i])
+                    for (int i = 0; i < 13; i++)
                     {
-                        numCardsLeft--;
-                        ptbMyCards[i].Dispose();
-                        ptbMyCards[i] = null;
-                        isClick[i] = false;
+                        if (isClick[i])
+                        {
+                            numCardsLeft--;
+                            ptbMyCards[i].Dispose();
+                            ptbMyCards[i] = null;
+                            isClick[i] = false;
+                        }
                     }
+
+
+                    tcpModel.sendData("pop" + myCards);
+                    if (numCardsLeft <= 0)
+                        tcpModel.sendData("winner ");
                 }
-                    
-                tcpModel.sendData("pop" + myCards);
-                if (numCardsLeft <= 0)
-                    tcpModel.sendData("winner ");
+                else
+                    MessageBox.Show("Invalid cards");
             }
         }
 //-----------------------------------------------------------------------------
@@ -245,7 +256,13 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void showRecentFightCard(string currentCardsString)
         {
+            
             string[] s = currentCardsString.Substring(7).Split(' ');
+            if(s[0] == "")
+            {
+                return;
+            }
+
             Card[] cardsArray = new Card[s.Length];
 
             for (int i = 0; i < s.Length; i++)
@@ -319,14 +336,23 @@ namespace Client
             }
         }
 
-        private void BtnAAAA_Click(object sender, EventArgs e)
+        private void BtnSendChat_Click(object sender, EventArgs e)
         {
-            for (int i = 1; i < 13; i++)
-            {
-                isClick[i] = true;   
-            }
-            
+            SendChatMessage();
         }
 
+        private void TxtMessage_KeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.KeyCode == Keys.Enter)
+            {
+                SendChatMessage();
+            }
+        }
+
+        private void SendChatMessage()
+        {
+            tcpModel.sendData($"chat {txtMessage.Text}");
+            txtMessage.Clear();
+        }
     }
 }

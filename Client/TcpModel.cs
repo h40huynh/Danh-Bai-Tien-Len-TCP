@@ -37,11 +37,16 @@ namespace Client
         public string receiveData()
         {
             byte[] byteReceive = new byte[100];
-            stream.Read(byteReceive, 0, 100);
+            string data = "";
+            do
+            {
+                stream.Read(byteReceive, 0, 100);
+
+                data = encoding.GetString(byteReceive);
+                char byte0 = (char)0;
+                data = data.Replace(byte0.ToString(), "");
+            } while (data == "");
             
-            string data = encoding.GetString(byteReceive);
-            char byte0 = (char)0;
-            data = data.Replace(byte0.ToString(), "");
             Console.WriteLine($"Receive: {data}");
             return data;
         }

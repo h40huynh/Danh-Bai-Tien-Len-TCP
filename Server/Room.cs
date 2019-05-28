@@ -109,11 +109,14 @@ namespace Server
                 winnerPosition = (winnerPosition + 1) % 4;
             }
             while (playerMiss.Contains(winnerPosition.ToString()));
-
-            players[winnerPosition].sendData($"next {miss.ToString()} {dataSend}");
+            if (miss == 3)
+            {
+                dataSend = "";
+            }
+            players[winnerPosition].sendData($"next {miss} {dataSend}");
             for (int i = 0; i < 4; i++)
                 if(i != winnerPosition)
-                    players[i].sendData($"wait {miss.ToString()} {dataSend}");
+                    players[i].sendData($"wait {miss} {dataSend}");
             if (miss == 3)
             {
                 miss = 0;
@@ -127,6 +130,15 @@ namespace Server
                 return true;
             else
                 return false;
+        }
+
+        public void chat(string data)
+        {
+            foreach(Player player in players)
+            {
+                if(player != null)
+                    player.sendData("chat " + data);
+            }
         }
     }
 }
