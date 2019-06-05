@@ -29,10 +29,10 @@ namespace Server
 //-------------------------------------------------------------------
         public void mix1()
         {
-            Random random = new Random();
-            int len = random.Next(5, 25);
-
-            int start = len + random.Next(5, 20);
+            //Random random = new Random();
+            //int len = random.Next(5, 25);
+            int len = 10;
+            int start = len + /*random.Next(5, 20)*/ +12;
 
             Card[] temp = new Card[len];
             

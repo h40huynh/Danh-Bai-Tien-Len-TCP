@@ -51,11 +51,17 @@ namespace Server
 //---------------------------------------------------------------
         public void startGame()
         {
-            for (int i = 0; i < 52; i++)
+            Random random = new Random();
+            int num = random.Next(40, 60);
+
+            for (int i = 0; i < num; i++)
             {
                 cards.mix1();
                 cards.mix2();
             }
+
+
+            Console.WriteLine("qua mix");
 
             string[] sendCard = cards.Split_Cards();
 
@@ -65,6 +71,9 @@ namespace Server
                 players[count].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
                 count = (count + 1) % 4;
             }
+
+            //cards = null;
+            //cards = new Cards();
         }
 //---------------------------------------------------------------------------------
         public void mergeCard(string dataReceive)   //gom bài từ client

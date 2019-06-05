@@ -75,12 +75,15 @@ namespace client
             // đánh tứ quý
             if (enemyCard.Length == 4 && enemyCard[0] / 10 == enemyCard[3] / 10)
             {
-                return checkquadra(myCard);
+                if (checkquadra(myCard) || finddoublegroup(myCard, 4))
+                    return true;
+                else
+                    return false;
             }
             // đánh 3 đôi thông
             if (enemyCard.Length == 6 && enemyCard[0] / 10 == enemyCard[1] / 10)
             {
-                if (checkdoublegroup(myCard, 3) || findquadra(myCard))
+                if (checkdoublegroup(myCard, 3) || findquadra(myCard) || finddoublegroup(myCard,4))
                     return true;
                 return false;
             }
@@ -221,6 +224,8 @@ namespace client
                 }
             }
             // curr max < enemyCard max => false
+            if (arrdouble.Count == 0)
+                return false;
             if (arrdouble[0] < enemyCard[enemyCard.Length - 1])
                 return false;
 
