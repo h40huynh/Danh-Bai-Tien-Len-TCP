@@ -112,9 +112,21 @@ namespace Client
             
             int offset = int.Parse($"{UserAvatarNameById[userOffsetInRoom][roomateId]}");
 
-            Controls.Find($"pnInfo{offset}", false).First().Show();
-            Controls.Find($"lblName{offset}", true).First().Text = arg[1];
-            (Controls.Find($"ptbAvatar{offset}", true).First() as PictureBox).ImageLocation = $"./avatar/{roomateId}.png";
+            bool isFinish = false;
+            do
+            {
+                if (this.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        Controls.Find($"pnInfo{offset}", false).First().Show();
+                        Controls.Find($"lblName{offset}", true).First().Text = arg[1];
+                        (Controls.Find($"ptbAvatar{offset}", true).First() as PictureBox).ImageLocation = $"./avatar/{roomateId}.png";
+                        isFinish = true;
+                    });
+                }
+            } while (!isFinish);
+            
         }
 
         //-----------------------------------------------------------------------------
@@ -349,14 +361,20 @@ namespace Client
                 ptbReceiveCards[i] = new PictureBox();
                 ptbReceiveCards[i].Location = new Point(-200, -200);
                 ptbReceiveCards[i].BackColor = Color.Transparent;
-                if (this.InvokeRequired)
+
+                bool isFinish = false;
+                do
                 {
-                    Invoke((MethodInvoker)delegate ()
+                    if (this.InvokeRequired)
                     {
-                        Controls.Add(ptbMyCards[i]);
-                        Controls.Add(ptbReceiveCards[i]);
-                    });
-                }
+                        Invoke((MethodInvoker)delegate ()
+                        {
+                            Controls.Add(ptbMyCards[i]);
+                            Controls.Add(ptbReceiveCards[i]);
+                            isFinish = true;
+                        });
+                    }
+                } while (!isFinish);
             }
         }
 
