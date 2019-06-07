@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{26C8CA45-4F8A-4ABB-A27F-157174950FB8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot", "Bot\Bot.csproj", "{BEBE6269-8941-48B6-B781-C6F48A1D0CC7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{26C8CA45-4F8A-4ABB-A27F-157174950FB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26C8CA45-4F8A-4ABB-A27F-157174950FB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26C8CA45-4F8A-4ABB-A27F-157174950FB8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEBE6269-8941-48B6-B781-C6F48A1D0CC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBE6269-8941-48B6-B781-C6F48A1D0CC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBE6269-8941-48B6-B781-C6F48A1D0CC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBE6269-8941-48B6-B781-C6F48A1D0CC7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

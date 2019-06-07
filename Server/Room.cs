@@ -53,7 +53,7 @@ namespace Server
         {
             Random random = new Random();
             int num = random.Next(40, 60);
-
+            cards = new Cards();
             for (int i = 0; i < num; i++)
             {
                 cards.mix1();
