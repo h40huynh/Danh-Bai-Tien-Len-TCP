@@ -1,3 +1,5 @@
 .vs/
-*/bin/
+*/bin/*.exe
+*/bin/*.exe.config
+*/bin/*.pdb
 */obj/
