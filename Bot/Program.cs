@@ -64,10 +64,11 @@ namespace Bot
         {
             bot.setmyCard(data);
             if (bot.KiemTraThangTrang())
-                tcpModel.sendData("win");
+                tcpModel.sendData("winner ");
             else
             { 
                 int[] fightCards = bot.DanhBaiChuDong();
+                Array.Reverse(fightCards);
                 fighting(fightCards);
             }
         }
@@ -80,6 +81,7 @@ namespace Bot
             if (miss < 3)
             {
                 int[] fightCards = bot.DanhBaiBiDong();
+                Array.Reverse(fightCards);
 
                 if (fightCards.Length == 1 && fightCards[0] == 0)
                     tcpModel.sendData("miss " + data.Remove(0, 7));
@@ -89,6 +91,7 @@ namespace Bot
             else
             {
                 int[] fightCards = bot.DanhBaiChuDong();
+                Array.Reverse(fightCards);
                 fighting(fightCards);
             }
         }
@@ -107,6 +110,8 @@ namespace Bot
 
             numCardsLeft -= fightCards.Length;
             tcpModel.sendData("pop" + sendData);
+            if (numCardsLeft == 0)
+                tcpModel.sendData("winner ");
         }
 
 
