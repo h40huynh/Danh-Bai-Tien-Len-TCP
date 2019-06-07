@@ -14,7 +14,6 @@ namespace Bot
         public Solve()
         {
         }
-
         public Solve(string dataReceive, string baidoithu)
         {
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -22,7 +21,6 @@ namespace Bot
             string[] enemystr = baidoithu.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
         }
-
         public void setEnemyCard(string dataReceive)
         {
             dataReceive = dataReceive.Remove(0, 7);
@@ -30,7 +28,6 @@ namespace Bot
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
             Array.Reverse(enemyCard);
         }
-
         public void setmyCard(string datareceive)
         {
             string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -44,8 +41,6 @@ namespace Bot
                         myCard[j] = temp;
                     }
         }
-
-
         private bool KiemTraSanh(int[] curr)
         {
             int dem = 1;
@@ -322,28 +317,28 @@ namespace Bot
                     mangtam3 = mangtam2.Concat(mangconlai).ToArray();
                     quickSort(mangtam3, 0, mangtam3.Length - 1);
 
-                    for (int k = 0; k < mangtam3.Length - 1; k++)
-                    {
-                        for (int l = 0; l < tmp.Length; l++)
-                        {
-                            if (mangtam3[k] / 10 == tmp[l] / 10 && mangtam3[k] < tmp[l] && mangtam3[k] / 10 != mangtam[mangtam.Length - 1] / 10)
-                            {
-                                if (k > 0)
-                                {
-                                    if (tmp[l] != mangtam3[k - 1])
-                                    {
-                                        mangtam3[k] = tmp[l];
-                                        break;
-                                    }
-                                }
-                                else
-                                {
-                                    mangtam3[k] = tmp[l];
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    //for (int k = 0; k < mangtam3.Length - 1; k++)
+                    //{
+                    //    for (int l = 0; l < tmp.Length; l++)
+                    //    {
+                    //        if (mangtam3[k] / 10 == tmp[l] / 10 && mangtam3[k] < tmp[l] && mangtam3[k] / 10 != mangtam[mangtam.Length - 1] / 10)
+                    //        {
+                    //            if (k > 0)
+                    //            {
+                    //                if (tmp[l] != mangtam3[k - 1])
+                    //                {
+                    //                    mangtam3[k] = tmp[l];
+                    //                    break;
+                    //                }
+                    //            }
+                    //            else
+                    //            {
+                    //                mangtam3[k] = tmp[l];
+                    //                break;
+                    //            }
+                    //        }
+                    //    }
+                    //}
                     return mangtam3;
                 }
             }
@@ -462,28 +457,57 @@ namespace Bot
         private int[] DemLe(int[] curr)
         {
             List<int> MangCacDoi = new List<int>();
-            for (int i = 0; i < curr.Length - 1; i++)
+
+            if (TheManhDoi(myCard) == false)
             {
-                if (curr[i] / 10 == curr[i + 1] / 10)
+                int[] cocle = new int[curr.Length];
+                Array.Copy(curr, 0, cocle, 0, curr.Length);
+                for (int i = cocle.Length; i >= 3; i--)
+                    if (KiemTraCoSanh(cocle, i).Length != cocle.Length)
+                        cocle = KiemTraCoSanh(cocle, i);
+                for (int i = 0; i < cocle.Length - 1; i++)
                 {
-                    MangCacDoi.Add(curr[i]);
-                    MangCacDoi.Add(curr[i + 1]);
-                    i++;
+                    if (cocle[i] / 10 == cocle[i + 1] / 10)
+                    {
+                        MangCacDoi.Add(cocle[i]);
+                        MangCacDoi.Add(cocle[i + 1]);
+                        i++;
+                    }
                 }
+
+                for (int i = 1; i < MangCacDoi.Count; i += 2)
+                    for (int j = 0; j < cocle.Length; j++)
+                        if (MangCacDoi[i] / 10 == cocle[j] / 10 && MangCacDoi[i] < cocle[j])
+                            MangCacDoi[i] = cocle[j];
+                cocle = cocle.Except(MangCacDoi.ToArray()).ToArray();
+                return cocle;
+            }
+            else
+            {
+                for (int i = 0; i < curr.Length - 1; i++)
+                {
+                    if (curr[i] / 10 == curr[i + 1] / 10)
+                    {
+                        MangCacDoi.Add(curr[i]);
+                        MangCacDoi.Add(curr[i + 1]);
+                        i++;
+                    }
+                }
+
+                for (int i = 1; i < MangCacDoi.Count; i += 2)
+                    for (int j = 0; j < curr.Length; j++)
+                        if (MangCacDoi[i] / 10 == curr[j] / 10 && MangCacDoi[i] < curr[j])
+                            MangCacDoi[i] = curr[j];
+
+                int[] cocle = new int[curr.Length - MangCacDoi.Count];
+                cocle = curr.Except(MangCacDoi.ToArray()).ToArray();
+
+                for (int i = cocle.Length; i >= 3; i--)
+                    if (KiemTraCoSanh(cocle, i).Length != cocle.Length)
+                        cocle = KiemTraCoSanh(cocle, i);
+                return cocle;
             }
 
-            for (int i = 1; i < MangCacDoi.Count; i += 2)
-                for (int j = 0; j < curr.Length; j++)
-                    if (MangCacDoi[i] / 10 == curr[j] / 10 && MangCacDoi[i] < curr[j])
-                        MangCacDoi[i] = curr[j];
-
-            int[] cocle = new int[curr.Length - MangCacDoi.Count];
-            cocle = curr.Except(MangCacDoi.ToArray()).ToArray();
-
-            for (int i = cocle.Length; i >= 3; i--)
-                if (KiemTraCoSanh(cocle, i).Length != cocle.Length)
-                    cocle = KiemTraCoSanh(cocle, i);
-            return cocle;
         }
         private List<int[]> TimSanhPhuHop(int[] tmp, int[] enemy, int sl)
         {
@@ -650,6 +674,10 @@ namespace Bot
         }
         public int[] DanhBaiChuDong()
         {
+            Console.WriteLine("\n");
+            for (int i = 0; i < myCard.Length; i++)
+                Console.Write(myCard[i] + " ");
+            
             int[] result;
             int[] tmp;
             int length = 0;
@@ -752,6 +780,10 @@ namespace Bot
         }
         public int[] DanhBaiBiDong()
         {
+            Console.WriteLine("\n");
+            for (int i = 0; i < myCard.Length; i++)
+                Console.Write(myCard[i] + " ");
+            
             // return 0 == bo luot
             int[] boluot = { 0 };
             if (enemyCard.Length == 1) // danh le
