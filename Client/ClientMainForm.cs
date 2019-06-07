@@ -43,7 +43,9 @@ namespace Client
                 switch(value[0])
                 {
                     case "room":
-                        using (GameForm gameForm = new GameForm(int.Parse(value[1]), tcpModel))
+                        int rommId = int.Parse(value[1]);
+                        int userOffsetInRoom = int.Parse(value[2]);
+                        using (GameForm gameForm = new GameForm(tcpModel, rommId, userOffsetInRoom)) 
                         {
                             this.Hide();
                             gameForm.ShowDialog();

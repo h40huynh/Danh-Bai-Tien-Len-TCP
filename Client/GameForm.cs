@@ -14,7 +14,7 @@ namespace Client
 {
     public partial class GameForm : Form
     {
-        private Size cardSize;
+        private Size cardSize = new Size(77, 110);
         private int space = 30;
         private int miss = 0;
         private List<PictureBox> ptbMyCards;
@@ -25,17 +25,20 @@ namespace Client
         private string enemyCards = ""; // for Ignore_click
         private Rules rule;
         private int numCardsLeft;
+        private int userOffsetInRoom;
 
-        public GameForm(int roomId, TcpModel tcpModel)
+        private readonly string[] UserAvatarNameById = { "0123", "3012", "2301", "1230" };
+
+        public GameForm(TcpModel tcpModel, int roomId, int userOffset)
         {
             InitializeComponent();
 
             ptbMyCards = new List<PictureBox>();
             ptbReceiveCards = new List<PictureBox>();
 
-            cardSize = ptbCards.Size;
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
+            userOffsetInRoom = userOffset;
             this.tcpModel = tcpModel;
             createPicturebox();
             Thread thread = new Thread(receiveDataThread);
@@ -81,13 +84,40 @@ namespace Client
                         string msg = data.Substring(5);
                         txtChatBox.Text += $"{msg}\n";
                         break;
-
+                    case "roomate":
+                        setNewRoomate(data.Substring(8));
+                        break;
+                    case "roomates":
+                        setNewRoomates(data.Substring(9));
+                        break;
                     default:
                         break;
                 }
             }
         }
-//-----------------------------------------------------------------------------
+
+        private void setNewRoomates(string data)
+        {
+            string[] infos = data.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (string roomateInfo in infos)
+            {
+                setNewRoomate(roomateInfo);
+            }
+        }
+
+        private void setNewRoomate(string data)
+        {
+            string[] arg = data.Split(' ');
+            int roomateId = int.Parse(arg[0]);
+            
+            int offset = int.Parse($"{UserAvatarNameById[userOffsetInRoom][roomateId]}");
+
+            Controls.Find($"pnInfo{offset}", false).First().Show();
+            Controls.Find($"lblName{offset}", true).First().Text = arg[1];
+            (Controls.Find($"ptbAvatar{offset}", true).First() as PictureBox).ImageLocation = $"./avatar/{roomateId}.png";
+        }
+
+        //-----------------------------------------------------------------------------
         private void initPictureBox(string listCard)
         {
             
@@ -130,7 +160,7 @@ namespace Client
             isClick[id] = !isClick[id];
         }
 //-----------------------------------------------------------------------------
-        private void setCardPosition(ref List<PictureBox> pictureBox, int y, int n = 0)
+        private void setCardPosition(ref List<PictureBox> pictureBox, int n = 0, int y = 170)
         {
             int len = pictureBox.Count - 1;
             len = n != 0 ? n - 1 : len;
@@ -158,13 +188,9 @@ namespace Client
         private void GameForm_Load(object sender, EventArgs e)
         {
             CheckForIllegalCrossThreadCalls = false;
-            // Set center card
-            ptbCards.ImageLocation = "./cards/cardBack_green5.png";
-            ptbCardRight.ImageLocation = ptbCardUp.ImageLocation = ptbCards.ImageLocation;
-
-            Point position = ptbCards.Location;
-            position.X = this.Size.Width / 2 - cardSize.Width / 2;
-            position.Y = this.Size.Height / 2 - cardSize.Height / 2;
+            pnInfo1.Hide();
+            pnInfo2.Hide();
+            pnInfo3.Hide();
         }
 //-----------------------------------------------------------------------------
         private void handleCardString(string data)
@@ -270,8 +296,6 @@ namespace Client
                 cardsArray[i] = new Card(int.Parse(s[i]));
             }
             Cards tmp = new Cards(cardsArray);
-            // wait 12
-            // next 12
             
             for (int i = 0; i < tmp.getNumberOfCard(); i++)
             {
@@ -284,7 +308,7 @@ namespace Client
                 ptbReceiveCards[i].Image = null;
             }
 
-            setCardPosition(ref ptbReceiveCards, ptbCards.Location.Y, tmp.getNumberOfCard());
+            setCardPosition(ref ptbReceiveCards, tmp.getNumberOfCard());
         }
 //-----------------------------------------------------------------------------
         private string getStringCards()

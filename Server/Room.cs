@@ -33,10 +33,15 @@ namespace Server
                 {
                     players[i] = p;
                     players[i].setIDRoom(id);
-                    players[i].sendData($"room {id}");
+                    players[i].sendData($"room {id} {i}");
                     numberOfPlayer++;
+                    sendRoomate(i);
                     if (isReady())
+                    {
+                        Thread.Sleep(500);
                         startGame();
+                    }
+                        
                     return;
                 }
             }
@@ -59,9 +64,6 @@ namespace Server
                 cards.mix1();
                 cards.mix2();
             }
-
-
-            Console.WriteLine("qua mix");
 
             string[] sendCard = cards.Split_Cards();
 
@@ -147,6 +149,23 @@ namespace Server
             {
                 if(player != null)
                     player.sendData("chat " + data);
+            }
+        }
+
+        public void sendRoomate(int thisUserId)
+        {
+            if (numberOfPlayer >= 2)
+            {
+                string dataToThisUser = "roomates ";
+                for (int i = 0; i < 4; i++)
+                {
+                    if (players[i] != null && i != thisUserId)
+                    {
+                        players[i].sendData($"roomate {thisUserId} {players[thisUserId].getName()}");
+                        dataToThisUser += $",{i} {players[i].getName()}";
+                    }
+                }
+                players[thisUserId].sendData(dataToThisUser);
             }
         }
     }
