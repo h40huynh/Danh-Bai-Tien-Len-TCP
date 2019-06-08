@@ -70,7 +70,7 @@ namespace Server
             int count = 0;
             for (int i = 0; i < 4; i++) 
             {
-                players[count].sendData("start " + sendCard[i] + ' ' + players[winnerPosition].getID().ToString());
+                players[count].sendData($"start {sendCard[i]} {players[winnerPosition].getID()}");
                 count = (count + 1) % 4;
             }
 
@@ -90,7 +90,7 @@ namespace Server
 //------------------------------------------------------------------------------
         public void endGame(Player player)      //sau khi nhận tín hiệu kết thúc ván
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(1000);
             for (int i = 0; i < 4; i++)
             {
                 if (players[i] == player)

@@ -14,32 +14,43 @@ namespace Client
 {
     public partial class GameForm : Form
     {
+        // For card image
         private Size cardSize = new Size(77, 110);
         private int space = 30;
         private int miss = 0;
         private List<PictureBox> ptbMyCards;
         private List<PictureBox> ptbReceiveCards;
         private bool[] isClick;
+
         private TcpModel tcpModel;
         private Cards cards;
         private string enemyCards = ""; // for Ignore_click
         private Rules rule;
+
+        // For set avatar position
         private int numCardsLeft;
         private int userOffsetInRoom;
-
         private readonly string[] UserAvatarNameById = { "0123", "3012", "2301", "1230" };
+
+        // For timer count down
+        private readonly int timePerTurn = 12;
+        private int timeCount;
+        private int countPosition = 0;
+        private readonly Point[] timerLocation = { new Point(427, 338), new Point(756, 143), new Point(553, 33), new Point(13, 143) };
 
         public GameForm(TcpModel tcpModel, int roomId, int userOffset)
         {
+            this.tcpModel = tcpModel;
             InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
 
             ptbMyCards = new List<PictureBox>();
             ptbReceiveCards = new List<PictureBox>();
 
+            timeCount = timePerTurn;
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
             userOffsetInRoom = userOffset;
-            this.tcpModel = tcpModel;
             createPicturebox();
             Thread thread = new Thread(receiveDataThread);
             thread.Start();
@@ -62,6 +73,7 @@ namespace Client
                         break;
 
                     case "next":
+                        timerCountdown.Start();
                         enemyCards = data;
                         miss = int.Parse(value[1]);
                         showRecentFightCard(data);
@@ -199,10 +211,10 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void GameForm_Load(object sender, EventArgs e)
         {
-            CheckForIllegalCrossThreadCalls = false;
             pnInfo1.Hide();
             pnInfo2.Hide();
             pnInfo3.Hide();
+            ptbAvatar0.ImageLocation = $"./avatar/{userOffsetInRoom}.png";
         }
 //-----------------------------------------------------------------------------
         private void handleCardString(string data)
@@ -254,7 +266,6 @@ namespace Client
                             isClick[i] = false;
                         }
                     }
-
 
                     tcpModel.sendData("pop" + myCards);
                     if (numCardsLeft <= 0)
@@ -395,6 +406,17 @@ namespace Client
         {
             tcpModel.sendData($"chat {txtMessage.Text}");
             txtMessage.Clear();
+        }
+
+        private void TimerCountdown_Tick(object sender, EventArgs e)
+        {
+            lblTimeLeft0.Text = timeCount.ToString();
+            if(--timeCount < -1)
+            {
+                timeCount = timePerTurn;
+                countPosition = (countPosition + 1) % 4;
+                lblTimeLeft0.Location = timerLocation[countPosition];
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameForm));
             this.lblRoomId = new System.Windows.Forms.Label();
             this.btnFight = new System.Windows.Forms.Button();
@@ -48,6 +49,9 @@
             this.lblMoney3 = new System.Windows.Forms.Label();
             this.lblName3 = new System.Windows.Forms.Label();
             this.ptbAvatar3 = new System.Windows.Forms.PictureBox();
+            this.ptbAvatar0 = new System.Windows.Forms.PictureBox();
+            this.timerCountdown = new System.Windows.Forms.Timer(this.components);
+            this.lblTimeLeft0 = new System.Windows.Forms.Label();
             this.pnlChat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
@@ -55,6 +59,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar2)).BeginInit();
             this.pnInfo3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar0)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRoomId
@@ -267,6 +272,34 @@
             this.ptbAvatar3.TabIndex = 10;
             this.ptbAvatar3.TabStop = false;
             // 
+            // ptbAvatar0
+            // 
+            this.ptbAvatar0.BackColor = System.Drawing.Color.Transparent;
+            this.ptbAvatar0.Location = new System.Drawing.Point(840, 453);
+            this.ptbAvatar0.Name = "ptbAvatar0";
+            this.ptbAvatar0.Size = new System.Drawing.Size(80, 80);
+            this.ptbAvatar0.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ptbAvatar0.TabIndex = 14;
+            this.ptbAvatar0.TabStop = false;
+            // 
+            // timerCountdown
+            // 
+            this.timerCountdown.Enabled = true;
+            this.timerCountdown.Interval = 1000;
+            this.timerCountdown.Tick += new System.EventHandler(this.TimerCountdown_Tick);
+            // 
+            // lblTimeLeft0
+            // 
+            this.lblTimeLeft0.AutoSize = true;
+            this.lblTimeLeft0.BackColor = System.Drawing.Color.Transparent;
+            this.lblTimeLeft0.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTimeLeft0.ForeColor = System.Drawing.Color.White;
+            this.lblTimeLeft0.Location = new System.Drawing.Point(427, 338);
+            this.lblTimeLeft0.Name = "lblTimeLeft0";
+            this.lblTimeLeft0.Size = new System.Drawing.Size(64, 24);
+            this.lblTimeLeft0.TabIndex = 15;
+            this.lblTimeLeft0.Text = "Timer";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -275,6 +308,8 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.lblTimeLeft0);
+            this.Controls.Add(this.ptbAvatar0);
             this.Controls.Add(this.lblRoomId);
             this.Controls.Add(this.pnInfo3);
             this.Controls.Add(this.pnInfo2);
@@ -297,6 +332,7 @@
             this.pnInfo3.ResumeLayout(false);
             this.pnInfo3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar0)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,5 +358,8 @@
         private System.Windows.Forms.Label lblMoney3;
         private System.Windows.Forms.Label lblName3;
         private System.Windows.Forms.PictureBox ptbAvatar3;
+        private System.Windows.Forms.PictureBox ptbAvatar0;
+        private System.Windows.Forms.Timer timerCountdown;
+        private System.Windows.Forms.Label lblTimeLeft0;
     }
 }
