@@ -39,6 +39,10 @@ namespace Client
         private int countPosition = 0;
         private readonly Point[] timerLocation = { new Point(427, 338), new Point(756, 143), new Point(553, 33), new Point(13, 143) };
 
+        // For signal allow fight or not
+        private readonly Point[] sunPosition;
+        private int toggleSun = 1;
+
         public GameForm(TcpModel tcpModel, int roomId, int userOffset)
         {
             this.tcpModel = tcpModel;
@@ -52,6 +56,9 @@ namespace Client
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
             userOffsetInRoom = userOffset;
+
+            sunPosition = new Point[] { btnFight.Location, btnIgnore.Location };
+
             createPicturebox();
             Thread thread = new Thread(receiveDataThread);
             thread.Start();
@@ -83,7 +90,14 @@ namespace Client
                         rule.setmyCard(getStringCards());
                         rule.setEnemyCard(data);
                         if (rule.check() || miss == 3)
+                        {
                             btnFight.Enabled = true;
+                            StartOrStopSunAnimation(true, sunPosition[0]);
+                        }
+                        else
+                        {
+                            StartOrStopSunAnimation(true, sunPosition[1]);
+                        }
                         break;
 
                     case "wait":
@@ -109,7 +123,43 @@ namespace Client
                 }
             }
         }
-//-----------------------------------------------------------------------------
+
+        private void StartOrStopSunAnimation(bool isStart, Point position)
+        {
+            position.Y -= 50;
+            position.X += 20;
+            ptbSun.Location = position;
+
+            try
+            {
+                if (this.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        if (isStart)
+                        {
+                            timerSunAnimation.Start();
+                        }
+                        else
+                            timerSunAnimation.Stop();
+
+                    });
+                }
+                else
+                {
+                    if (isStart)
+                    {
+                        timerSunAnimation.Start();
+                    }
+                    else
+                        timerSunAnimation.Stop();
+                }
+            }
+            catch { }
+
+        }
+
+        //-----------------------------------------------------------------------------
         private void setNewRoomates(string data)
         {
             string[] infos = data.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -250,6 +300,9 @@ namespace Client
             pnInfo2.Hide();
             pnInfo3.Hide();
             ptbAvatar0.ImageLocation = $"./avatar/{userOffsetInRoom}.png";
+
+            // Set sun position
+            ptbSun.ImageLocation = "./icon/sun.png";
         }
 //-----------------------------------------------------------------------------
         private void handleCardString(string data)
@@ -306,6 +359,7 @@ namespace Client
                     }
 
                     tcpModel.sendData("pop" + myCards);
+                    StartOrStopSunAnimation(false, new Point(0, 0));
                     if (numCardsLeft <= 0)
                         tcpModel.sendData("winner ");
                 }
@@ -318,6 +372,7 @@ namespace Client
         {
             enemyCards = enemyCards.Remove(0, 7);
             tcpModel.sendData("miss " + enemyCards);
+            StartOrStopSunAnimation(false, new Point(0, 0));
         }
 //----------------------------------------------------------------------------
         private void createPicturebox()
@@ -455,6 +510,14 @@ namespace Client
                 countPosition = (countPosition + 1) % 4;
                 lblTimeLeft0.Location = timerLocation[countPosition];
             }
+        }
+
+        private void TimerSunAnimation_Tick(object sender, EventArgs e)
+        {
+            Point tmp = ptbSun.Location;
+            tmp.Y += 10 * toggleSun;
+            ptbSun.Location = tmp;
+            toggleSun *= -1;
         }
     }
 }
