@@ -21,8 +21,8 @@ namespace Bot
 
             if (int.Parse(mystr[0]) < 31)
                 Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
-            else if (int.Parse(mystr[mystr.Length - 1]) < 31 || int.Parse(mystr[0]) > 154)
-                Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
+            else if (int.Parse(mystr[mystr.Length - 1]) > 154)
+                Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
             else
                 return mystr;
             return mystr2;
