@@ -10,14 +10,30 @@ namespace Bot
     {
         int[] myCard;
         int[] enemyCard;
-
         public Solve()
         {
         }
+
+        private string[] Setcard(string dataReceive)
+        {
+            string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+            string[] mystr2 = new string[mystr.Length - 1];
+
+            if (int.Parse(mystr[0]) < 31)
+                Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
+            else if (int.Parse(mystr[mystr.Length - 1]) < 31 || int.Parse(mystr[0]) > 154)
+                Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
+            else
+                return mystr;
+            return mystr2;
+
+        }
+
         public Solve(string dataReceive, string baidoithu)
         {
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+            myCard = Array.ConvertAll<string, int>(Setcard(dataReceive), int.Parse);
+            
             string[] enemystr = baidoithu.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
         }
@@ -738,6 +754,9 @@ namespace Bot
                     }
                 }
             }
+
+            if (myCard[0] / 10 == 15)
+                return myCard;
 
             if (myCard.Length >= 7)
             {
