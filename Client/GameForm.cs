@@ -26,6 +26,7 @@ namespace Client
         private Cards cards;
         private string enemyCards = ""; // for Ignore_click
         private Rules rule;
+        private int[] myCards = new int[13];
 
         // For set avatar position
         private int numCardsLeft;
@@ -70,6 +71,7 @@ namespace Client
                         int id = int.Parse(value[value.Length - 1]);
                         if (id == tcpModel.getID())
                             btnFight.Enabled = true;
+                        
                         break;
 
                     case "next":
@@ -107,7 +109,7 @@ namespace Client
                 }
             }
         }
-
+//-----------------------------------------------------------------------------
         private void setNewRoomates(string data)
         {
             string[] infos = data.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -116,7 +118,7 @@ namespace Client
                 setNewRoomate(roomateInfo);
             }
         }
-
+//-----------------------------------------------------------------------------
         private void setNewRoomate(string data)
         {
             string[] arg = data.Split(' ');
@@ -140,8 +142,23 @@ namespace Client
             } while (!isFinish);
             
         }
-
-        //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+        private void getHint(int id)
+        {
+            int[] hint = rule.setclickcards2(myCards, id);
+            for (int i = 0; i < hint.Length; i++)
+                Console.Write(hint[i] + "\t");
+            for (int i = 0; i < hint.Length; i++)
+            {
+                if (hint[i] != id)
+                {
+                    PictureBox picture = Controls.Find($"ptbCard_{hint[i]}", false).First() as PictureBox;
+                    ptbCardsHint_Click(picture);
+                }
+            }
+        }
+//-----------------------------------------------------------------------------
         private void initPictureBox(string listCard)
         {
             
@@ -165,7 +182,7 @@ namespace Client
                 startPoint.X -= space;
             }
         }
-
+//------------------------------------------------------------------------------
         private void PictureBoxCards_Click(object sender, EventArgs e)
         {
             PictureBox pictureBox = sender as PictureBox;
@@ -181,6 +198,24 @@ namespace Client
             }
 
             (sender as PictureBox).Location = p;
+            isClick[id] = !isClick[id];
+            getHint(id);
+        }
+//--------------------------------------------------------------------------------
+        private void ptbCardsHint_Click(PictureBox picture)
+        {
+            Point p = picture.Location;
+            int id = int.Parse(picture.Name.Split('_')[1]);
+            if (isClick[id])
+            {
+                p.Y += 20;
+            }
+            else
+            {
+                p.Y -= 20;
+            }
+
+            picture.Location = p;
             isClick[id] = !isClick[id];
         }
 //-----------------------------------------------------------------------------
@@ -239,6 +274,9 @@ namespace Client
                     }
                 }
             }
+            for (int i = 0; i < cardsArray.Length; i++)
+                myCards[i] = cardsArray[i].getvalue();
+            Array.Reverse(myCards);
             cards = new Cards(cardsArray);
         }
 //-----------------------------------------------------------------------------
@@ -343,7 +381,7 @@ namespace Client
             str = str.Remove(0, 1);
             return str;
         }
-        //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
         private void sendCardsLeft()
         {
             string myCards = "";

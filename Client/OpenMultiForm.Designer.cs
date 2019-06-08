@@ -48,7 +48,7 @@
             this.ClientSize = new System.Drawing.Size(154, 81);
             this.Controls.Add(this.btnAddClient);
             this.Name = "OpenMultiForm";
-            this.Text = "OpenMultiForm";
+            this.Text = "7";
             this.Load += new System.EventHandler(this.OpenMultiForm_Load);
             this.ResumeLayout(false);
 

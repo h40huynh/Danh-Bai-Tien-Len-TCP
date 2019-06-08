@@ -680,6 +680,17 @@ namespace client
             }
             return result;
         }
+        public int[] setclickcards2(int[] mycard, int id)
+        {
+            int[] temp = setclickcards(mycard, 12 - id);
+            for(int i = 0; i < temp.Length; i++)
+            {
+                temp[i] = 12 - temp[i];
+                
+            }
+            
+            return temp;
+        }
     }
 
 }

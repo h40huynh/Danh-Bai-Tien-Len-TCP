@@ -26,7 +26,7 @@ namespace Client
         private void BtnAddClient_Click(object sender, EventArgs e)
         {
             ClientMainForm clientMainForm;
-            int i = 1;
+            int i = 4;
             while (i-- != 0)
             {
                 clientMainForm = new ClientMainForm();
