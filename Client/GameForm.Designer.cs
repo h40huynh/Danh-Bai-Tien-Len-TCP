@@ -52,6 +52,8 @@
             this.ptbAvatar0 = new System.Windows.Forms.PictureBox();
             this.timerCountdown = new System.Windows.Forms.Timer(this.components);
             this.lblTimeLeft0 = new System.Windows.Forms.Label();
+            this.ptbSun = new System.Windows.Forms.PictureBox();
+            this.timerSunAnimation = new System.Windows.Forms.Timer(this.components);
             this.pnlChat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
@@ -60,6 +62,7 @@
             this.pnInfo3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar0)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbSun)).BeginInit();
             this.SuspendLayout();
             // 
             // lblRoomId
@@ -300,6 +303,21 @@
             this.lblTimeLeft0.TabIndex = 15;
             this.lblTimeLeft0.Text = "Timer";
             // 
+            // ptbSun
+            // 
+            this.ptbSun.BackColor = System.Drawing.Color.Transparent;
+            this.ptbSun.Location = new System.Drawing.Point(742, 328);
+            this.ptbSun.Name = "ptbSun";
+            this.ptbSun.Size = new System.Drawing.Size(32, 32);
+            this.ptbSun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.ptbSun.TabIndex = 17;
+            this.ptbSun.TabStop = false;
+            // 
+            // timerSunAnimation
+            // 
+            this.timerSunAnimation.Interval = 200;
+            this.timerSunAnimation.Tick += new System.EventHandler(this.TimerSunAnimation_Tick);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -308,6 +326,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.ptbSun);
             this.Controls.Add(this.lblTimeLeft0);
             this.Controls.Add(this.ptbAvatar0);
             this.Controls.Add(this.lblRoomId);
@@ -333,6 +352,7 @@
             this.pnInfo3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar0)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ptbSun)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -361,5 +381,7 @@
         private System.Windows.Forms.PictureBox ptbAvatar0;
         private System.Windows.Forms.Timer timerCountdown;
         private System.Windows.Forms.Label lblTimeLeft0;
+        private System.Windows.Forms.PictureBox ptbSun;
+        private System.Windows.Forms.Timer timerSunAnimation;
     }
 }
