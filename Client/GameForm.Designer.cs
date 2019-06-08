@@ -33,10 +33,6 @@
             this.lblRoomId = new System.Windows.Forms.Label();
             this.btnFight = new System.Windows.Forms.Button();
             this.btnIgnore = new System.Windows.Forms.Button();
-            this.pnlChat = new System.Windows.Forms.Panel();
-            this.txtChatBox = new System.Windows.Forms.RichTextBox();
-            this.btnSendChat = new System.Windows.Forms.Button();
-            this.txtMessage = new System.Windows.Forms.TextBox();
             this.ptbAvatar1 = new System.Windows.Forms.PictureBox();
             this.pnInfo1 = new System.Windows.Forms.Panel();
             this.lblMoney1 = new System.Windows.Forms.Label();
@@ -54,7 +50,12 @@
             this.lblTimeLeft0 = new System.Windows.Forms.Label();
             this.ptbSun = new System.Windows.Forms.PictureBox();
             this.timerSunAnimation = new System.Windows.Forms.Timer(this.components);
-            this.pnlChat.SuspendLayout();
+            this.lblChat3 = new System.Windows.Forms.Label();
+            this.lblChat2 = new System.Windows.Forms.Label();
+            this.lblChat1 = new System.Windows.Forms.Label();
+            this.lblChat0 = new System.Windows.Forms.Label();
+            this.txtMessage = new System.Windows.Forms.TextBox();
+            this.btnSendChat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
             this.pnInfo2.SuspendLayout();
@@ -98,53 +99,6 @@
             this.btnIgnore.Text = "Ignore";
             this.btnIgnore.UseVisualStyleBackColor = true;
             this.btnIgnore.Click += new System.EventHandler(this.BtnIgnore_Click);
-            // 
-            // pnlChat
-            // 
-            this.pnlChat.BackColor = System.Drawing.Color.Black;
-            this.pnlChat.Controls.Add(this.txtChatBox);
-            this.pnlChat.Controls.Add(this.btnSendChat);
-            this.pnlChat.Controls.Add(this.txtMessage);
-            this.pnlChat.ForeColor = System.Drawing.Color.White;
-            this.pnlChat.Location = new System.Drawing.Point(0, 406);
-            this.pnlChat.Name = "pnlChat";
-            this.pnlChat.Size = new System.Drawing.Size(308, 138);
-            this.pnlChat.TabIndex = 8;
-            // 
-            // txtChatBox
-            // 
-            this.txtChatBox.BackColor = System.Drawing.Color.Black;
-            this.txtChatBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txtChatBox.ForeColor = System.Drawing.Color.White;
-            this.txtChatBox.Location = new System.Drawing.Point(3, 3);
-            this.txtChatBox.Name = "txtChatBox";
-            this.txtChatBox.Size = new System.Drawing.Size(302, 108);
-            this.txtChatBox.TabIndex = 11;
-            this.txtChatBox.Text = "";
-            // 
-            // btnSendChat
-            // 
-            this.btnSendChat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.btnSendChat.FlatAppearance.BorderSize = 0;
-            this.btnSendChat.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnSendChat.Location = new System.Drawing.Point(253, 117);
-            this.btnSendChat.Name = "btnSendChat";
-            this.btnSendChat.Size = new System.Drawing.Size(55, 23);
-            this.btnSendChat.TabIndex = 10;
-            this.btnSendChat.Text = "Send";
-            this.btnSendChat.UseVisualStyleBackColor = false;
-            this.btnSendChat.Click += new System.EventHandler(this.BtnSendChat_Click);
-            // 
-            // txtMessage
-            // 
-            this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtMessage.ForeColor = System.Drawing.Color.White;
-            this.txtMessage.Location = new System.Drawing.Point(0, 118);
-            this.txtMessage.Name = "txtMessage";
-            this.txtMessage.Size = new System.Drawing.Size(256, 20);
-            this.txtMessage.TabIndex = 9;
-            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtMessage_KeyDown);
             // 
             // ptbAvatar1
             // 
@@ -318,6 +272,67 @@
             this.timerSunAnimation.Interval = 200;
             this.timerSunAnimation.Tick += new System.EventHandler(this.TimerSunAnimation_Tick);
             // 
+            // lblChat3
+            // 
+            this.lblChat3.AutoSize = true;
+            this.lblChat3.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChat3.Location = new System.Drawing.Point(22, 144);
+            this.lblChat3.Name = "lblChat3";
+            this.lblChat3.Size = new System.Drawing.Size(0, 16);
+            this.lblChat3.TabIndex = 18;
+            // 
+            // lblChat2
+            // 
+            this.lblChat2.AutoSize = true;
+            this.lblChat2.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChat2.Location = new System.Drawing.Point(553, 33);
+            this.lblChat2.Name = "lblChat2";
+            this.lblChat2.Size = new System.Drawing.Size(0, 16);
+            this.lblChat2.TabIndex = 19;
+            // 
+            // lblChat1
+            // 
+            this.lblChat1.AutoSize = true;
+            this.lblChat1.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChat1.Location = new System.Drawing.Point(757, 144);
+            this.lblChat1.Name = "lblChat1";
+            this.lblChat1.Size = new System.Drawing.Size(0, 16);
+            this.lblChat1.TabIndex = 20;
+            // 
+            // lblChat0
+            // 
+            this.lblChat0.AutoSize = true;
+            this.lblChat0.Font = new System.Drawing.Font("Arial Narrow", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblChat0.Location = new System.Drawing.Point(86, 390);
+            this.lblChat0.Name = "lblChat0";
+            this.lblChat0.Size = new System.Drawing.Size(0, 16);
+            this.lblChat0.TabIndex = 21;
+            // 
+            // txtMessage
+            // 
+            this.txtMessage.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(110)))), ((int)(((byte)(44)))), ((int)(((byte)(0)))));
+            this.txtMessage.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.txtMessage.ForeColor = System.Drawing.Color.White;
+            this.txtMessage.Location = new System.Drawing.Point(3, 522);
+            this.txtMessage.Name = "txtMessage";
+            this.txtMessage.Size = new System.Drawing.Size(256, 20);
+            this.txtMessage.TabIndex = 9;
+            this.txtMessage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TxtMessage_KeyDown);
+            // 
+            // btnSendChat
+            // 
+            this.btnSendChat.BackColor = System.Drawing.Color.Gainsboro;
+            this.btnSendChat.FlatAppearance.BorderSize = 0;
+            this.btnSendChat.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnSendChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSendChat.Location = new System.Drawing.Point(256, 519);
+            this.btnSendChat.Name = "btnSendChat";
+            this.btnSendChat.Size = new System.Drawing.Size(55, 31);
+            this.btnSendChat.TabIndex = 10;
+            this.btnSendChat.Text = "Send";
+            this.btnSendChat.UseVisualStyleBackColor = false;
+            this.btnSendChat.Click += new System.EventHandler(this.BtnSendChat_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -326,6 +341,12 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.lblChat0);
+            this.Controls.Add(this.btnSendChat);
+            this.Controls.Add(this.lblChat1);
+            this.Controls.Add(this.txtMessage);
+            this.Controls.Add(this.lblChat2);
+            this.Controls.Add(this.lblChat3);
             this.Controls.Add(this.ptbSun);
             this.Controls.Add(this.lblTimeLeft0);
             this.Controls.Add(this.ptbAvatar0);
@@ -333,15 +354,12 @@
             this.Controls.Add(this.pnInfo3);
             this.Controls.Add(this.pnInfo2);
             this.Controls.Add(this.pnInfo1);
-            this.Controls.Add(this.pnlChat);
             this.Controls.Add(this.btnIgnore);
             this.Controls.Add(this.btnFight);
             this.DoubleBuffered = true;
             this.Name = "GameForm";
             this.Text = "GameForm";
             this.Load += new System.EventHandler(this.GameForm_Load);
-            this.pnlChat.ResumeLayout(false);
-            this.pnlChat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).EndInit();
             this.pnInfo1.ResumeLayout(false);
             this.pnInfo1.PerformLayout();
@@ -362,10 +380,6 @@
         private System.Windows.Forms.Label lblRoomId;
         private System.Windows.Forms.Button btnFight;
         private System.Windows.Forms.Button btnIgnore;
-        private System.Windows.Forms.Panel pnlChat;
-        private System.Windows.Forms.TextBox txtMessage;
-        private System.Windows.Forms.RichTextBox txtChatBox;
-        private System.Windows.Forms.Button btnSendChat;
         private System.Windows.Forms.PictureBox ptbAvatar1;
         private System.Windows.Forms.Panel pnInfo1;
         private System.Windows.Forms.Label lblMoney1;
@@ -383,5 +397,11 @@
         private System.Windows.Forms.Label lblTimeLeft0;
         private System.Windows.Forms.PictureBox ptbSun;
         private System.Windows.Forms.Timer timerSunAnimation;
+        private System.Windows.Forms.Label lblChat3;
+        private System.Windows.Forms.Label lblChat2;
+        private System.Windows.Forms.Label lblChat1;
+        private System.Windows.Forms.Label lblChat0;
+        private System.Windows.Forms.TextBox txtMessage;
+        private System.Windows.Forms.Button btnSendChat;
     }
 }

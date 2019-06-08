@@ -70,7 +70,7 @@ namespace Server
             int count = 0;
             for (int i = 0; i < 4; i++) 
             {
-                players[count].sendData($"start {sendCard[i]} {players[winnerPosition].getID()}");
+                players[count].sendData($"start {sendCard[i]} {winnerPosition}");
                 count = (count + 1) % 4;
             }
 
@@ -88,8 +88,11 @@ namespace Server
             }
         }
 //------------------------------------------------------------------------------
-        public void endGame(Player player)      //sau khi nhận tín hiệu kết thúc ván
+        public void endGame(string data, Player player)      //sau khi nhận tín hiệu kết thúc ván
         {
+            string dataSend = data.Substring(7);
+            for (int i = 0; i < 4; i++)
+                    players[i].sendData($"wait {miss} {dataSend}");
             Thread.Sleep(1000);
             for (int i = 0; i < 4; i++)
             {
@@ -143,12 +146,20 @@ namespace Server
                 return false;
         }
 
-        public void chat(string data)
+        public void chat(string data, Player player)
         {
-            foreach(Player player in players)
+            int vt = 0;
+            for (int i = 0; i < 4; i++)
+                if (players[i] == player)
+                {
+                    vt = i;
+                    break;
+                }
+            
+            foreach(Player pl in players)
             {
-                if(player != null)
-                    player.sendData("chat " + data);
+                if (pl != null)
+                    pl.sendData("chat " + vt.ToString() + data);
             }
         }
 

@@ -92,6 +92,8 @@ namespace Client
                         if (rule.check() || miss == 3)
                         {
                             btnFight.Enabled = true;
+                            if (miss == 3) 
+                                btnIgnore.Enabled = false;
                             StartOrStopSunAnimation(true, sunPosition[0]);
                         }
                         else
@@ -109,8 +111,10 @@ namespace Client
                         cleanCardsImage();
                         break;
                     case "chat":
-                        string msg = data.Substring(5);
-                        txtChatBox.Text += $"{msg}\n";
+                        string msg = data.Substring(8);
+                        int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[6]}")]}");
+                        Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
+                        //txtChatBox.Text += $"{msg}\n";
                         break;
                     case "roomate":
                         setNewRoomate(data.Substring(8));
@@ -159,7 +163,7 @@ namespace Client
 
         }
 
-        //-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
         private void setNewRoomates(string data)
         {
             string[] infos = data.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
@@ -357,11 +361,12 @@ namespace Client
                             isClick[i] = false;
                         }
                     }
-
-                    tcpModel.sendData("pop" + myCards);
-                    StartOrStopSunAnimation(false, new Point(0, 0));
                     if (numCardsLeft <= 0)
-                        tcpModel.sendData("winner ");
+                        tcpModel.sendData("winner" + myCards);
+                    else
+                        tcpModel.sendData("pop" + myCards);
+                    StartOrStopSunAnimation(false, new Point(0, 0));
+                    
                 }
                 else
                     MessageBox.Show("Invalid cards");

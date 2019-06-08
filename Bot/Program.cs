@@ -11,6 +11,7 @@ namespace Bot
         private Solve bot;
         private int numCardsLeft = 13;
         private int miss;
+        private string offset = "";
 
         static void Main(string[] args)
         {
@@ -40,11 +41,11 @@ namespace Bot
                         break;
 
                     case "start":
-                        int id = int.Parse(value[value.Length - 1]);
+                        string id = value[value.Length - 1];
                         bot = new Solve();
                         data = data.Remove(0, 6);
                         myCards = data.Remove(data.Length - 1, 1);
-                        if (id == tcpModel.getID())
+                        if (id == offset)
                             start(myCards);
                         break;
 
@@ -53,7 +54,9 @@ namespace Bot
                         miss = int.Parse(value[1]);
                         next(data);
                         break;
-
+                    case "room":
+                        offset = value[2];
+                        break;
                     default:
                         break;
                 }

@@ -93,7 +93,7 @@ namespace Server
                             break;
 
                         case "winner"://client thắng gửi, kết thúc ván
-                            rooms[player.getIDRoom()].endGame(player);
+                            rooms[player.getIDRoom()].endGame(data, player);
                             break;
 
                         case "pop":
@@ -115,7 +115,7 @@ namespace Server
                         case "chat":
                             data = data.Substring(5);
                             string sendContent = $"{player.getID()}:{data}";
-                            rooms[player.getIDRoom()].chat(sendContent);
+                            rooms[player.getIDRoom()].chat(sendContent, player);
                             break;
                         default:
                             break;
