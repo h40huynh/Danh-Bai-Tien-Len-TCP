@@ -47,7 +47,7 @@ namespace Bot
         public void setmyCard(string datareceive)
         {
             string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+            myCard = Array.ConvertAll<string, int>(Setcard(datareceive), int.Parse);
             for (int i = 0; i < myCard.Length - 1; i++)
                 for (int j = i + 1; j < myCard.Length; j++) 
                     if (myCard[i] > myCard[j]) 
