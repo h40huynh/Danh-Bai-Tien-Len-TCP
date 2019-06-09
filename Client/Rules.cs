@@ -33,9 +33,34 @@ namespace client
             myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
             Array.Reverse(myCard);
         }
-        public Rules()
-        {
-        }
+        //public void setmyCard(string datareceive)
+        //{
+        //    string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+        //    if (int.Parse(mystr[0]) < 31)
+        //    {
+        //        string[] mystr2 = new string[mystr.Length - 1];
+        //        Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
+        //        myCard = Array.ConvertAll<string, int>(mystr2, int.Parse);
+        //    }
+        //    else if (int.Parse(mystr[mystr.Length - 1]) > 154)
+        //    {
+        //        string[] mystr2 = new string[mystr.Length - 1];
+        //        Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
+        //        myCard = Array.ConvertAll<string, int>(mystr2, int.Parse);
+        //    }
+        //    else
+        //        myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+        //}
+
+        public Rules() { }
+        //public Heo(string mycard, string enemy)
+        //{
+        //    string[] mystr = mycard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
+        //    string[] enemystr = enemy.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
+        //}
         public bool check() // check ban đầu
         {
             if (enemyCard.Length == 0)
@@ -46,7 +71,7 @@ namespace client
                 // đánh lẻ =2
                 if (enemyCard[0] / 10 == 15)
                 {
-                    if (checksingle(myCard) == true || finddoublegroup(myCard, 3) == true || findquadra(myCard) == true)
+                    if (checksingle(myCard) == true || finddoublegroup(myCard, 3) == true || findquadra() == true)
                         return true;
                 }
                 else
@@ -59,7 +84,7 @@ namespace client
                 // đánh đôi 2
                 if (enemyCard[0] / 10 == 15)
                 {
-                    if (checkdouble(myCard) == true || findquadra(myCard) == true || finddoublegroup(myCard, 4) == true)
+                    if (checkdouble(myCard) == true || findquadra() == true || finddoublegroup(myCard, 4) == true)
                         return true;
                 }
                 else
@@ -81,7 +106,7 @@ namespace client
             // đánh 3 đôi thông
             if (enemyCard.Length == 6 && enemyCard[0] / 10 == enemyCard[1] / 10)
             {
-                if (checkdoublegroup(myCard, 3).Length != 0 || findquadra(myCard) || finddoublegroup(myCard, 4))
+                if (checkdoublegroup(myCard, 3).Length == 6 || findquadra() || finddoublegroup(myCard, 4))
                     return true;
                 return false;
             }
@@ -142,25 +167,31 @@ namespace client
             }
             return false;
         }
-        private int[] checkquadra(int[] curr)// tứ quý
+        private int[] checkquadra(int[] position)// tứ quý
         {
             int[] tmp = new int[4];
             // curr max < enemyCard min => false
-            if (curr[curr.Length - 1] < enemyCard[0])
+            if (myCard[myCard.Length - 1] < enemyCard[0])
                 return tmp;
             // tìm tứ quý lớn nhất 
-            for (int i = curr.Length - 1; i > 2; i--)
+            for (int i = myCard.Length - 1; i > 2; i--)
             {
                 // có tứ quý và curr lớn của tứ quý lớn hơn cardmax của địch
-                if (curr[i] > enemyCard[0])
+                if (myCard[i] > enemyCard[0])
                 {
-                    if (curr[i] / 10 == curr[i - 1] / 10 && curr[i] / 10 == curr[i - 2] / 10 && curr[i] / 10 == curr[i - 3] / 10)
+                    if (myCard[i] / 10 == myCard[i - 1] / 10 && myCard[i] / 10 == myCard[i - 2] / 10 && myCard[i] / 10 == myCard[i - 3] / 10)
                     {
-                        tmp[0] = i - 3;
-                        tmp[1] = i - 2;
-                        tmp[2] = i - 1;
-                        tmp[3] = i;
-                        return tmp;
+                        for (int j = 0; j < position.Length; j++)
+                        {
+                            if (myCard[i] == position[j])
+                            {
+                                tmp[0] = i - 3;
+                                tmp[1] = i - 2;
+                                tmp[2] = i - 1;
+                                tmp[3] = i;
+                                return tmp;
+                            }
+                        }
                     }
                 }
                 else
@@ -206,15 +237,15 @@ namespace client
             }
             return false;
         }
-        private int[] checkdoublegroup(int[] curr, int num)
+        private int[] checkdoublegroup(int[] position, int num)
         {
             List<int> arrdouble = new List<int>(); // mảng các đôi
-            for (int i = curr.Length - 1; i > 0; i--)
+            for (int i = myCard.Length - 1; i > 0; i--)
             {
-                if (curr[i] / 10 == curr[i - 1] / 10 && curr[i] / 10 != 15)
+                if (myCard[i] / 10 == myCard[i - 1] / 10 && myCard[i] / 10 != 15)
                 {
-                    arrdouble.Add(curr[i]);
-                    arrdouble.Add(curr[i - 1]);
+                    arrdouble.Add(myCard[i]);
+                    arrdouble.Add(myCard[i - 1]);
                 }
             }
 
@@ -235,6 +266,7 @@ namespace client
                 return tmp;
 
             int dem = 1;
+            int p = 0;
             for (int i = 0; i < arrdouble.Count - 2; i = i + 2)
             {
                 if (arrdouble[i] / 10 == arrdouble[i + 2] / 10 + 1)
@@ -245,52 +277,21 @@ namespace client
                 {
                     arrdouble.Reverse();
                     i = arrdouble.Count - i;
-                    int k = 0;
-                    for (int j = i + (dem - 2) * 2 - (dem * 2); j <= dem * 2; j++, k++)
+                    for (int j = i + (dem - 2) * 2 - (dem * 2); j <= dem * 2; j++)
                     {
-                        tmp[k] = j;
+                        for (int k = 0; k < position.Length; k++)
+                        {
+                            if (myCard[j] == position[k])
+                            {
+                                tmp[p++] = k;
+                                break;
+                            }
+                        }
                     }
-                    //  Array.Copy(arrdouble.ToArray(), (i + (dem - 2) * 2 - (dem * 2)), tmp, 0, dem * 2);
                     return tmp;
                 }
             }
             return tmp;
-            //mảng các đôi
-            //int temp = 0;
-            //List<int> result = new List<int>();
-
-            //List<int> arrdouble = new List<int>();
-            //for (int i = curr.Length - 1; i > 0; i--)
-            //{
-            //    if (curr[i] / 10 == curr[i - 1] / 10 && curr[i] / 10 != 15)
-            //    {
-            //        if (curr[i] / 10 != temp)
-            //        {
-            //            arrdouble.Add(curr[i]);
-            //            arrdouble.Add(curr[i - 1]);
-            //            temp = curr[i] / 10;
-            //        }
-            //        i--;
-            //    }
-            //}
-            //// curr max < enemyCard max => false
-            //if (arrdouble.Count == 0)
-            //    return result;
-            //if (arrdouble[0] < enemyCard[enemyCard.Length - 1])
-            //    return result;
-
-            //int dem = 1;
-            //for (int i = 0; i < arrdouble.Count - 2; i = i + 2)
-            //{
-            //    if (arrdouble[i] / 10 == arrdouble[i + 2] / 10 + 1)
-            //        dem++;
-            //    else
-            //        dem = 1;
-            //    if (dem * 2 == enemyCard.Length && arrdouble[i + 4 - len * 2] > enemyCard[enemyCard.Length - 1])
-            //        return true;
-            //}
-            //return result;
-
         }
         private bool finddoublegroup(int[] myCard, int num)
         {
@@ -320,7 +321,7 @@ namespace client
             return false;
 
         }
-        private bool findquadra(int[] myCard)
+        private bool findquadra()
         {
             for (int i = myCard.Length - 1; i > 2; i--)
             {
@@ -436,7 +437,7 @@ namespace client
                             return true;
                         else if (isdoublegroup(4) || isquadra())
                             return true;
-                        else if (checkquadra(currentCard).Length != 0 && isquadra())
+                        else if (checkquadra(myCard).Length != 0 && isquadra())
                             return true;
                     }
                     else
@@ -458,7 +459,7 @@ namespace client
                 // đánh tứ quý
                 if (enemyCard.Length == 4 && enemyCard[0] / 10 == enemyCard[3] / 10)
                 {
-                    if (checkquadra(currentCard).Length != 0 && isquadra())
+                    if (checkquadra(myCard).Length != 0 && isquadra())
                         return true;
                     else
                         return false;
@@ -468,13 +469,13 @@ namespace client
                 {
                     if (isquadra())
                         return true;
-                    if (checkdoublegroup(currentCard, 3).Length != 0 && isdoublegroup(3))
+                    if (checkdoublegroup(myCard, 3).Length != 0 && isdoublegroup(3))
                         return true;
                 }
                 // đánh đôi thông > 3
                 if (enemyCard.Length >= 8 && enemyCard[0] / 10 == enemyCard[1] / 10)
                 {
-                    if (isdoublegroup(enemyCard.Length / 2) && checkdoublegroup(currentCard, enemyCard.Length / 2).Length != 0)
+                    if (isdoublegroup(enemyCard.Length / 2) && checkdoublegroup(myCard, enemyCard.Length / 2).Length != 0)
                         return true;
                     else
                         return false;
@@ -485,29 +486,28 @@ namespace client
                 return false;
             }
         }
-
-        private List<int[]> MangCacDoi(int[] mycard)
+        private List<int[]> MangCacDoi(int[] position)
         {
             List<int[]> result = new List<int[]>();
             int[] tmp = { -1, -1 };
-            if (mycard.Length < 2)
+            if (myCard.Length < 2)
                 return result;
             List<int> arrdouble = new List<int>(); // mảng các đôi
-            for (int i = mycard.Length - 1; i > 0; i--)
+            for (int i = myCard.Length - 1; i > 0; i--)
             {
-                if (mycard[i] / 10 == mycard[i - 1] / 10 && mycard[i] > enemyCard[1])
+                if (myCard[i] / 10 == myCard[i - 1] / 10 && myCard[i] > enemyCard[1])
                 {
-                    arrdouble.Add(mycard[i]);
-                    arrdouble.Add(mycard[i - 1]);
+                    arrdouble.Add(myCard[i]);
+                    arrdouble.Add(myCard[i - 1]);
                 }
             }
             arrdouble.Reverse();
             int k = 0;
             for (int j = 0; j < arrdouble.Count; j++)
             {
-                for (int i = 0; i < mycard.Length; i++)
+                for (int i = 0; i < position.Length; i++)
                 {
-                    if (arrdouble[j] == mycard[i])
+                    if (arrdouble[j] == position[i])
                     {
                         tmp[k] = i;
                         k++;
@@ -525,28 +525,28 @@ namespace client
             }
             return result;
         }
-        private List<int[]> MangBaCay(int[] mycard)
+        private List<int[]> MangBaCay(int[] position)
         {
             List<int[]> result = new List<int[]>();
             int[] tmp = { 0, 0, 0 };
-            if (mycard.Length < 3)
+            if (myCard.Length < 3)
                 return result;
             List<int> arrdouble = new List<int>();
-            for (int i = mycard.Length - 1; i > 1; i--)
+            for (int i = myCard.Length - 1; i > 1; i--)
             {
-                if (mycard[i] > enemyCard[1] && mycard[i] / 10 == mycard[i - 1] / 10 && mycard[i] / 10 == mycard[i - 2] / 10)
+                if (myCard[i] > enemyCard[1] && myCard[i] / 10 == myCard[i - 1] / 10 && myCard[i] / 10 == myCard[i - 2] / 10)
                 {
-                    arrdouble.Add(mycard[i]);
-                    arrdouble.Add(mycard[i - 1]);
-                    arrdouble.Add(mycard[i - 2]);
+                    arrdouble.Add(myCard[i]);
+                    arrdouble.Add(myCard[i - 1]);
+                    arrdouble.Add(myCard[i - 2]);
                 }
             }
             arrdouble.Reverse();
             for (int j = 0; j < arrdouble.Count; j++)
             {
-                for (int i = 0, k = 0; i < mycard.Length; i++)
+                for (int i = 0, k = 0; i < position.Length; i++)
                 {
-                    if (arrdouble[j] == mycard[i])
+                    if (arrdouble[j] == position[i])
                     {
                         tmp[k] = i;
                         k++;
@@ -561,23 +561,23 @@ namespace client
             }
             return result;
         }
-        private List<int[]> MangCacSanh(int[] mycard)
+        private List<int[]> MangCacSanh(int[] position)
         {
             List<int> arrayIncreased = new List<int>();
             int j;
             int sl = enemyCard.Length;
-            for (j = mycard.Length - 1; j >= 0; j--)
+            for (j = myCard.Length - 1; j >= 0; j--)
             {
-                if (mycard[j] / 10 != 15)
+                if (myCard[j] / 10 != 15)
                 {
-                    arrayIncreased.Add(mycard[j]);
+                    arrayIncreased.Add(myCard[j]);
                     break;
                 }
             }
 
             for (int i = j - 1; i >= 0; i--)
-                if (mycard[i] / 10 < mycard[i + 1] / 10)
-                    arrayIncreased.Add(mycard[i]);
+                if (myCard[i] / 10 < myCard[i + 1] / 10)
+                    arrayIncreased.Add(myCard[i]);
 
             arrayIncreased.Reverse();
             List<int[]> result = new List<int[]>();
@@ -591,18 +591,18 @@ namespace client
                 int[] tmp = new int[sl];
                 Array.Copy(arrayIncreased.ToArray(), i, mangtam, 0, sl);
                 for (int k = 0; k < mangtam.Length - 1; k++)
-                    for (int l = 0; l < mycard.Length; l++)
-                        if (mangtam[k] / 10 == mycard[l] / 10 && mangtam[k] > mycard[l])
-                            mangtam[k] = mycard[l];
+                    for (int l = 0; l < myCard.Length; l++)
+                        if (mangtam[k] / 10 == myCard[l] / 10 && mangtam[k] > myCard[l])
+                            mangtam[k] = myCard[l];
 
                 if (mangtam[sl - 1] > enemyCard[sl - 1] && isgroup(mangtam) == true)
                 {
                     mangtam.Reverse();
                     for (int k = 0; k < mangtam.Length; k++)
                     {
-                        for (int m = 0; m < mycard.Length; m++)
+                        for (int m = 0; m < position.Length; m++)
                         {
-                            if (mangtam[k] == mycard[m])
+                            if (mangtam[k] == position[m])
                             {
                                 tmp[k] = m;
                                 break;
@@ -614,7 +614,7 @@ namespace client
             }
             return result;
         }
-        public int[] setclickcards(int[] mycard, int id)
+        public int[] setclickcards(int[] position, int id)
         {
             int[] result = { id };
             if (enemyCard == null || enemyCard.Length == 0 /*|| check() == false*/)
@@ -624,71 +624,77 @@ namespace client
             {
                 if (enemyCard[0] / 10 == 15)
                 {
-                    if (checkdoublegroup(myCard, 4).Length != 0 && checkdoublegroup(myCard, 4).Contains(id) == true)
-                        return checkdoublegroup(myCard, 4);
+                    int[] tmp1 = checkdoublegroup(position, 4);
+                    if (tmp1.Length != 0 && tmp1.Contains(id) == true)
+                        return tmp1;
 
-                    if (checkdoublegroup(myCard, 3).Length != 0 && checkdoublegroup(myCard, 3).Contains(id) == true)
-                        return checkdoublegroup(myCard, 3);
-
-                    if (checkquadra(myCard).Length != 0 && checkquadra(myCard).Contains(id) == true)
-                        return checkquadra(myCard);
+                    int[] tmp2 = checkdoublegroup(position, 2);
+                    if (tmp2.Length != 0 && tmp2.Contains(id) == true)
+                        return tmp2;
+                    int[] tmp3 = checkquadra(position);
+                    if (tmp3.Length != 0 && tmp3.Contains(id) == true)
+                        return checkquadra(position);
                 }
             }
             else if (enemyCard.Length == 2)
             {
-                for (int i = 0; i < MangCacDoi(mycard).Count; i++)
-                    if (MangCacDoi(mycard)[i].Contains(id))
-                        return MangCacDoi(mycard)[i];
+                for (int i = 0; i < MangCacDoi(position).Count; i++)
+                    if (MangCacDoi(position)[i].Contains(id))
+                        return MangCacDoi(position)[i];
                 if (enemyCard[0] / 10 == 15)
                 {
-                    if (checkdoublegroup(mycard, 3).Length != 0 && checkdoublegroup(mycard, 3).Contains(id) == true)
-                        return checkdoublegroup(mycard, 3);
-
-                    if (checkquadra(mycard).Length != 0 && checkquadra(mycard).Contains(id) == true)
-                        return checkquadra(mycard);
+                    int[] tmp1 = checkdoublegroup(position, 3);
+                    if (tmp1.Length != 0 && tmp1.Contains(id) == true)
+                        return tmp1;
+                    int[] tmp2 = checkquadra(position);
+                    if (tmp2.Length != 0 && tmp2.Contains(id) == true)
+                        return tmp2;
                 }
             }
             else if (enemyCard.Length == 3 && enemyCard[0] / 10 == enemyCard[1] / 10)
             {
-                for (int i = 0; i < MangBaCay(mycard).Count; i++)
-                    if (MangBaCay(mycard)[i].Contains(id))
-                        return MangBaCay(mycard)[i];
-
+                for (int i = 0; i < MangBaCay(position).Count; i++)
+                    if (MangBaCay(position)[i].Contains(id))
+                        return MangBaCay(position)[i];
             }
             else if (enemyCard.Length == 4 && enemyCard[0] / 10 == enemyCard[3] / 10)
             {
-                if (checkquadra(mycard).Length != 0 && checkquadra(mycard).Contains(id) == true)
-                    return checkquadra(mycard);
+                int[] tmp = checkquadra(position);
+                if (tmp.Length != 0 && tmp.Contains(id) == true)
+                    return tmp;
             }
             else if (enemyCard.Length == 6 && enemyCard[0] / 10 == enemyCard[1] / 10)
             {
-                if (checkquadra(mycard).Length != 0 && checkquadra(mycard).Contains(id) == true)
-                    return checkquadra(mycard);
-                if (checkdoublegroup(mycard, 3).Length != 0 && checkdoublegroup(mycard, 3).Contains(id) == true)
-                    return checkdoublegroup(mycard, 3);
+                int[] tmp1 = checkquadra(position);
+                if (tmp1.Length != 0 && tmp1.Contains(id) == true)
+                    return tmp1;
+                int[] tmp2 = checkdoublegroup(position, 3);
+                if (tmp2.Length != 0 && tmp2.Contains(id) == true)
+                    return tmp2;
             }
             else if (enemyCard.Length >= 8 && enemyCard[0] / 10 == enemyCard[1] / 10)
             {
-                if (checkdoublegroup(mycard, enemyCard.Length / 2).Length != 0 && checkdoublegroup(mycard, enemyCard.Length / 2).Contains(id) == true)
-                    return checkdoublegroup(mycard, enemyCard.Length / 2);
+                int[] tmp = checkdoublegroup(position, enemyCard.Length / 2);
+                if (tmp.Length != 0 && tmp.Contains(id) == true)
+                    return tmp;
             }
             else
             {
-                for (int i = 0; i < MangCacSanh(mycard).Count; i++)
-                    if (MangCacSanh(mycard)[i].Contains(id))
-                        return MangCacSanh(mycard)[i];
+                for (int i = 0; i < MangCacSanh(position).Count; i++)
+                    if (MangCacSanh(position)[i].Contains(id))
+                        return MangCacSanh(position)[i];
             }
             return result;
         }
-        public int[] setclickcards2(int[] mycard, int id)
+        public int[] setclickcards2(int[] position, int id)
         {
-            int[] temp = setclickcards(mycard, 12 - id);
-            for(int i = 0; i < temp.Length; i++)
+            int[] temp = setclickcards(position, 12 - id);
+            for (int i = 0; i < temp.Length; i++)
             {
                 temp[i] = 12 - temp[i];
-                
+
             }
-            
+
             return temp;
         }
     }
