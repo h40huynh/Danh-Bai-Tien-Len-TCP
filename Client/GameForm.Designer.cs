@@ -241,7 +241,6 @@
             // 
             // timerCountdown
             // 
-            this.timerCountdown.Enabled = true;
             this.timerCountdown.Interval = 1000;
             this.timerCountdown.Tick += new System.EventHandler(this.TimerCountdown_Tick);
             // 
@@ -253,9 +252,8 @@
             this.lblTimeLeft0.ForeColor = System.Drawing.Color.White;
             this.lblTimeLeft0.Location = new System.Drawing.Point(427, 338);
             this.lblTimeLeft0.Name = "lblTimeLeft0";
-            this.lblTimeLeft0.Size = new System.Drawing.Size(64, 24);
+            this.lblTimeLeft0.Size = new System.Drawing.Size(0, 24);
             this.lblTimeLeft0.TabIndex = 15;
-            this.lblTimeLeft0.Text = "Timer";
             // 
             // ptbSun
             // 
@@ -357,8 +355,10 @@
             this.Controls.Add(this.btnIgnore);
             this.Controls.Add(this.btnFight);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "GameForm";
             this.Text = "GameForm";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.GameForm_FormClosing);
             this.Load += new System.EventHandler(this.GameForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).EndInit();
             this.pnInfo1.ResumeLayout(false);

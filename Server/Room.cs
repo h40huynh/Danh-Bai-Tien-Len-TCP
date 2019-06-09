@@ -52,6 +52,14 @@ namespace Server
             int position = Array.FindIndex(players, player => player == p);
             players[position] = null;
             numberOfPlayer--;
+
+            for (int i = 0; i < 4; i++)
+            {
+                if(i != position && players[i] != null)
+                {
+                    players[i].sendData($"quitroom {position}");
+                }
+            }
         }
 //---------------------------------------------------------------
         public void startGame()

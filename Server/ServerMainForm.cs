@@ -117,6 +117,9 @@ namespace Server
                             string sendContent = $"{player.getID()}:{data}";
                             rooms[player.getIDRoom()].chat(sendContent, player);
                             break;
+                        case "quit":
+                            rooms[player.getIDRoom()].deletePlayer(player);
+                            break;
                         default:
                             break;
                     }

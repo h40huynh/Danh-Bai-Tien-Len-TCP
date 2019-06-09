@@ -43,6 +43,10 @@ namespace Client
         private readonly Point[] sunPosition;
         private int toggleSun = 1;
 
+        // Form closing
+        private bool isPlaying = false;
+        
+
         public GameForm(TcpModel tcpModel, int roomId, int userOffset)
         {
             this.tcpModel = tcpModel;
@@ -70,19 +74,24 @@ namespace Client
             {
                 string data = tcpModel.receiveData();
                 string[] value = data.Split(' ');
+                int cid;
                 switch (value[0])
                 {
                     case "start":
+                        isPlaying = true;
                         initPictureBox(data);
                         rule = new Rules();
                         int id = int.Parse(value[value.Length - 1]);
-                        if (id == tcpModel.getID())
+                        if (id == userOffsetInRoom)
+                        {
+                            StartOrStopSunAnimation(true, sunPosition[0]);
                             btnFight.Enabled = true;
-                        
+                        }
+                        startTimerCountDown(id);
                         break;
 
                     case "next":
-                        timerCountdown.Start();
+                        
                         enemyCards = data;
                         miss = int.Parse(value[1]);
                         showRecentFightCard(data);
@@ -108,11 +117,12 @@ namespace Client
                         btnIgnore.Enabled = false;
                         break;
                     case "end":
+                        isPlaying = false;
                         cleanCardsImage();
                         break;
                     case "chat":
                         string msg = data.Substring(8);
-                        int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[6]}")]}");
+                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[6]}")]}");
                         Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
                         //txtChatBox.Text += $"{msg}\n";
                         break;
@@ -122,10 +132,35 @@ namespace Client
                     case "roomates":
                         setNewRoomates(data.Substring(9));
                         break;
+                    case "quitroom":
+                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[9]}")]}");
+                        deleteRoomate(cid);
+                        break;
                     default:
                         break;
                 }
             }
+        }
+
+        private void deleteRoomate(int cid)
+        {
+            bool isFinish = false;
+            do
+            {
+                if (this.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        Controls.Find($"pnInfo{cid}", false).First().Hide();
+                        isFinish = true;
+                    });
+                }
+            } while (!isFinish);
+        }
+
+        private void startTimerCountDown(int id)
+        {
+            
         }
 
         private void StartOrStopSunAnimation(bool isStart, Point position)
@@ -523,6 +558,12 @@ namespace Client
             tmp.Y += 10 * toggleSun;
             ptbSun.Location = tmp;
             toggleSun *= -1;
+        }
+
+        private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = isPlaying;
+            tcpModel.sendData("quit ");
         }
     }
 }
