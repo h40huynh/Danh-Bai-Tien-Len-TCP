@@ -34,10 +34,10 @@ namespace Client
         private readonly string[] UserAvatarNameById = { "0123", "3012", "2301", "1230" };
 
         // For timer count down
-        private readonly int timePerTurn = 12;
+        private readonly int timePerTurn = 10;
         private int timeCount;
         private int countPosition = 0;
-        private readonly Point[] timerLocation = { new Point(427, 338), new Point(756, 143), new Point(553, 33), new Point(13, 143) };
+        private readonly Point[] timerLocation = { new Point(840, 434), new Point(760, 259), new Point(387, 95), new Point(17, 259) };
 
         // For signal allow fight or not
         private readonly Point[] sunPosition;
@@ -60,6 +60,7 @@ namespace Client
             isClick = new bool[13];
             lblRoomId.Text = $"Room {roomId}";
             userOffsetInRoom = userOffset;
+            prbTimerCount.Maximum = timePerTurn;
 
             sunPosition = new Point[] { btnFight.Location, btnIgnore.Location };
 
@@ -91,7 +92,7 @@ namespace Client
                         break;
 
                     case "next":
-                        
+                        resetTimer();
                         enemyCards = data;
                         miss = int.Parse(value[1]);
                         showRecentFightCard(data);
@@ -112,6 +113,7 @@ namespace Client
                         break;
 
                     case "wait":
+                        resetTimer();
                         showRecentFightCard(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
@@ -142,6 +144,13 @@ namespace Client
             }
         }
 
+        private void resetTimer()
+        {
+            countPosition = (countPosition + 1) % 4;
+            prbTimerCount.Location = timerLocation[countPosition];
+            prbTimerCount.Value = timePerTurn;
+        }
+
         private void deleteRoomate(int cid)
         {
             bool isFinish = false;
@@ -160,7 +169,26 @@ namespace Client
 
         private void startTimerCountDown(int id)
         {
-            
+            int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][id]}");
+            countPosition = cid;
+            prbTimerCount.Value = timePerTurn;
+            prbTimerCount.Location = timerLocation[countPosition];
+            try
+            {
+                if (this.InvokeRequired)
+                {
+                    Invoke((MethodInvoker)delegate ()
+                    {
+                        timerCountdown.Start();
+
+                    });
+                }
+                else
+                {
+                    timerCountdown.Start();
+                }
+            }
+            catch { }
         }
 
         private void StartOrStopSunAnimation(bool isStart, Point position)
@@ -342,6 +370,9 @@ namespace Client
 
             // Set sun position
             ptbSun.ImageLocation = "./icon/sun.png";
+
+            // progress bar for timer
+            prbTimerCount.Location = new Point(-200, -200);
         }
 //-----------------------------------------------------------------------------
         private void handleCardString(string data)
@@ -543,12 +574,28 @@ namespace Client
 
         private void TimerCountdown_Tick(object sender, EventArgs e)
         {
-            lblTimeLeft0.Text = timeCount.ToString();
-            if(--timeCount < -1)
+            if(prbTimerCount.Value > 0)
             {
-                timeCount = timePerTurn;
-                countPosition = (countPosition + 1) % 4;
-                lblTimeLeft0.Location = timerLocation[countPosition];
+                prbTimerCount.Increment(-1);
+            }
+            else if (countPosition == 0)
+            {
+                if(enemyCards == "" || miss == 3)
+                {
+                    for(int i = 12; i >= 0; i--)
+                    {
+                        if(ptbMyCards[i] != null)
+                        {
+                            isClick[i] = true;
+                            BtnFight_Click(null, null);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    BtnIgnore_Click(null, null);
+                }
             }
         }
 

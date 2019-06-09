@@ -56,6 +56,7 @@
             this.lblChat0 = new System.Windows.Forms.Label();
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSendChat = new System.Windows.Forms.Button();
+            this.prbTimerCount = new System.Windows.Forms.ProgressBar();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
             this.pnInfo2.SuspendLayout();
@@ -118,7 +119,7 @@
             this.pnInfo1.Controls.Add(this.ptbAvatar1);
             this.pnInfo1.Location = new System.Drawing.Point(760, 170);
             this.pnInfo1.Name = "pnInfo1";
-            this.pnInfo1.Size = new System.Drawing.Size(160, 110);
+            this.pnInfo1.Size = new System.Drawing.Size(160, 83);
             this.pnInfo1.TabIndex = 11;
             // 
             // lblMoney1
@@ -151,7 +152,7 @@
             this.pnInfo2.Controls.Add(this.ptbAvatar2);
             this.pnInfo2.Location = new System.Drawing.Point(387, 6);
             this.pnInfo2.Name = "pnInfo2";
-            this.pnInfo2.Size = new System.Drawing.Size(160, 110);
+            this.pnInfo2.Size = new System.Drawing.Size(160, 85);
             this.pnInfo2.TabIndex = 12;
             // 
             // lblMoney2
@@ -194,7 +195,7 @@
             this.pnInfo3.Controls.Add(this.ptbAvatar3);
             this.pnInfo3.Location = new System.Drawing.Point(17, 170);
             this.pnInfo3.Name = "pnInfo3";
-            this.pnInfo3.Size = new System.Drawing.Size(160, 110);
+            this.pnInfo3.Size = new System.Drawing.Size(160, 83);
             this.pnInfo3.TabIndex = 13;
             // 
             // lblMoney3
@@ -331,6 +332,14 @@
             this.btnSendChat.UseVisualStyleBackColor = false;
             this.btnSendChat.Click += new System.EventHandler(this.BtnSendChat_Click);
             // 
+            // prbTimerCount
+            // 
+            this.prbTimerCount.Location = new System.Drawing.Point(387, 95);
+            this.prbTimerCount.Maximum = 15;
+            this.prbTimerCount.Name = "prbTimerCount";
+            this.prbTimerCount.Size = new System.Drawing.Size(80, 13);
+            this.prbTimerCount.TabIndex = 22;
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -339,6 +348,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.prbTimerCount);
             this.Controls.Add(this.lblChat0);
             this.Controls.Add(this.btnSendChat);
             this.Controls.Add(this.lblChat1);
@@ -403,5 +413,6 @@
         private System.Windows.Forms.Label lblChat0;
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnSendChat;
+        private System.Windows.Forms.ProgressBar prbTimerCount;
     }
 }
