@@ -39,7 +39,7 @@ namespace Bot
         }
         public void setEnemyCard(string dataReceive)
         {
-            dataReceive = dataReceive.Remove(0, 7);
+            dataReceive = dataReceive.Remove(0, 9);
             string[] enemystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
             Array.Reverse(enemyCard);

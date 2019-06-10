@@ -135,10 +135,10 @@ namespace Server
             {
                 dataSend = "";
             }
-            players[winnerPosition].sendData($"next {miss} {dataSend}");
+            players[winnerPosition].sendData($"next {miss} {winnerPosition} {dataSend}");
             for (int i = 0; i < 4; i++)
                 if(i != winnerPosition)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                    players[i].sendData($"wait {miss} {winnerPosition} {dataSend}");
             if (miss == 3)
             {
                 miss = 0;

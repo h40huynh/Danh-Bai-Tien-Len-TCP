@@ -87,7 +87,7 @@ namespace Bot
                 Array.Reverse(fightCards);
 
                 if (fightCards.Length == 1 && fightCards[0] == 0)
-                    tcpModel.sendData("miss " + data.Remove(0, 7));
+                    tcpModel.sendData("miss " + data.Remove(0, 9));
                 else
                     fighting(fightCards);
             }
