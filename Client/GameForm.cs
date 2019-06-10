@@ -126,8 +126,8 @@ namespace Client
                         cleanCardsImage();
                         break;
                     case "chat":
-                        string msg = data.Substring(8);
-                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[6]}")]}");
+                        string msg = data.Substring(7);
+                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse(value[1])]}");
                         Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
                         //txtChatBox.Text += $"{msg}\n";
                         break;

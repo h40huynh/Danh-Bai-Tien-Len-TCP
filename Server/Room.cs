@@ -167,7 +167,7 @@ namespace Server
             foreach(Player pl in players)
             {
                 if (pl != null)
-                    pl.sendData("chat " + vt.ToString() + data);
+                    pl.sendData($"chat {vt} {data}");
             }
         }
 
