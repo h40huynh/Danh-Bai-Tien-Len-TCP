@@ -1,16 +1,20 @@
 client:
-	create room <money>
+	create room {money}
 	join
-	winner
-	pop <listcards> / miss <listcards>
+	winner {cards}
+	pop miss {listcards}
+	quitroom
 	close
 room (server listen):
-	room <id> 
-	user <id> <money>
-	start <listcards>
-	next <listcards>
-	wait <listcards>
-	end <idwin> 
+	room {id} 
+	user {id} {money}
+	start {listcards} {first turn id}
+	next {miss} {next id} {listcards}
+	wait {miss} {next id} {listcards}
+	end {idwin}
+	roomate {id in room} {name}
+	roomates ,{id in room}{name}, {id in room}{name}
+	
 	
 		
 	

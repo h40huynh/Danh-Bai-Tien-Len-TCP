@@ -3,3 +3,5 @@
 */bin/Debug/*.exe.config
 */bin/Debug/*.pdb
 */obj/
+Bot/bin/Debug/netcoreapp2.1/Bot.dll
+Bot/bin/Debug/netcoreapp2.1/Bot.pdb
