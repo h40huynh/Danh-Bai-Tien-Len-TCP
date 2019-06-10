@@ -1,4 +1,4 @@
-﻿namespace Server
+﻿namespace Server2
 {
     partial class ServerMainForm
     {
@@ -49,7 +49,7 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Location = new System.Drawing.Point(0, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(338, 80);
+            this.groupBox1.Size = new System.Drawing.Size(334, 80);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Connection";
@@ -95,7 +95,7 @@
             this.rtxtLog.Location = new System.Drawing.Point(0, 80);
             this.rtxtLog.Name = "rtxtLog";
             this.rtxtLog.ReadOnly = true;
-            this.rtxtLog.Size = new System.Drawing.Size(338, 50);
+            this.rtxtLog.Size = new System.Drawing.Size(334, 46);
             this.rtxtLog.TabIndex = 1;
             this.rtxtLog.Text = "";
             // 
@@ -103,9 +103,9 @@
             // 
             this.statusStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.lblStatus});
-            this.statusStripMain.Location = new System.Drawing.Point(0, 108);
+            this.statusStripMain.Location = new System.Drawing.Point(0, 104);
             this.statusStripMain.Name = "statusStripMain";
-            this.statusStripMain.Size = new System.Drawing.Size(338, 22);
+            this.statusStripMain.Size = new System.Drawing.Size(334, 22);
             this.statusStripMain.TabIndex = 2;
             this.statusStripMain.Text = "statusBar";
             // 
@@ -119,12 +119,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 130);
+            this.ClientSize = new System.Drawing.Size(334, 126);
             this.Controls.Add(this.statusStripMain);
             this.Controls.Add(this.rtxtLog);
             this.Controls.Add(this.groupBox1);
             this.Name = "ServerMainForm";
-            this.Text = "Server";
+            this.Text = "Server2";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.statusStripMain.ResumeLayout(false);
@@ -146,4 +146,5 @@
         private System.Windows.Forms.ToolStripStatusLabel lblStatus;
     }
 }
+
 
