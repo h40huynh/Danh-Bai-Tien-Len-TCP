@@ -34,7 +34,7 @@ namespace Client
         private readonly string[] UserAvatarNameById = { "0123", "3012", "2301", "1230" };
 
         // For timer count down
-        private readonly int timePerTurn = 10;
+        private readonly int timePerTurn = 100;
         private int timeCount;
         private int countPosition = 0;
         private readonly Point[] timerLocation = { new Point(840, 434), new Point(760, 259), new Point(387, 95), new Point(17, 259) };

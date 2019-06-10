@@ -14,25 +14,25 @@ namespace Bot
         {
         }
 
-        private string[] Setcard(string dataReceive)
-        {
-            string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            string[] mystr2 = new string[mystr.Length - 1];
+        //private string[] Setcard(string dataReceive)
+        //{
+        //    string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+        //    string[] mystr2 = new string[mystr.Length - 1];
 
-            if (int.Parse(mystr[0]) < 31)
-                Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
-            else if (int.Parse(mystr[mystr.Length - 1]) > 154)
-                Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
-            else
-                return mystr;
-            return mystr2;
+        //    if (int.Parse(mystr[0]) < 31)
+        //        Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
+        //    else if (int.Parse(mystr[mystr.Length - 1]) > 154)
+        //        Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
+        //    else
+        //        return mystr;
+        //    return mystr2;
 
-        }
+        //}
 
         public Solve(string dataReceive, string baidoithu)
         {
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            myCard = Array.ConvertAll<string, int>(Setcard(dataReceive), int.Parse);
+            myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
             
             string[] enemystr = baidoithu.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
@@ -47,7 +47,7 @@ namespace Bot
         public void setmyCard(string datareceive)
         {
             string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-            myCard = Array.ConvertAll<string, int>(Setcard(datareceive), int.Parse);
+            myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
             for (int i = 0; i < myCard.Length - 1; i++)
                 for (int j = i + 1; j < myCard.Length; j++) 
                     if (myCard[i] > myCard[j]) 
@@ -613,10 +613,16 @@ namespace Bot
             if (TheManhSanh(myCard) == 0 && TheManhDoi(myCard) == false)
             {
                 if (cocle.Length == 0)
-                    if (DoiNhoNhat(myCard)[0] < SanhNhoDaiNhat(myCard)[2])
-                        return DoiNhoNhat(myCard);
-                    else
-                        return SanhNhoDaiNhat(myCard);
+                {
+                    if (KiemTraCoSanh(myCard, 3).Length != myCard.Length)
+                    {
+                        if (DoiNhoNhat(myCard)[0] < SanhNhoDaiNhat(myCard)[2])
+                            return DoiNhoNhat(myCard);
+                        else
+                            return SanhNhoDaiNhat(myCard);
+                    }
+                    return DoiNhoNhat(myCard);
+                }
                 else
                 {
                     if (DemLe(myCard).Length != myCard.Length)
@@ -690,10 +696,14 @@ namespace Bot
         }
         public int[] DanhBaiChuDong()
         {
+            if (myCard[0] < 31)
+                myCard = myCard.Skip(1).ToArray();
+            else if (myCard[myCard.Length - 1] > 154)
+                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
                 Console.Write(myCard[i] + " ");
-            
+           
             int[] result;
             int[] tmp;
             int length = 0;
@@ -795,10 +805,17 @@ namespace Bot
                     return result;
             }
 
+            if (myCard.Length < 4 && DoiNhoNhat(myCard)[0] != 0)
+                return DoiNhoNhat(myCard);
+
             return ChonBaiDanh();
         }
         public int[] DanhBaiBiDong()
         {
+            if (myCard[0] < 31)
+                myCard = myCard.Skip(1).ToArray();
+            else if (myCard[myCard.Length - 1] > 154)
+                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
                 Console.Write(myCard[i] + " ");
@@ -864,6 +881,12 @@ namespace Bot
                             }
                         }
                         return boluot;
+                    }
+                    else
+                    {
+                        if (myCard[0] / 10 >= 14)
+                            cocle[0] = myCard[0];
+                        return cocle;
                     }
                 }
             }
