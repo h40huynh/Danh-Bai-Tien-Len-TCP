@@ -97,7 +97,7 @@ namespace Client
 
         private void BtnLocal_Click(object sender, EventArgs e)
         {
-            tcpModel = new TcpModel("127.0.0.1", 8080);
+            tcpModel = new TcpModel("127.0.0.1", 13000);
             btnConnect.Enabled = false;
             btnLocal.Enabled = false;
             btnCreate.Enabled = btnJoin.Enabled = true;

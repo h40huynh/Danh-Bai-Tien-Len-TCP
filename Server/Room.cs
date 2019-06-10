@@ -69,13 +69,17 @@ namespace Server
         {
             Random random = new Random();
             int num = random.Next(40, 60);
+            int num2 = random.Next(80, 150);
             cards = new Cards();
-            for (int i = 0; i < num; i++)
+            for (int i = 0; i < num2; i++)
             {
                 cards.mix1();
                 cards.mix2();
             }
-
+            for (int i = 0; i < num; i++) 
+            {
+                cards.mix2();
+            }
             string[] sendCard = cards.Split_Cards();
 
             int count = 0;

@@ -28,7 +28,7 @@ namespace Bot
 
         public void startPlay()
         {
-            tcpModel = new TcpModel("127.0.0.1", 8080);
+            tcpModel = new TcpModel("127.0.0.1", 13000);
 
             Thread thread = new Thread(receiveDataThread);
             thread.Start();

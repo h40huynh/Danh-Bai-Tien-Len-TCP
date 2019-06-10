@@ -78,6 +78,7 @@ namespace Server2
                 {
                     string data = player.receiveData();
                     rtxtLog.Text += $"From {name}: {data}\n";
+                    rtxtLog.Text += "\n";
 
                     string[] fixData = data.Split(' ');
                     switch (fixData[0])
@@ -114,8 +115,7 @@ namespace Server2
                             break;
                         case "chat":
                             data = data.Substring(5);
-                            string sendContent = $"{player.getID()}:{data}";
-                            rooms[player.getIDRoom()].chat(sendContent, player);
+                            rooms[player.getIDRoom()].chat(data, player);
                             break;
                         case "quit":
                             rooms[player.getIDRoom()].deletePlayer(player);
@@ -168,4 +168,3 @@ namespace Server2
         }
     }
 }
-

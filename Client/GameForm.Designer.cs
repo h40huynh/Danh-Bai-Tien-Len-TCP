@@ -347,7 +347,7 @@
             this.lblWiner.BackColor = System.Drawing.Color.Transparent;
             this.lblWiner.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblWiner.ForeColor = System.Drawing.Color.Yellow;
-            this.lblWiner.Location = new System.Drawing.Point(110, 288);
+            this.lblWiner.Location = new System.Drawing.Point(-96, 288);
             this.lblWiner.Name = "lblWiner";
             this.lblWiner.Size = new System.Drawing.Size(95, 29);
             this.lblWiner.TabIndex = 23;

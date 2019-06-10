@@ -17,19 +17,19 @@ namespace Server2
         private int numberOfPlayer = 0;
         private int miss = 0;
         private string playerMiss = "";
-//--------------------------------------------------------      
+        //--------------------------------------------------------      
         public Room(int money, int id)
         {
             this.money = money;
             this.id = id;
             players = new Player[4];
         }
-//----------------------------------------------------------
+        //----------------------------------------------------------
         public void addPlayer(Player p)
-        {   
-            for(int i = 0; i < 5; i++)
+        {
+            for (int i = 0; i < 5; i++)
             {
-                if(players[i] == null)
+                if (players[i] == null)
                 {
                     players[i] = p;
                     players[i].setIDRoom(id);
@@ -41,42 +41,49 @@ namespace Server2
                         Thread.Sleep(500);
                         startGame();
                     }
-                        
+
                     return;
                 }
             }
         }
-//-------------------------------------------------------------
+        //-------------------------------------------------------------
         public void deletePlayer(Player p)
         {
             int position = Array.FindIndex(players, player => player == p);
+            players[position].sendData("quitseccussfully");
             players[position] = null;
             numberOfPlayer--;
 
             for (int i = 0; i < 4; i++)
             {
-                if(i != position && players[i] != null)
+                if (i != position && players[i] != null)
                 {
                     players[i].sendData($"quitroom {position}");
                 }
             }
+
+
         }
-//---------------------------------------------------------------
+        //---------------------------------------------------------------
         public void startGame()
         {
             Random random = new Random();
             int num = random.Next(40, 60);
+            int num2 = random.Next(80, 150);
             cards = new Cards();
-            for (int i = 0; i < num; i++)
+            for (int i = 0; i < num2; i++)
             {
                 cards.mix1();
                 cards.mix2();
             }
-
+            for (int i = 0; i < num; i++)
+            {
+                cards.mix2();
+            }
             string[] sendCard = cards.Split_Cards();
 
             int count = 0;
-            for (int i = 0; i < 4; i++) 
+            for (int i = 0; i < 4; i++)
             {
                 players[count].sendData($"start {sendCard[i]} {winnerPosition}");
                 count = (count + 1) % 4;
@@ -85,7 +92,7 @@ namespace Server2
             //cards = null;
             //cards = new Cards();
         }
-//---------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------
         public void mergeCard(string dataReceive)   //gom bài từ client
         {
             string[] str = dataReceive.Split(' ');
@@ -95,29 +102,24 @@ namespace Server2
                 cards.Add(newCard);
             }
         }
-//------------------------------------------------------------------------------
+        //------------------------------------------------------------------------------
         public void endGame(string data, Player player)      //sau khi nhận tín hiệu kết thúc ván
         {
             string dataSend = data.Substring(7);
             for (int i = 0; i < 4; i++)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                players[i].sendData($"wait {miss} {winnerPosition + 4} {dataSend}");
             Thread.Sleep(1000);
             for (int i = 0; i < 4; i++)
             {
-                if (players[i] == player)
-                {
-                    winnerPosition = i;
-                }
-                
                 players[i].sendData("end");
             }
             Thread.Sleep(3000);
             if (isReady())
                 startGame();
         }
-//---------------------------------------------------------------
+        //---------------------------------------------------------------
         //gửi bài cho tất cả client sau mỗi lần có người đánh
-        public void sendCardToPlayer(string dataReceive, Player player) 
+        public void sendCardToPlayer(string dataReceive, Player player)
         {
             string type = dataReceive.Split(' ')[0];
             if (type == "miss")
@@ -135,17 +137,17 @@ namespace Server2
             {
                 dataSend = "";
             }
-            players[winnerPosition].sendData($"next {miss} {dataSend}");
+            players[winnerPosition].sendData($"next {miss} {winnerPosition} {dataSend}");
             for (int i = 0; i < 4; i++)
-                if(i != winnerPosition)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                if (i != winnerPosition)
+                    players[i].sendData($"wait {miss} {winnerPosition} {dataSend}");
             if (miss == 3)
             {
                 miss = 0;
                 playerMiss = "";
             }
         }
-//-------------------------------------------------------------------------
+        //-------------------------------------------------------------------------
         public bool isReady()
         {
             if (numberOfPlayer == 4)
@@ -163,11 +165,11 @@ namespace Server2
                     vt = i;
                     break;
                 }
-            
-            foreach(Player pl in players)
+
+            foreach (Player pl in players)
             {
                 if (pl != null)
-                    pl.sendData("chat " + vt.ToString() + data);
+                    pl.sendData($"chat {vt} {data}");
             }
         }
 

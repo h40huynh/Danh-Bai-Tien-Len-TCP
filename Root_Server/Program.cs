@@ -79,11 +79,18 @@ namespace Root_Server
 
         private void receiveServerData(object obj)
         {
-            TcpModel tcp = obj as TcpModel;
-            while (true)
+            try
             {
-                string data = tcp.tcpClient.receiveData();
-                tcp.player.sendData(data);
+                TcpModel tcp = obj as TcpModel;
+                while (true)
+                {
+                    string data = tcp.tcpClient.receiveData();
+                    tcp.player.sendData(data);
+                }
+            }
+            catch
+            {
+
             }
         }
     }
