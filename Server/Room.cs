@@ -50,6 +50,7 @@ namespace Server
         public void deletePlayer(Player p)
         {
             int position = Array.FindIndex(players, player => player == p);
+            players[position].sendData("quitseccussfully");
             players[position] = null;
             numberOfPlayer--;
 
@@ -60,6 +61,8 @@ namespace Server
                     players[i].sendData($"quitroom {position}");
                 }
             }
+
+            
         }
 //---------------------------------------------------------------
         public void startGame()
@@ -100,15 +103,10 @@ namespace Server
         {
             string dataSend = data.Substring(7);
             for (int i = 0; i < 4; i++)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                    players[i].sendData($"wait {miss} {winnerPosition + 4} {dataSend}");
             Thread.Sleep(1000);
             for (int i = 0; i < 4; i++)
-            {
-                if (players[i] == player)
-                {
-                    winnerPosition = i;
-                }
-                
+            {                
                 players[i].sendData("end");
             }
             Thread.Sleep(3000);

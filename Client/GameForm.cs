@@ -92,11 +92,10 @@ namespace Client
                         break;
 
                     case "next":
-                        
                         enemyCards = data;
                         miss = int.Parse(value[1]);
                         cid = int.Parse(value[2]);
-                        resetTimer(cid);
+                        resetTimerOrWin(cid);
                         showRecentFightCard(data);
                         btnIgnore.Enabled = true;
                         rule.setmyCard(getStringCards());
@@ -116,13 +115,14 @@ namespace Client
 
                     case "wait":
                         cid = int.Parse(value[2]);
-                        resetTimer(cid);
+                        resetTimerOrWin(cid);
                         showRecentFightCard(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
                     case "end":
                         isPlaying = false;
+                        lblWiner.Location = new Point(-40, -40);
                         cleanCardsImage();
                         break;
                     case "chat":
@@ -147,12 +147,38 @@ namespace Client
             }
         }
 
-        private void resetTimer(int id)
+        private void resetTimerOrWin(int id)
         {
-            int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][id]}");
-            countPosition = cid;
-            prbTimerCount.Location = timerLocation[countPosition];
-            prbTimerCount.Value = timePerTurn;
+            if(id <= 3)
+            {
+                int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][id]}");
+                countPosition = cid;
+                prbTimerCount.Location = timerLocation[countPosition];
+                prbTimerCount.Value = timePerTurn;
+            }
+            else
+            {
+                try
+                {
+                    if (this.InvokeRequired)
+                    {
+                        Invoke((MethodInvoker)delegate ()
+                        {
+                            timerCountdown.Stop();
+
+                        });
+                    }
+                    else
+                    {
+                        timerCountdown.Stop();
+                    }
+                }
+                catch { }
+                int winId = id - 4;
+                int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][winId]}");
+                lblWiner.Location = timerLocation[cid];
+                
+            }
         }
 
         private void deleteRoomate(int cid)

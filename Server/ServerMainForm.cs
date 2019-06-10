@@ -78,6 +78,7 @@ namespace Server
                 {
                     string data = player.receiveData();
                     rtxtLog.Text += $"From {name}: {data}\n";
+                    rtxtLog.Text += "\n";
 
                     string[] fixData = data.Split(' ');
                     switch(fixData[0])

@@ -49,6 +49,7 @@ namespace Client
                         {
                             this.Hide();
                             gameForm.ShowDialog();
+                            gameForm.Close();
                             this.Show();
                         }
                         break;

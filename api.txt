@@ -10,7 +10,7 @@ room (server listen):
 	user {id} {money}
 	start {listcards} {first turn id}
 	next {miss} {next id} {listcards}
-	wait {miss} {next id} {listcards}
+	wait {miss} {next id} {listcards} (if next > 3 set win or lose)
 	end {idwin}
 	roomate {id in room} {name}
 	roomates ,{id in room}{name}, {id in room}{name}

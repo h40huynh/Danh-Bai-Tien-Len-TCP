@@ -17,6 +17,13 @@ namespace Bot
         {
             Program program = new Program();
             program.startPlay();
+            int i = 2;
+            while (i-- > 0)
+            {
+                Thread.Sleep(500);
+                program = new Program();
+                program.startPlay();
+            }
         }
 
         public void startPlay()
@@ -105,16 +112,19 @@ namespace Bot
             for (int i = 0; i < fightCards.Length; i++)
             {
                 sendData += ' ' + fightCards[i].ToString();
-                myCards += ' ';
-                myCards = myCards.Replace(fightCards[i].ToString() + ' ', "");
+                myCards = ' ' + myCards;
+                myCards = myCards.Replace(' ' + fightCards[i].ToString(), "");
+                myCards.Trim();
             }
             if (myCards[myCards.Length - 1] == ' ')
                 myCards.Remove(myCards.Length - 1);
 
             numCardsLeft -= fightCards.Length;
-            tcpModel.sendData("pop" + sendData);
+            
             if (numCardsLeft == 0)
-                tcpModel.sendData("winner ");
+                tcpModel.sendData("winner " + sendData);
+            else
+                tcpModel.sendData("pop" + sendData);
         }
 
 
