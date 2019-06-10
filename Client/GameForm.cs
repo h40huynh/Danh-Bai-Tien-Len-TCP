@@ -34,7 +34,7 @@ namespace Client
         private readonly string[] UserAvatarNameById = { "0123", "3012", "2301", "1230" };
 
         // For timer count down
-        private readonly int timePerTurn = 100;
+        private readonly int timePerTurn = 30;
         private int timeCount;
         private int countPosition = 0;
         private readonly Point[] timerLocation = { new Point(840, 434), new Point(760, 259), new Point(387, 95), new Point(17, 259) };
@@ -92,9 +92,10 @@ namespace Client
                         break;
 
                     case "next":
-                        resetTimer();
                         enemyCards = data;
                         miss = int.Parse(value[1]);
+                        cid = int.Parse(value[2]);
+                        resetTimerOrWin(cid);
                         showRecentFightCard(data);
                         btnIgnore.Enabled = true;
                         rule.setmyCard(getStringCards());
@@ -113,18 +114,20 @@ namespace Client
                         break;
 
                     case "wait":
-                        resetTimer();
+                        cid = int.Parse(value[2]);
+                        resetTimerOrWin(cid);
                         showRecentFightCard(data);
                         btnFight.Enabled = false;
                         btnIgnore.Enabled = false;
                         break;
                     case "end":
                         isPlaying = false;
+                        lblWiner.Location = new Point(-40, -40);
                         cleanCardsImage();
                         break;
                     case "chat":
-                        string msg = data.Substring(8);
-                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[6]}")]}");
+                        string msg = data.Substring(7);
+                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse(value[1])]}");
                         Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
                         //txtChatBox.Text += $"{msg}\n";
                         break;
@@ -144,11 +147,38 @@ namespace Client
             }
         }
 
-        private void resetTimer()
+        private void resetTimerOrWin(int id)
         {
-            countPosition = (countPosition + 1) % 4;
-            prbTimerCount.Location = timerLocation[countPosition];
-            prbTimerCount.Value = timePerTurn;
+            if(id <= 3)
+            {
+                int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][id]}");
+                countPosition = cid;
+                prbTimerCount.Location = timerLocation[countPosition];
+                prbTimerCount.Value = timePerTurn;
+            }
+            else
+            {
+                try
+                {
+                    if (this.InvokeRequired)
+                    {
+                        Invoke((MethodInvoker)delegate ()
+                        {
+                            timerCountdown.Stop();
+
+                        });
+                    }
+                    else
+                    {
+                        timerCountdown.Stop();
+                    }
+                }
+                catch { }
+                int winId = id - 4;
+                int cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][winId]}");
+                lblWiner.Location = timerLocation[cid];
+                
+            }
         }
 
         private void deleteRoomate(int cid)
@@ -441,7 +471,7 @@ namespace Client
 //-----------------------------------------------------------------------------
         private void BtnIgnore_Click(object sender, EventArgs e)
         {
-            enemyCards = enemyCards.Remove(0, 7);
+            enemyCards = enemyCards.Remove(0, 9);
             tcpModel.sendData("miss " + enemyCards);
             StartOrStopSunAnimation(false, new Point(0, 0));
         }
@@ -470,7 +500,7 @@ namespace Client
         private void showRecentFightCard(string currentCardsString)
         {
             
-            string[] s = currentCardsString.Substring(7).Split(' ');
+            string[] s = currentCardsString.Substring(9).Split(' ');
             if(s[0] == "")
             {
                 return;

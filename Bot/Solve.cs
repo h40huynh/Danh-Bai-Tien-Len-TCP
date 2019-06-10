@@ -39,7 +39,7 @@ namespace Bot
         }
         public void setEnemyCard(string dataReceive)
         {
-            dataReceive = dataReceive.Remove(0, 7);
+            dataReceive = dataReceive.Remove(0, 9);
             string[] enemystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
             enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
             Array.Reverse(enemyCard);
@@ -814,7 +814,7 @@ namespace Bot
         {
             if (myCard[0] < 31)
                 myCard = myCard.Skip(1).ToArray();
-            else if (myCard[myCard.Length - 1] > 154)
+            if (myCard[myCard.Length - 1] > 154)
                 myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)

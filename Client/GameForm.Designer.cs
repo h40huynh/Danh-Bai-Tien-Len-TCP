@@ -57,6 +57,7 @@
             this.txtMessage = new System.Windows.Forms.TextBox();
             this.btnSendChat = new System.Windows.Forms.Button();
             this.prbTimerCount = new System.Windows.Forms.ProgressBar();
+            this.lblWiner = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
             this.pnInfo2.SuspendLayout();
@@ -340,6 +341,18 @@
             this.prbTimerCount.Size = new System.Drawing.Size(80, 13);
             this.prbTimerCount.TabIndex = 22;
             // 
+            // lblWiner
+            // 
+            this.lblWiner.AutoSize = true;
+            this.lblWiner.BackColor = System.Drawing.Color.Transparent;
+            this.lblWiner.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblWiner.ForeColor = System.Drawing.Color.Yellow;
+            this.lblWiner.Location = new System.Drawing.Point(110, 288);
+            this.lblWiner.Name = "lblWiner";
+            this.lblWiner.Size = new System.Drawing.Size(95, 29);
+            this.lblWiner.TabIndex = 23;
+            this.lblWiner.Text = "Winner";
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,6 +361,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.lblWiner);
             this.Controls.Add(this.prbTimerCount);
             this.Controls.Add(this.lblChat0);
             this.Controls.Add(this.btnSendChat);
@@ -414,5 +428,6 @@
         private System.Windows.Forms.TextBox txtMessage;
         private System.Windows.Forms.Button btnSendChat;
         private System.Windows.Forms.ProgressBar prbTimerCount;
+        private System.Windows.Forms.Label lblWiner;
     }
 }

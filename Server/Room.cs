@@ -50,6 +50,7 @@ namespace Server
         public void deletePlayer(Player p)
         {
             int position = Array.FindIndex(players, player => player == p);
+            players[position].sendData("quitseccussfully");
             players[position] = null;
             numberOfPlayer--;
 
@@ -60,6 +61,8 @@ namespace Server
                     players[i].sendData($"quitroom {position}");
                 }
             }
+
+            
         }
 //---------------------------------------------------------------
         public void startGame()
@@ -100,15 +103,10 @@ namespace Server
         {
             string dataSend = data.Substring(7);
             for (int i = 0; i < 4; i++)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                    players[i].sendData($"wait {miss} {winnerPosition + 4} {dataSend}");
             Thread.Sleep(1000);
             for (int i = 0; i < 4; i++)
-            {
-                if (players[i] == player)
-                {
-                    winnerPosition = i;
-                }
-                
+            {                
                 players[i].sendData("end");
             }
             Thread.Sleep(3000);
@@ -135,10 +133,10 @@ namespace Server
             {
                 dataSend = "";
             }
-            players[winnerPosition].sendData($"next {miss} {dataSend}");
+            players[winnerPosition].sendData($"next {miss} {winnerPosition} {dataSend}");
             for (int i = 0; i < 4; i++)
                 if(i != winnerPosition)
-                    players[i].sendData($"wait {miss} {dataSend}");
+                    players[i].sendData($"wait {miss} {winnerPosition} {dataSend}");
             if (miss == 3)
             {
                 miss = 0;
@@ -167,7 +165,7 @@ namespace Server
             foreach(Player pl in players)
             {
                 if (pl != null)
-                    pl.sendData("chat " + vt.ToString() + data);
+                    pl.sendData($"chat {vt} {data}");
             }
         }
 
