@@ -10,6 +10,7 @@ namespace Root_Server
         private List<TcpModel> tcps = new List<TcpModel>();
         private TcpModelServer tcpServer;
         private int numOfPlayer = 0;
+        private bool isRunning1 = true, isRunning2 = true;
 
         static void Main(string[] args)
         {
@@ -29,10 +30,12 @@ namespace Root_Server
         private int choosePort(int num)
         {
             int res = 0;
-            if ((num / 4) % 2 == 0)
+            if (isRunning1 && (num / 4) % 2 == 0)
                 res = 8080;
-            else
+            else if (isRunning2)
                 res = 9090;
+            else if (isRunning1)
+                res = 8080;
             Console.WriteLine($"Port = {res}");
             return res;
         }
@@ -92,13 +95,12 @@ namespace Root_Server
             {
                 if (tcp.tcpClient.port == 8080)
                 {
-                    tcp.tcpClient = new TcpModelClient("127.0.0.1", 9090);
-                    tcp.player.sendData("end");
+                    isRunning1 = false;
+                    tcp.player.closeConnection();
                 }
                 else
                 {
-                    tcp.tcpClient = new TcpModelClient("127.0.0.1", 8080);
-                    tcp.player.sendData("end");
+                    isRunning2 = false;
                 }
             }
         }

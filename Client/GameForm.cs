@@ -79,6 +79,8 @@ namespace Client
             while(true)
             {
                 string data = tcpModel.receiveData();
+                if (data == "Error")
+                    this.Close();
                 string[] value = data.Split(' ');
                 int cid;
                 switch (value[0])
