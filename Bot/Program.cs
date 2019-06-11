@@ -13,6 +13,8 @@ namespace Bot
         private int miss;
         private string offset = "";
 
+        private bool isPlaying = false;
+
         static void Main(string[] args)
         {
             Program program = new Program();
@@ -48,6 +50,8 @@ namespace Bot
                         break;
 
                     case "start":
+                        isPlaying = true;
+                        numCardsLeft = 13;
                         string id = value[value.Length - 1];
                         bot = new Solve();
                         data = data.Remove(0, 6);
@@ -64,10 +68,29 @@ namespace Bot
                     case "room":
                         offset = value[2];
                         break;
+                    case "end":
+                        isPlaying = false;
+                        if(offset == "0")
+                        {
+                            Thread thread = new Thread(replayGame);
+                            thread.Start();
+                        }
+                        break;
                     default:
                         break;
                 }
             }
+        }
+
+        private void replayGame()
+        {
+            Thread.Sleep(2000);
+            while (!isPlaying)
+            {
+                tcpModel.sendData("startplay ");
+                Thread.Sleep(2000);
+            }
+            
         }
 
         private void start(string data)

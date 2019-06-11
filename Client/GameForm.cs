@@ -67,6 +67,11 @@ namespace Client
             createPicturebox();
             Thread thread = new Thread(receiveDataThread);
             thread.Start();
+
+            if(userOffsetInRoom == 0)
+            {
+                btnPlay.Enabled = true;
+            }
         }
 //-----------------------------------------------------------------
         private void receiveDataThread()
@@ -79,6 +84,8 @@ namespace Client
                 switch (value[0])
                 {
                     case "start":
+                        btnPlay.Hide();
+                        lblWiner.Location = new Point(-40, -40);
                         isPlaying = true;
                         initPictureBox(data);
                         rule = new Rules();
@@ -121,8 +128,8 @@ namespace Client
                         btnIgnore.Enabled = false;
                         break;
                     case "end":
+                        btnPlay.Show();
                         isPlaying = false;
-                        lblWiner.Location = new Point(-40, -40);
                         cleanCardsImage();
                         break;
                     case "chat":
@@ -641,6 +648,11 @@ namespace Client
         {
             e.Cancel = isPlaying;
             tcpModel.sendData("quit ");
+        }
+
+        private void BtnPlay_Click(object sender, EventArgs e)
+        {
+            tcpModel.sendData("startplay ");
         }
     }
 }

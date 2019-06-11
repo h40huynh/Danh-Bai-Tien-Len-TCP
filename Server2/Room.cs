@@ -36,12 +36,6 @@ namespace Server2
                     players[i].sendData($"room {id} {i}");
                     numberOfPlayer++;
                     sendRoomate(i);
-                    if (isReady())
-                    {
-                        Thread.Sleep(500);
-                        startGame();
-                    }
-
                     return;
                 }
             }
@@ -67,6 +61,8 @@ namespace Server2
         //---------------------------------------------------------------
         public void startGame()
         {
+            if (!isReady())
+                return;
             Random random = new Random();
             int num = random.Next(40, 60);
             int num2 = random.Next(80, 150);
@@ -113,9 +109,8 @@ namespace Server2
             {
                 players[i].sendData("end");
             }
-            Thread.Sleep(3000);
-            if (isReady())
-                startGame();
+            miss = 0;
+            playerMiss = "";
         }
         //---------------------------------------------------------------
         //gửi bài cho tất cả client sau mỗi lần có người đánh
