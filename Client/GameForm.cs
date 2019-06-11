@@ -46,7 +46,11 @@ namespace Client
 
         // Form closing
         private bool isPlaying = false;
-        
+
+        // For sound
+        SoundPlayer soundReceiveCard = new SoundPlayer("./sounds/receive-cards.wav");
+        SoundPlayer soundFighting = new SoundPlayer("./sounds/pick-card.wav");
+        SoundPlayer soundClickCard = new SoundPlayer("./sounds/card-drop.wav");
 
         public GameForm(TcpModel tcpModel, int roomId, int userOffset)
         {
@@ -89,6 +93,7 @@ namespace Client
                     switch (value[0])
                     {
                         case "start":
+                            soundReceiveCard.Play();
                             btnPlay.Hide();
                             lblWiner.Location = new Point(-40, -40);
                             isPlaying = true;
@@ -104,6 +109,7 @@ namespace Client
                             break;
 
                         case "next":
+                            soundFighting.Play();
                             enemyCards = data;
                             miss = int.Parse(value[1]);
                             cid = int.Parse(value[2]);
@@ -126,6 +132,7 @@ namespace Client
                             break;
 
                         case "wait":
+                            soundFighting.Play();
                             cid = int.Parse(value[2]);
                             resetTimerOrWin(cid);
                             showRecentFightCard(data);
@@ -358,6 +365,7 @@ namespace Client
             {
                 p.Y -= 20;
             }
+            soundClickCard.Play();
 
             (sender as PictureBox).Location = p;
             isClick[id] = !isClick[id];
