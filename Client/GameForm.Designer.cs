@@ -58,6 +58,7 @@
             this.btnSendChat = new System.Windows.Forms.Button();
             this.prbTimerCount = new System.Windows.Forms.ProgressBar();
             this.lblWiner = new System.Windows.Forms.Label();
+            this.btnPlay = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.ptbAvatar1)).BeginInit();
             this.pnInfo1.SuspendLayout();
             this.pnInfo2.SuspendLayout();
@@ -353,6 +354,17 @@
             this.lblWiner.TabIndex = 23;
             this.lblWiner.Text = "Winner";
             // 
+            // btnPlay
+            // 
+            this.btnPlay.Enabled = false;
+            this.btnPlay.Location = new System.Drawing.Point(431, 328);
+            this.btnPlay.Name = "btnPlay";
+            this.btnPlay.Size = new System.Drawing.Size(75, 23);
+            this.btnPlay.TabIndex = 24;
+            this.btnPlay.Text = "Play";
+            this.btnPlay.UseVisualStyleBackColor = true;
+            this.btnPlay.Click += new System.EventHandler(this.BtnPlay_Click);
+            // 
             // GameForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -361,6 +373,7 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(932, 545);
+            this.Controls.Add(this.btnPlay);
             this.Controls.Add(this.lblWiner);
             this.Controls.Add(this.prbTimerCount);
             this.Controls.Add(this.lblChat0);
@@ -429,5 +442,6 @@
         private System.Windows.Forms.Button btnSendChat;
         private System.Windows.Forms.ProgressBar prbTimerCount;
         private System.Windows.Forms.Label lblWiner;
+        private System.Windows.Forms.Button btnPlay;
     }
 }

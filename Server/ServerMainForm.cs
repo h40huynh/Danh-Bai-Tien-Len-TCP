@@ -120,6 +120,9 @@ namespace Server
                         case "quit":
                             rooms[player.getIDRoom()].deletePlayer(player);
                             break;
+                        case "startplay":
+                            rooms[player.getIDRoom()].startGame();
+                            break;
                         default:
                             break;
                     }
