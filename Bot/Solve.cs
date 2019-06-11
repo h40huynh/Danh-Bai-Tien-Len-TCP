@@ -13,22 +13,6 @@ namespace Bot
         public Solve()
         {
         }
-
-        //private string[] Setcard(string dataReceive)
-        //{
-        //    string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    string[] mystr2 = new string[mystr.Length - 1];
-
-        //    if (int.Parse(mystr[0]) < 31)
-        //        Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
-        //    else if (int.Parse(mystr[mystr.Length - 1]) > 154)
-        //        Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
-        //    else
-        //        return mystr;
-        //    return mystr2;
-
-        //}
-
         public Solve(string dataReceive, string baidoithu)
         {
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
