@@ -696,6 +696,10 @@ namespace Bot
         }
         public int[] DanhBaiChuDong()
         {
+            if (myCard[0] < 31)
+                myCard = myCard.Skip(1).ToArray();
+            else if (myCard[myCard.Length - 1] > 154)
+                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
                 Console.Write(myCard[i] + " ");
@@ -792,12 +796,10 @@ namespace Bot
                 {
                     if (DemLe(myCard)[0] < SanhNhoNhat(myCard, 3)[0])
                         result[0] = DemLe(myCard)[0];
-                    else return SanhNhoDaiNhat(myCard);
                 }
-                if (DoiNhoNhat(myCard)[0] != 0)
+                else if (DoiNhoNhat(myCard)[0] != 0)
                     if (DemLe(myCard)[0] < DoiNhoNhat(myCard)[0])
                         result[0] = DemLe(myCard)[0];
-                    else return DoiNhoNhat(myCard);
 
                 if (result[0] != 0)
                     return result;
@@ -810,6 +812,10 @@ namespace Bot
         }
         public int[] DanhBaiBiDong()
         {
+            if (myCard[0] < 31)
+                myCard = myCard.Skip(1).ToArray();
+            if (myCard[myCard.Length - 1] > 154)
+                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
                 Console.Write(myCard[i] + " ");
@@ -932,7 +938,7 @@ namespace Bot
                             int[] baisaukhidanhdoi = myCard.Except(KiemTraDoi(myCard)).ToArray();
                             if (TheManhDoi(myCard) == true || TheManhDoi(baisaukhidanhdoi) == true)
                                 return KiemTraDoi(myCard);
-                            if (DemCocLon(baisaukhidanhdoi) > DemLe(baisaukhidanhdoi).Length / 2 - 1)
+                            if (DemCocLon(baisaukhidanhdoi) >= DemLe(baisaukhidanhdoi).Length / 2 - 1)
                                 return KiemTraDoi(myCard);
                             if (DemLe(baisaukhidanhdoi).Length < DemLe(myCard).Length)
                                 return KiemTraDoi(myCard);
