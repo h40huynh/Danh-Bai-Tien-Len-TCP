@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace Client
 {
@@ -76,83 +77,89 @@ namespace Client
 //-----------------------------------------------------------------
         private void receiveDataThread()
         {
-            while(true)
+            try
             {
-                string data = tcpModel.receiveData();
-                if (data == "Error")
-                    this.Close();
-                string[] value = data.Split(' ');
-                int cid;
-                switch (value[0])
+                while (true)
                 {
-                    case "start":
-                        btnPlay.Hide();
-                        lblWiner.Location = new Point(-40, -40);
-                        isPlaying = true;
-                        initPictureBox(data);
-                        rule = new Rules();
-                        int id = int.Parse(value[value.Length - 1]);
-                        if (id == userOffsetInRoom)
-                        {
-                            StartOrStopSunAnimation(true, sunPosition[0]);
-                            btnFight.Enabled = true;
-                        }
-                        startTimerCountDown(id);
-                        break;
+                    string data = tcpModel.receiveData();
+                    if (data == "Error")
+                        this.Close();
+                    string[] value = data.Split(' ');
+                    int cid;
+                    switch (value[0])
+                    {
+                        case "start":
+                            btnPlay.Hide();
+                            lblWiner.Location = new Point(-40, -40);
+                            isPlaying = true;
+                            initPictureBox(data);
+                            rule = new Rules();
+                            int id = int.Parse(value[value.Length - 1]);
+                            if (id == userOffsetInRoom)
+                            {
+                                StartOrStopSunAnimation(true, sunPosition[0]);
+                                btnFight.Enabled = true;
+                            }
+                            startTimerCountDown(id);
+                            break;
 
-                    case "next":
-                        enemyCards = data;
-                        miss = int.Parse(value[1]);
-                        cid = int.Parse(value[2]);
-                        resetTimerOrWin(cid);
-                        showRecentFightCard(data);
-                        btnIgnore.Enabled = true;
-                        rule.setmyCard(getStringCards());
-                        rule.setEnemyCard(data);
-                        if (rule.check() || miss == 3)
-                        {
-                            btnFight.Enabled = true;
-                            if (miss == 3) 
-                                btnIgnore.Enabled = false;
-                            StartOrStopSunAnimation(true, sunPosition[0]);
-                        }
-                        else
-                        {
-                            StartOrStopSunAnimation(true, sunPosition[1]);
-                        }
-                        break;
+                        case "next":
+                            enemyCards = data;
+                            miss = int.Parse(value[1]);
+                            cid = int.Parse(value[2]);
+                            resetTimerOrWin(cid);
+                            showRecentFightCard(data);
+                            btnIgnore.Enabled = true;
+                            rule.setmyCard(getStringCards());
+                            rule.setEnemyCard(data);
+                            if (rule.check() || miss == 3)
+                            {
+                                btnFight.Enabled = true;
+                                if (miss == 3)
+                                    btnIgnore.Enabled = false;
+                                StartOrStopSunAnimation(true, sunPosition[0]);
+                            }
+                            else
+                            {
+                                StartOrStopSunAnimation(true, sunPosition[1]);
+                            }
+                            break;
 
-                    case "wait":
-                        cid = int.Parse(value[2]);
-                        resetTimerOrWin(cid);
-                        showRecentFightCard(data);
-                        btnFight.Enabled = false;
-                        btnIgnore.Enabled = false;
-                        break;
-                    case "end":
-                        btnPlay.Show();
-                        isPlaying = false;
-                        cleanCardsImage();
-                        break;
-                    case "chat":
-                        string msg = data.Substring(7);
-                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse(value[1])]}");
-                        Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
-                        //txtChatBox.Text += $"{msg}\n";
-                        break;
-                    case "roomate":
-                        setNewRoomate(data.Substring(8));
-                        break;
-                    case "roomates":
-                        setNewRoomates(data.Substring(9));
-                        break;
-                    case "quitroom":
-                        cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[9]}")]}");
-                        deleteRoomate(cid);
-                        break;
-                    default:
-                        break;
+                        case "wait":
+                            cid = int.Parse(value[2]);
+                            resetTimerOrWin(cid);
+                            showRecentFightCard(data);
+                            btnFight.Enabled = false;
+                            btnIgnore.Enabled = false;
+                            break;
+                        case "end":
+                            btnPlay.Show();
+                            isPlaying = false;
+                            cleanCardsImage();
+                            break;
+                        case "chat":
+                            string msg = data.Substring(7);
+                            cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse(value[1])]}");
+                            Controls.Find($"lblChat{cid}", false).First().Text = $"{msg}\n";
+                            //txtChatBox.Text += $"{msg}\n";
+                            break;
+                        case "roomate":
+                            setNewRoomate(data.Substring(8));
+                            break;
+                        case "roomates":
+                            setNewRoomates(data.Substring(9));
+                            break;
+                        case "quitroom":
+                            cid = int.Parse($"{UserAvatarNameById[userOffsetInRoom][int.Parse($"{data[9]}")]}");
+                            deleteRoomate(cid);
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }catch
+            {
+                this.Close();
             }
         }
 
@@ -298,7 +305,6 @@ namespace Client
             } while (!isFinish);
             
         }
-//-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
         private void getHint(int id)
         {
@@ -648,8 +654,9 @@ namespace Client
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            e.Cancel = isPlaying;
-            tcpModel.sendData("quit ");
+            //e.Cancel = isPlaying;
+            //tcpModel.sendData("quit ");
+            
         }
 
         private void BtnPlay_Click(object sender, EventArgs e)

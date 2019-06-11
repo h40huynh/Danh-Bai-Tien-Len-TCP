@@ -49,8 +49,9 @@ namespace Client
                         {
                             this.Hide();
                             gameForm.ShowDialog();
-                            gameForm.Close();
-                            this.Show();
+                            //gameForm.Close();
+                            //this.Show();
+                            this.Close();
                         }
                         break;
                     case "user":

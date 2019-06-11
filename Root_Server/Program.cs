@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Net.Sockets;
+using System.IO;
 
 namespace Root_Server
 {
@@ -29,6 +30,14 @@ namespace Root_Server
 
         private int choosePort(int num)
         {
+            if (num % 4 == 0)
+            {
+                if (isRunning1 == false && reConnect("127.0.0.1", 8080) == 1)
+                    isRunning1 = true;
+                if (isRunning2 == false && reConnect("127.0.0.1", 9090) == 1)
+                    isRunning2 = true;
+            }
+
             int res = 0;
             if (isRunning1 && (num / 4) % 2 == 0)
                 res = 8080;
@@ -96,13 +105,31 @@ namespace Root_Server
                 if (tcp.tcpClient.port == 8080)
                 {
                     isRunning1 = false;
+                    tcp.player.sendData("Error");
                     tcp.player.closeConnection();
                 }
                 else
                 {
                     isRunning2 = false;
+                    tcp.player.sendData("Error");
+                    tcp.player.closeConnection();
                 }
             }
+        }
+
+        private int reConnect(string ip, int port)
+        {
+            try
+            {
+                TcpClient tcpClient = new TcpClient(ip, port);
+                Stream stream = tcpClient.GetStream();
+                return 1;
+            }
+            catch
+            {
+                return -1;
+            }
+
         }
     }
 }

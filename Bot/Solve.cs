@@ -10,9 +10,7 @@ namespace Bot
     {
         int[] myCard;
         int[] enemyCard;
-        public Solve()
-        {
-        }
+        public Solve() { }
         public Solve(string dataReceive, string baidoithu)
         {
             string[] mystr = dataReceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
@@ -128,7 +126,6 @@ namespace Bot
                     return tmp;
                 }
             }
-
             tmp[0] = 0;
             return tmp;
         }
@@ -317,28 +314,6 @@ namespace Bot
                     mangtam3 = mangtam2.Concat(mangconlai).ToArray();
                     quickSort(mangtam3, 0, mangtam3.Length - 1);
 
-                    //for (int k = 0; k < mangtam3.Length - 1; k++)
-                    //{
-                    //    for (int l = 0; l < tmp.Length; l++)
-                    //    {
-                    //        if (mangtam3[k] / 10 == tmp[l] / 10 && mangtam3[k] < tmp[l] && mangtam3[k] / 10 != mangtam[mangtam.Length - 1] / 10)
-                    //        {
-                    //            if (k > 0)
-                    //            {
-                    //                if (tmp[l] != mangtam3[k - 1])
-                    //                {
-                    //                    mangtam3[k] = tmp[l];
-                    //                    break;
-                    //                }
-                    //            }
-                    //            else
-                    //            {
-                    //                mangtam3[k] = tmp[l];
-                    //                break;
-                    //            }
-                    //        }
-                    //    }
-                    //}
                     return mangtam3;
                 }
             }
@@ -682,10 +657,6 @@ namespace Bot
         }
         public int[] DanhBaiChuDong()
         {
-            if (myCard[0] < 31)
-                myCard = myCard.Skip(1).ToArray();
-            else if (myCard[myCard.Length - 1] > 154)
-                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
                 Console.Write(myCard[i] + " ");
@@ -759,7 +730,6 @@ namespace Bot
                 for (int i = myCard.Length; i >= 7; i--)
                     if (CoSanhLon(i))
                         return SanhNhoNhat(myCard, i);
-
             }
 
             //chon danh 3 cay
@@ -798,14 +768,9 @@ namespace Bot
         }
         public int[] DanhBaiBiDong()
         {
-            if (myCard[0] < 31)
-                myCard = myCard.Skip(1).ToArray();
-            if (myCard[myCard.Length - 1] > 154)
-                myCard = myCard.SkipWhile(element => element > 154).ToArray();
             Console.WriteLine("\n");
             for (int i = 0; i < myCard.Length; i++)
-                Console.Write(myCard[i] + " ");
-            
+                Console.Write(myCard[i] + " ");            
             // return 0 == bo luot
             int[] boluot = { 0 };
             if (enemyCard.Length == 1) // danh le
@@ -838,7 +803,6 @@ namespace Bot
                             return cocle;
                         else
                             return boluot;
-
                     }
                     else
                         return boluot;

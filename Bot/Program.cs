@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Net.Sockets;
 using System.Threading;
 
 namespace Bot
@@ -38,47 +40,54 @@ namespace Bot
 
         private void receiveDataThread()
         {
-            while (true)
+            try
             {
-                string data = tcpModel.receiveData();
-                string[] value = data.Split(' ');
-                switch (value[0])
+                while (true)
                 {
-                    case "user":
-                        tcpModel.setID(int.Parse(value[1]));
-                        tcpModel.sendData("join ");
-                        break;
+                    string data = tcpModel.receiveData();
+                    string[] value = data.Split(' ');
+                    switch (value[0])
+                    {
+                        case "user":
+                            tcpModel.setID(int.Parse(value[1]));
+                            tcpModel.sendData("join ");
+                            break;
 
-                    case "start":
-                        isPlaying = true;
-                        numCardsLeft = 13;
-                        string id = value[value.Length - 1];
-                        bot = new Solve();
-                        data = data.Remove(0, 6);
-                        myCards = data.Remove(data.Length - 1, 1);
-                        if (id == offset)
-                            start(myCards);
-                        break;
+                        case "start":
+                            isPlaying = true;
+                            numCardsLeft = 13;
+                            string id = value[value.Length - 1];
+                            bot = new Solve();
+                            data = data.Remove(0, 6);
+                            myCards = data.Remove(data.Length - 1, 1);
+                            if (id == offset)
+                                start(myCards);
+                            break;
 
-                    case "next":
-                        enemyCards = data;
-                        miss = int.Parse(value[1]);
-                        next(data);
-                        break;
-                    case "room":
-                        offset = value[2];
-                        break;
-                    case "end":
-                        isPlaying = false;
-                        if(offset == "0")
-                        {
-                            Thread thread = new Thread(replayGame);
-                            thread.Start();
-                        }
-                        break;
-                    default:
-                        break;
+                        case "next":
+                            enemyCards = data;
+                            miss = int.Parse(value[1]);
+                            next(data);
+                            break;
+                        case "room":
+                            offset = value[2];
+                            break;
+                        case "end":
+                            isPlaying = false;
+                            if (offset == "0")
+                            {
+                                Thread thread = new Thread(replayGame);
+                                thread.Start();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
+            }
+            catch
+            {
+                Environment.Exit(1);   
             }
         }
 
