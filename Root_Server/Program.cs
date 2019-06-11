@@ -73,15 +73,15 @@ namespace Root_Server
             }
             catch (Exception)
             {
-                tcp.player.closeConnection();
+                tcp.player.closeConnection();                
             }
         }
 
         private void receiveServerData(object obj)
         {
+            TcpModel tcp = obj as TcpModel;
             try
             {
-                TcpModel tcp = obj as TcpModel;
                 while (true)
                 {
                     string data = tcp.tcpClient.receiveData();
@@ -90,7 +90,16 @@ namespace Root_Server
             }
             catch
             {
-
+                if (tcp.tcpClient.port == 8080)
+                {
+                    tcp.tcpClient = new TcpModelClient("127.0.0.1", 9090);
+                    tcp.player.sendData("end");
+                }
+                else
+                {
+                    tcp.tcpClient = new TcpModelClient("127.0.0.1", 8080);
+                    tcp.player.sendData("end");
+                }
             }
         }
     }

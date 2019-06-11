@@ -13,8 +13,8 @@ namespace Root_Server
     {
         private TcpClient tcpClient;
         private NetworkStream stream;
-        //private byte[] byteReceive;
         private int ID;
+        public int port;
 
         public int getID() => ID;
         public void setID(int id) { ID = id; }
@@ -23,6 +23,7 @@ namespace Root_Server
         public TcpModelClient(string ip, int port)
         {
             tcpClient = new TcpClient(ip, port);
+            this.port = port;
             stream = tcpClient.GetStream();
             encoding = new ASCIIEncoding();
         }
