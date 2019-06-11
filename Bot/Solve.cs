@@ -662,6 +662,8 @@ namespace Bot
                 }
                 else
                 {
+                    if (DemLe(myCard).Length == 0)
+                        return DoiNhoNhat(myCard);
                     if (DemLe(myCard)[0] < DoiNhoNhat(myCard)[0])
                     {
                         mangtam[0] = DemLe(myCard)[0];
@@ -739,7 +741,7 @@ namespace Bot
                             result[0] = DemLe(tmp)[0];
                         else
                         {
-                            if (CoBaCay(tmp)[0] != 0)
+                            if (CoBaCay(tmp)[0] != 0 && CoBaCay(tmp)[0] / 10 < 13)
                                 return CoBaCay(tmp);
                             else
                                 result[0] = DemLe(tmp)[0];
