@@ -834,7 +834,7 @@ namespace Bot
                     }
                     else
                     {
-                        if (myCard[0] / 10 >= 14)
+                        if (myCard[0] / 10 >= 14 && myCard[0] > enemyCard[0])
                             cocle[0] = myCard[0];
                         return cocle;
                     }
@@ -899,7 +899,7 @@ namespace Bot
             }
             if (enemyCard.Length == 3 && enemyCard[0] / 10 == enemyCard[1] / 10) // danh 3 cay
             {
-                if (CoBaCay(myCard)[0] > enemyCard[0])
+                if (CoBaCay(myCard)[0] > enemyCard[0] && CoBaCay(myCard)[0]/10 < 14)
                 {
                     if (CoTuQui(myCard)[0] != 0)
                     {

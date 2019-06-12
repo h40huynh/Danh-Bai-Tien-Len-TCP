@@ -33,34 +33,7 @@ namespace client
             myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
             Array.Reverse(myCard);
         }
-        //public void setmyCard(string datareceive)
-        //{
-        //    string[] mystr = datareceive.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-
-        //    if (int.Parse(mystr[0]) < 31)
-        //    {
-        //        string[] mystr2 = new string[mystr.Length - 1];
-        //        Array.Copy(mystr, 1, mystr2, 0, mystr.Length - 1);
-        //        myCard = Array.ConvertAll<string, int>(mystr2, int.Parse);
-        //    }
-        //    else if (int.Parse(mystr[mystr.Length - 1]) > 154)
-        //    {
-        //        string[] mystr2 = new string[mystr.Length - 1];
-        //        Array.Copy(mystr, 0, mystr2, 0, mystr.Length - 1);
-        //        myCard = Array.ConvertAll<string, int>(mystr2, int.Parse);
-        //    }
-        //    else
-        //        myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
-        //}
-
         public Rules() { }
-        //public Heo(string mycard, string enemy)
-        //{
-        //    string[] mystr = mycard.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    myCard = Array.ConvertAll<string, int>(mystr, int.Parse);
-        //    string[] enemystr = enemy.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-        //    enemyCard = Array.ConvertAll<string, int>(enemystr, int.Parse);
-        //}
         public bool check() // check ban đầu
         {
             if (enemyCard.Length == 0)
